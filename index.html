@@ -1380,13 +1380,27 @@
     const message = formatCartForTelegram();
     const encodedMessage = encodeURIComponent(message);
 
-    // Send order directly to @pachisshop
-    const telegramUrl = `https://t.me/pachisshop?text=${encodedMessage}`;
+    // Try to open direct message to @pachisshop using tg:// protocol
+    // This works better for direct messages than https://t.me
+    const telegramUrl = `tg://resolve?domain=pachisshop&text=${encodedMessage}`;
 
-    // Open Telegram
-    window.open(telegramUrl, '_blank');
+    // Fallback to web version if tg:// doesn't work
+    const webTelegramUrl = `https://t.me/pachisshop`;
 
-    showToast('Opening Telegram...');
+    // Try to open with tg:// first (works on mobile and desktop apps)
+    window.location.href = telegramUrl;
+
+    // Fallback: copy message to clipboard and open chat
+    navigator.clipboard.writeText(message).then(() => {
+      showToast('Order copied! Opening Telegram...');
+      setTimeout(() => {
+        window.open(webTelegramUrl, '_blank');
+      }, 500);
+    }).catch(() => {
+      // If clipboard fails, just open Telegram
+      window.open(webTelegramUrl, '_blank');
+      showToast('Opening Telegram...');
+    });
   }
 
   /**
