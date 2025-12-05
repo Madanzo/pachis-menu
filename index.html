@@ -350,6 +350,360 @@
     font-size: 1.2rem;
     color: var(--pachis-text-main);
   }
+
+  /* Cart Badge */
+  .cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #FF4444;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+    min-width: 18px;
+    text-align: center;
+  }
+
+  .nav-icon {
+    position: relative;
+  }
+
+  /* Cart Modal */
+  .cart-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .cart-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+  }
+
+  .cart-modal-content {
+    position: relative;
+    background: white;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+
+  .cart-modal-header {
+    padding: 20px;
+    border-bottom: 2px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cart-modal-header h2 {
+    font-size: 1.5rem;
+    color: var(--pachis-text-accent);
+    margin: 0;
+  }
+
+  .cart-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.3s;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cart-close-btn:hover {
+    color: #333;
+  }
+
+  .cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  .cart-item {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .cart-item-image {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .cart-item-details {
+    flex: 1;
+  }
+
+  .cart-item-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--pachis-text-accent);
+    margin-bottom: 5px;
+  }
+
+  .cart-item-type {
+    font-size: 0.8rem;
+    color: #666;
+  }
+
+  .cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .cart-qty-btn {
+    background: var(--pachis-text-accent);
+    color: white;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+
+  .cart-qty-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px var(--pachis-glow);
+  }
+
+  .cart-qty-btn:active {
+    transform: scale(0.95);
+  }
+
+  .cart-qty {
+    font-weight: 700;
+    font-size: 1rem;
+    min-width: 30px;
+    text-align: center;
+    color: #333;
+  }
+
+  .cart-remove-btn {
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+  }
+
+  .cart-remove-btn:hover {
+    background: #cc0000;
+    transform: translateY(-1px);
+  }
+
+  .cart-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+  }
+
+  .cart-empty-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+  }
+
+  .cart-modal-footer {
+    padding: 20px;
+    border-top: 2px solid #f0f0f0;
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-clear {
+    background: #f0f0f0;
+    color: #666;
+  }
+
+  .btn-clear:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+  }
+
+  .btn-telegram {
+    background: var(--pachis-text-accent);
+    color: white;
+    box-shadow: 0 4px 12px var(--pachis-glow);
+  }
+
+  .btn-telegram:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--pachis-glow);
+  }
+
+  /* Quantity controls on product cards */
+  .product-card-actions {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .qty-btn {
+    background: var(--pachis-text-accent);
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    font-weight: 700;
+  }
+
+  .qty-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 10px var(--pachis-glow);
+  }
+
+  .qty-btn:active {
+    transform: scale(0.95);
+  }
+
+  .qty-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .qty-btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .qty-display {
+    font-weight: 700;
+    font-size: 1.1rem;
+    min-width: 35px;
+    text-align: center;
+    color: var(--pachis-text-accent);
+  }
+
+  .add-to-cart-btn {
+    background: var(--pachis-text-accent);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .add-to-cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--pachis-glow);
+  }
+
+  .add-to-cart-btn:active {
+    transform: translateY(0);
+  }
+
+  /* Toast notification */
+  .toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 161, 196, 0.95);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-weight: 600;
+    z-index: 3000;
+    animation: slideUp 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  @keyframes slideUp {
+    from {
+      bottom: 80px;
+      opacity: 0;
+    }
+    to {
+      bottom: 100px;
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .cart-modal-content {
+      max-height: 90vh;
+    }
+
+    .cart-modal-header h2 {
+      font-size: 1.3rem;
+    }
+
+    .btn {
+      font-size: 0.85rem;
+      padding: 12px 16px;
+    }
+  }
 </style>
 
 <div class="menu">
@@ -380,6 +734,28 @@
 
   </div>
 
+  <!-- Cart Modal -->
+  <div id="cart-modal" class="cart-modal" style="display: none;">
+    <div class="cart-modal-overlay" onclick="closeCart()"></div>
+    <div class="cart-modal-content">
+      <div class="cart-modal-header">
+        <h2>🛒 Your Cart</h2>
+        <button class="cart-close-btn" onclick="closeCart()">✕</button>
+      </div>
+
+      <div id="cart-items" class="cart-items">
+        <!-- Cart items will be rendered here -->
+      </div>
+
+      <div class="cart-modal-footer">
+        <button class="btn btn-clear" onclick="clearCart()">Clear Cart</button>
+        <button class="btn btn-telegram" onclick="sendToTelegram()">
+          ✈️ Send to Telegram
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <div class="bottom-nav-container">
@@ -388,7 +764,10 @@
         <div class="nav-label">Home</div>
       </button>
       <button class="nav-button" onclick="openCart()">
-        <div class="nav-icon">🛒</div>
+        <div class="nav-icon">
+          🛒
+          <span id="cart-badge" class="cart-badge" style="display: none;">0</span>
+        </div>
         <div class="nav-label">Cart</div>
       </button>
       <button class="nav-button" onclick="openTelegram()">
@@ -545,6 +924,261 @@
   // Current active category
   let currentCategory = "Disposable";
 
+  // Cart management with localStorage
+  let cart = [];
+  const CART_STORAGE_KEY = 'pachisCart';
+
+  /**
+   * Load cart from localStorage
+   */
+  function loadCart() {
+    const savedCart = localStorage.getItem(CART_STORAGE_KEY);
+    if (savedCart) {
+      cart = JSON.parse(savedCart);
+      updateCartBadge();
+    }
+  }
+
+  /**
+   * Save cart to localStorage
+   */
+  function saveCart() {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    updateCartBadge();
+  }
+
+  /**
+   * Update cart badge count
+   */
+  function updateCartBadge() {
+    const badge = document.getElementById('cart-badge');
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    if (totalItems > 0) {
+      badge.textContent = totalItems;
+      badge.style.display = 'block';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  /**
+   * Add product to cart
+   * @param {string} productID - The ID of the product to add
+   * @param {number} quantity - Quantity to add
+   */
+  function addToCart(productID, quantity = 1) {
+    if (quantity <= 0) return;
+
+    const product = products.find(p => p.id === productID);
+    if (!product) return;
+
+    // Check if product already in cart
+    const existingItem = cart.find(item => item.id === productID);
+
+    if (existingItem) {
+      existingItem.quantity += quantity;
+    } else {
+      cart.push({
+        id: productID,
+        name: product.name,
+        type: product.type,
+        category: product.category,
+        image: product.image,
+        quantity: quantity
+      });
+    }
+
+    saveCart();
+    showToast(`Added ${product.name} to cart!`);
+
+    // Reset quantity selector
+    const qtyDisplay = document.querySelector(`[data-product-id="${productID}"]`);
+    if (qtyDisplay) {
+      qtyDisplay.textContent = '1';
+    }
+  }
+
+  /**
+   * Update cart item quantity
+   */
+  function updateCartItemQuantity(productID, change) {
+    const item = cart.find(i => i.id === productID);
+    if (!item) return;
+
+    item.quantity += change;
+
+    if (item.quantity <= 0) {
+      removeFromCart(productID);
+    } else {
+      saveCart();
+      renderCart();
+    }
+  }
+
+  /**
+   * Remove item from cart
+   */
+  function removeFromCart(productID) {
+    cart = cart.filter(item => item.id !== productID);
+    saveCart();
+    renderCart();
+    showToast('Item removed from cart');
+  }
+
+  /**
+   * Clear entire cart
+   */
+  function clearCart() {
+    if (cart.length === 0) return;
+
+    if (confirm('Are you sure you want to clear your cart?')) {
+      cart = [];
+      saveCart();
+      renderCart();
+      showToast('Cart cleared');
+    }
+  }
+
+  /**
+   * Open cart modal
+   */
+  function openCart() {
+    document.getElementById('cart-modal').style.display = 'flex';
+    renderCart();
+    document.body.style.overflow = 'hidden';
+  }
+
+  /**
+   * Close cart modal
+   */
+  function closeCart() {
+    document.getElementById('cart-modal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+
+  /**
+   * Render cart items in modal
+   */
+  function renderCart() {
+    const container = document.getElementById('cart-items');
+
+    if (cart.length === 0) {
+      container.innerHTML = `
+        <div class="cart-empty">
+          <div class="cart-empty-icon">🛒</div>
+          <p>Your cart is empty</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+        <div class="cart-item-details">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-type">${item.type}</div>
+        </div>
+        <div class="cart-item-controls">
+          <button class="cart-qty-btn" onclick="updateCartItemQuantity('${item.id}', -1)">−</button>
+          <span class="cart-qty">${item.quantity}</span>
+          <button class="cart-qty-btn" onclick="updateCartItemQuantity('${item.id}', 1)">+</button>
+          <button class="cart-remove-btn" onclick="removeFromCart('${item.id}')">Remove</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /**
+   * Format cart for Telegram message
+   */
+  function formatCartForTelegram() {
+    if (cart.length === 0) return '';
+
+    // Group items by category
+    const grouped = {};
+    cart.forEach(item => {
+      if (!grouped[item.category]) {
+        grouped[item.category] = [];
+      }
+      grouped[item.category].push(item);
+    });
+
+    let message = '🛒 *Pachis Order*\n\n';
+
+    // Add items by category
+    Object.keys(grouped).forEach(category => {
+      message += `📦 *${category}:*\n`;
+      grouped[category].forEach(item => {
+        message += `• ${item.name} x${item.quantity}\n`;
+      });
+      message += '\n';
+    });
+
+    // Add total
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    message += `*Total Items:* ${totalItems}\n\n`;
+    message += 'Thank you for ordering from Pachis! 🌿';
+
+    return message;
+  }
+
+  /**
+   * Send cart to Telegram
+   */
+  function sendToTelegram() {
+    if (cart.length === 0) {
+      showToast('Your cart is empty!');
+      return;
+    }
+
+    const message = formatCartForTelegram();
+    const encodedMessage = encodeURIComponent(message);
+
+    // TODO: Replace with your actual Telegram username or bot
+    const telegramUrl = `https://t.me/share/url?url=${encodedMessage}`;
+
+    // Open Telegram
+    window.open(telegramUrl, '_blank');
+
+    showToast('Opening Telegram...');
+  }
+
+  /**
+   * Show toast notification
+   */
+  function showToast(message) {
+    // Remove existing toasts
+    const existingToast = document.querySelector('.toast');
+    if (existingToast) {
+      existingToast.remove();
+    }
+
+    // Create new toast
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // Remove after 2 seconds
+    setTimeout(() => {
+      toast.remove();
+    }, 2000);
+  }
+
+  /**
+   * Update product quantity selector
+   */
+  function updateQuantity(productID, change) {
+    const qtyDisplay = document.querySelector(`[data-product-id="${productID}"]`);
+    if (!qtyDisplay) return;
+
+    let current = parseInt(qtyDisplay.textContent);
+    current = Math.max(1, current + change);
+    qtyDisplay.textContent = current;
+  }
+
   /**
    * Render products for a given category
    * @param {string} category - The category to filter and display
@@ -567,7 +1201,6 @@
     filteredProducts.forEach(product => {
       const card = document.createElement('div');
       card.className = 'product-card';
-      card.onclick = () => addToCart(product.id);
 
       let sizesHTML = '';
       if (product.sizes && product.sizes.length > 0) {
@@ -584,48 +1217,26 @@
         <div class="product-name">${product.name}</div>
         <div class="product-descriptor">${product.type}</div>
         ${sizesHTML}
+        <div class="product-card-actions" onclick="event.stopPropagation()">
+          <button class="qty-btn" onclick="updateQuantity('${product.id}', -1)">−</button>
+          <span class="qty-display" data-product-id="${product.id}">1</span>
+          <button class="qty-btn" onclick="updateQuantity('${product.id}', 1)">+</button>
+          <button class="add-to-cart-btn" onclick="addToCart('${product.id}', parseInt(document.querySelector('[data-product-id=&quot;${product.id}&quot;]').textContent))">
+            Add to Cart
+          </button>
+        </div>
       `;
 
       grid.appendChild(card);
     });
   }
 
-  /**
-   * Add product to cart
-   * @param {string} productID - The ID of the product to add
-   */
-  function addToCart(productID) {
-    const product = products.find(p => p.id === productID);
-    console.log('Adding to cart:', product);
-    // TODO: Implement cart logic
-    // For now, just show an alert
-    alert(`Added to cart: ${product.name}`);
-  }
-
   // Navigation action stubs
   function goHome() {
-    console.log('Navigate to Home');
-    // TODO: Implement home navigation
-    alert('Home');
-  }
-
-  function openCategories() {
-    console.log('Open Categories');
-    // TODO: Implement categories modal/page
-    alert('Categories');
-  }
-
-  function openCart() {
-    console.log('Open Cart');
-    // TODO: Implement cart view
-    alert('Cart');
-  }
-
-  function openTelegram() {
-    console.log('Open Telegram');
-    // TODO: Implement Telegram integration
-    // Example: window.open('https://t.me/yourusername', '_blank');
-    alert('Telegram: Coming soon');
+    // Scroll to top and reset to default category
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const firstTab = document.querySelector('.tab-button[data-category="Disposable"]');
+    if (firstTab) firstTab.click();
   }
 
   // Event listeners for category tabs
@@ -645,6 +1256,9 @@
         renderProducts(category);
       });
     });
+
+    // Load cart from localStorage
+    loadCart();
 
     // Initialize with default category (Disposable)
     renderProducts('Disposable');
