@@ -237,6 +237,40 @@
     font-weight: 600;
   }
 
+  /* Size selector buttons */
+  .size-selector {
+    display: flex;
+    gap: 8px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .size-option {
+    background: rgba(0, 161, 196, 0.1);
+    border: 2px solid var(--pachis-text-accent);
+    color: var(--pachis-text-accent);
+    padding: 8px 16px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+  }
+
+  .size-option:hover {
+    background: rgba(0, 161, 196, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .size-option.selected {
+    background: var(--pachis-text-accent);
+    color: white;
+    box-shadow: 0 3px 10px var(--pachis-glow);
+  }
+
   /* Coming Soon Overlay */
   .coming-soon-overlay {
     position: absolute;
@@ -1168,31 +1202,39 @@
    * Add product to cart
    * @param {string} productID - The ID of the product to add
    * @param {number} quantity - Quantity to add
+   * @param {string} size - Optional size selection (for Flower products)
    */
-  function addToCart(productID, quantity = 1) {
+  function addToCart(productID, quantity = 1, size = null) {
     if (quantity <= 0) return;
 
     const product = products.find(p => p.id === productID);
     if (!product) return;
 
-    // Check if product already in cart
-    const existingItem = cart.find(item => item.id === productID);
+    // Create unique identifier for cart items (includes size if specified)
+    const cartItemId = size ? `${productID}_${size}` : productID;
+
+    // Check if product with same size already in cart
+    const existingItem = cart.find(item => item.cartItemId === cartItemId);
 
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
       cart.push({
+        cartItemId: cartItemId,
         id: productID,
         name: product.name,
         type: product.type,
         category: product.category,
         image: product.image,
+        size: size,
         quantity: quantity
       });
     }
 
     saveCart();
-    showToast(`Added ${product.name} to cart!`);
+
+    const sizeText = size ? ` (${size})` : '';
+    showToast(`Added ${product.name}${sizeText} to cart!`);
 
     // Reset quantity selector
     const qtyDisplay = document.querySelector(`[data-product-id="${productID}"]`);
@@ -1407,13 +1449,32 @@
       const card = document.createElement('div');
       card.className = isComingSoon ? 'product-card coming-soon' : 'product-card';
 
+      // Check if this is a Flower product (needs size selector)
+      const isFlowerProduct = category === 'Flower' && product.sizes && product.sizes.length > 0;
+
       let sizesHTML = '';
       if (product.sizes && product.sizes.length > 0) {
-        sizesHTML = `
-          <div class="product-sizes">
-            ${product.sizes.map(size => `<span class="size-badge">${size}</span>`).join('')}
-          </div>
-        `;
+        if (isFlowerProduct) {
+          // For Flower products, create selectable size buttons
+          sizesHTML = `
+            <div class="size-selector" id="size-selector-${product.id}">
+              ${product.sizes.map((size, index) => `
+                <button class="size-option ${index === 0 ? 'selected' : ''}"
+                        data-size="${size}"
+                        onclick="selectSize('${product.id}', '${size}')">
+                  ${size}
+                </button>
+              `).join('')}
+            </div>
+          `;
+        } else {
+          // For other products (Apparel, 420 Kit), show as badges
+          sizesHTML = `
+            <div class="product-sizes">
+              ${product.sizes.map(size => `<span class="size-badge">${size}</span>`).join('')}
+            </div>
+          `;
+        }
       }
 
       let comingSoonHTML = '';
@@ -1435,7 +1496,7 @@
           <button class="qty-btn" onclick="updateQuantity('${product.id}', -1)">−</button>
           <span class="qty-display" data-product-id="${product.id}">1</span>
           <button class="qty-btn" onclick="updateQuantity('${product.id}', 1)">+</button>
-          <button class="add-to-cart-btn" onclick="addToCart('${product.id}', parseInt(document.querySelector('[data-product-id=&quot;${product.id}&quot;]').textContent))">
+          <button class="add-to-cart-btn" onclick="addToCartWithSize('${product.id}')">
             Add to Cart
           </button>
         </div>
@@ -1443,6 +1504,45 @@
 
       grid.appendChild(card);
     });
+  }
+
+  /**
+   * Select size for a product (for Flower category)
+   */
+  function selectSize(productID, size) {
+    const selector = document.getElementById(`size-selector-${productID}`);
+    if (!selector) return;
+
+    // Remove selected class from all buttons
+    selector.querySelectorAll('.size-option').forEach(btn => {
+      btn.classList.remove('selected');
+    });
+
+    // Add selected class to clicked button
+    const clickedBtn = selector.querySelector(`[data-size="${size}"]`);
+    if (clickedBtn) {
+      clickedBtn.classList.add('selected');
+    }
+  }
+
+  /**
+   * Get selected size for a product
+   */
+  function getSelectedSize(productID) {
+    const selector = document.getElementById(`size-selector-${productID}`);
+    if (!selector) return null;
+
+    const selectedBtn = selector.querySelector('.size-option.selected');
+    return selectedBtn ? selectedBtn.getAttribute('data-size') : null;
+  }
+
+  /**
+   * Add to cart with size selection
+   */
+  function addToCartWithSize(productID) {
+    const quantity = parseInt(document.querySelector(`[data-product-id="${productID}"]`).textContent);
+    const size = getSelectedSize(productID);
+    addToCart(productID, quantity, size);
   }
 
   // Navigation action stubs
