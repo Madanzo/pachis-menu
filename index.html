@@ -7,6 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Telegram Web App SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
 
@@ -1378,29 +1381,48 @@
     }
 
     const message = formatCartForTelegram();
-    const encodedMessage = encodeURIComponent(message);
 
-    // Try to open direct message to @pachisshop using tg:// protocol
-    // This works better for direct messages than https://t.me
-    const telegramUrl = `tg://resolve?domain=pachisshop&text=${encodedMessage}`;
+    // Check if running inside Telegram Web App
+    if (window.Telegram && window.Telegram.WebApp) {
+      const tg = window.Telegram.WebApp;
 
-    // Fallback to web version if tg:// doesn't work
-    const webTelegramUrl = `https://t.me/pachisshop`;
+      // Prepare order data as JSON
+      const orderData = {
+        items: cart,
+        message: message,
+        timestamp: new Date().toISOString()
+      };
 
-    // Try to open with tg:// first (works on mobile and desktop apps)
-    window.location.href = telegramUrl;
+      // Send data to bot using Telegram Web App API
+      tg.sendData(JSON.stringify(orderData));
 
-    // Fallback: copy message to clipboard and open chat
-    navigator.clipboard.writeText(message).then(() => {
-      showToast('Order copied! Opening Telegram...');
+      // Show success and close the app
+      showToast('Order sent to Pachis! ✅');
+
+      // Clear cart after successful order
       setTimeout(() => {
+        cart = [];
+        saveCart();
+        renderCart();
+        tg.close();
+      }, 1500);
+
+    } else {
+      // Fallback: Not running in Telegram, use clipboard + open chat method
+      const webTelegramUrl = `https://t.me/pachisshop`;
+
+      // Copy message to clipboard and open chat
+      navigator.clipboard.writeText(message).then(() => {
+        showToast('Order copied! Opening Telegram...');
+        setTimeout(() => {
+          window.open(webTelegramUrl, '_blank');
+        }, 500);
+      }).catch(() => {
+        // If clipboard fails, just open Telegram
         window.open(webTelegramUrl, '_blank');
-      }, 500);
-    }).catch(() => {
-      // If clipboard fails, just open Telegram
-      window.open(webTelegramUrl, '_blank');
-      showToast('Opening Telegram...');
-    });
+        showToast('Opening Telegram...');
+      });
+    }
   }
 
   /**
@@ -1569,6 +1591,22 @@
 
   // Event listeners for category tabs
   document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Telegram Web App if running inside Telegram
+    if (window.Telegram && window.Telegram.WebApp) {
+      const tg = window.Telegram.WebApp;
+
+      // Expand the app to full height
+      tg.expand();
+
+      // Enable closing confirmation
+      tg.enableClosingConfirmation();
+
+      // Set theme
+      document.body.style.backgroundColor = tg.themeParams.bg_color || '#00C5D8';
+
+      console.log('Telegram Web App initialized');
+    }
+
     const tabButtons = document.querySelectorAll('.tab-button');
 
     tabButtons.forEach(button => {
