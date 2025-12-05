@@ -1380,8 +1380,8 @@
     const message = formatCartForTelegram();
     const encodedMessage = encodeURIComponent(message);
 
-    // TODO: Replace with your actual Telegram username or bot
-    const telegramUrl = `https://t.me/share/url?url=${encodedMessage}`;
+    // Send order directly to @pachisshop
+    const telegramUrl = `https://t.me/pachisshop?text=${encodedMessage}`;
 
     // Open Telegram
     window.open(telegramUrl, '_blank');
