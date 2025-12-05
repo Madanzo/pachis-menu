@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -387,13 +387,9 @@
         <div class="nav-icon">🏠</div>
         <div class="nav-label">Home</div>
       </button>
-      <button class="nav-button" onclick="openCategories()">
-        <div class="nav-icon">📋</div>
-        <div class="nav-label">Categorías</div>
-      </button>
       <button class="nav-button" onclick="openCart()">
         <div class="nav-icon">🛒</div>
-        <div class="nav-label">Carrito</div>
+        <div class="nav-label">Cart</div>
       </button>
       <button class="nav-button" onclick="openWhatsApp()">
         <div class="nav-icon">💬</div>
@@ -603,33 +599,33 @@
     console.log('Adding to cart:', product);
     // TODO: Implement cart logic
     // For now, just show an alert
-    alert(`Agregado al carrito: ${product.name}`);
+    alert(`Added to cart: ${product.name}`);
   }
 
   // Navigation action stubs
   function goHome() {
     console.log('Navigate to Home');
     // TODO: Implement home navigation
-    alert('Inicio');
+    alert('Home');
   }
 
   function openCategories() {
     console.log('Open Categories');
     // TODO: Implement categories modal/page
-    alert('Categorías');
+    alert('Categories');
   }
 
   function openCart() {
     console.log('Open Cart');
     // TODO: Implement cart view
-    alert('Carrito');
+    alert('Cart');
   }
 
   function openWhatsApp() {
     console.log('Open WhatsApp');
     // TODO: Implement WhatsApp integration
-    // Example: window.open('https://wa.me/525512345678?text=Hola, me interesa...', '_blank');
-    alert('WhatsApp: Próximamente');
+    // Example: window.open('https://wa.me/525512345678?text=Hi, I am interested in...', '_blank');
+    alert('WhatsApp: Coming soon');
   }
 
   // Event listeners for category tabs
