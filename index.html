@@ -237,6 +237,41 @@
     font-weight: 600;
   }
 
+  /* Coming Soon Overlay */
+  .coming-soon-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(3px);
+    border-radius: 20px;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .coming-soon-banner {
+    position: absolute;
+    top: 30px;
+    right: -35px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #333;
+    padding: 8px 45px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transform: rotate(45deg);
+    box-shadow: 0 4px 15px rgba(255, 165, 0, 0.4);
+    z-index: 11;
+  }
+
+  .product-card.coming-soon {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
   /* Bottom Navigation */
   .bottom-nav {
     position: fixed;
@@ -725,7 +760,9 @@
       <button class="tab-button" data-category="Live Rosin Dabs">Dabs</button>
       <button class="tab-button" data-category="Pre-Rolls">Pre-Rolls</button>
       <button class="tab-button" data-category="Flower">Flower</button>
-      <button class="tab-button" data-category="Pachis Merch">Merch</button>
+      <button class="tab-button" data-category="Apparel">Apparel</button>
+      <button class="tab-button" data-category="Pleasure Gear">Pleasure Gear</button>
+      <button class="tab-button" data-category="420 Kit">420 Kit</button>
     </div>
 
     <!-- Product Grid -->
@@ -913,76 +950,162 @@
       image: "https://via.placeholder.com/150/228B22/FFFFFF?text=EXOTIC"
     },
 
-    // PACHIS MERCH
+    // APPAREL
     {
-      id: "merch_hat_classic",
+      id: "apparel_hat_classic",
       name: "PACHIS CLASSIC HAT",
-      category: "Pachis Merch",
+      category: "Apparel",
       brand: "Pachis",
       type: "Snapback Hat",
       image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=HAT"
     },
     {
-      id: "merch_hat_trucker",
+      id: "apparel_hat_trucker",
       name: "PACHIS TRUCKER HAT",
-      category: "Pachis Merch",
+      category: "Apparel",
       brand: "Pachis",
       type: "Trucker Hat",
       image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=TRUCKER"
     },
     {
-      id: "merch_tshirt_logo",
+      id: "apparel_tshirt_logo",
       name: "PACHIS LOGO T-SHIRT",
-      category: "Pachis Merch",
+      category: "Apparel",
       brand: "Pachis",
       type: "Cotton T-Shirt",
       sizes: ["S", "M", "L", "XL", "XXL"],
       image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=TSHIRT"
     },
     {
-      id: "merch_tshirt_vintage",
+      id: "apparel_tshirt_vintage",
       name: "PACHIS VINTAGE TEE",
-      category: "Pachis Merch",
+      category: "Apparel",
       brand: "Pachis",
       type: "Vintage Wash T-Shirt",
       sizes: ["S", "M", "L", "XL", "XXL"],
       image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=VINTAGE"
     },
     {
-      id: "merch_hoodie_classic",
+      id: "apparel_hoodie_classic",
       name: "PACHIS CLASSIC HOODIE",
-      category: "Pachis Merch",
+      category: "Apparel",
       brand: "Pachis",
       type: "Pullover Hoodie",
       sizes: ["S", "M", "L", "XL", "XXL"],
       image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=HOODIE"
     },
     {
-      id: "merch_hoodie_zip",
+      id: "apparel_hoodie_zip",
       name: "PACHIS ZIP HOODIE",
-      category: "Pachis Merch",
+      category: "Apparel",
       brand: "Pachis",
       type: "Zip-Up Hoodie",
       sizes: ["S", "M", "L", "XL", "XXL"],
       image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=ZIP"
     },
     {
-      id: "merch_sneakers_high",
+      id: "apparel_sneakers_high",
       name: "PACHIS HIGH TOPS",
-      category: "Pachis Merch",
+      category: "Apparel",
       brand: "Pachis",
       type: "Canvas High Top Sneakers",
       sizes: ["7", "8", "9", "10", "11", "12"],
       image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=HIGHTOP"
     },
     {
-      id: "merch_sneakers_low",
+      id: "apparel_sneakers_low",
       name: "PACHIS LOW TOPS",
-      category: "Pachis Merch",
+      category: "Apparel",
       brand: "Pachis",
       type: "Canvas Low Top Sneakers",
       sizes: ["7", "8", "9", "10", "11", "12"],
       image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=LOWTOP"
+    },
+
+    // PLEASURE GEAR
+    {
+      id: "pleasure_massager",
+      name: "INTIMATE MASSAGER",
+      category: "Pleasure Gear",
+      brand: "Pachis",
+      type: "Premium Massager",
+      image: "https://via.placeholder.com/150/FF69B4/FFFFFF?text=MASSAGER"
+    },
+    {
+      id: "pleasure_kit_couples",
+      name: "COUPLES KIT",
+      category: "Pleasure Gear",
+      brand: "Pachis",
+      type: "Couples Experience Kit",
+      image: "https://via.placeholder.com/150/FF69B4/FFFFFF?text=COUPLES"
+    },
+    {
+      id: "pleasure_lubricant",
+      name: "PREMIUM LUBRICANT",
+      category: "Pleasure Gear",
+      brand: "Pachis",
+      type: "Water-Based Lubricant",
+      image: "https://via.placeholder.com/150/FF69B4/FFFFFF?text=LUBE"
+    },
+    {
+      id: "pleasure_accessories",
+      name: "INTIMACY ACCESSORIES",
+      category: "Pleasure Gear",
+      brand: "Pachis",
+      type: "Accessory Set",
+      image: "https://via.placeholder.com/150/FF69B4/FFFFFF?text=ACCESSORIES"
+    },
+
+    // 420 KIT
+    {
+      id: "kit_grinder_premium",
+      name: "PREMIUM GRINDER",
+      category: "420 Kit",
+      brand: "Pachis",
+      type: "4-Piece Metal Grinder",
+      image: "https://via.placeholder.com/150/FFD700/000000?text=GRINDER"
+    },
+    {
+      id: "kit_rolling_tray",
+      name: "ROLLING TRAY",
+      category: "420 Kit",
+      brand: "Pachis",
+      type: "Metal Rolling Tray",
+      sizes: ["Small", "Medium", "Large"],
+      image: "https://via.placeholder.com/150/FFD700/000000?text=TRAY"
+    },
+    {
+      id: "kit_storage_jar",
+      name: "AIRTIGHT STORAGE JAR",
+      category: "420 Kit",
+      brand: "Pachis",
+      type: "UV Glass Storage Jar",
+      sizes: ["4oz", "8oz", "16oz"],
+      image: "https://via.placeholder.com/150/FFD700/000000?text=JAR"
+    },
+    {
+      id: "kit_papers",
+      name: "PREMIUM PAPERS",
+      category: "420 Kit",
+      brand: "Pachis",
+      type: "Rolling Papers Pack",
+      image: "https://via.placeholder.com/150/FFD700/000000?text=PAPERS"
+    },
+    {
+      id: "kit_lighter",
+      name: "PACHIS LIGHTER",
+      category: "420 Kit",
+      brand: "Pachis",
+      type: "Branded Lighter",
+      image: "https://via.placeholder.com/150/FFD700/000000?text=LIGHTER"
+    },
+    {
+      id: "kit_cleaning",
+      name: "CLEANING KIT",
+      category: "420 Kit",
+      brand: "Pachis",
+      type: "Complete Cleaning Kit",
+      image: "https://via.placeholder.com/150/FFD700/000000?text=CLEANING"
     }
   ];
 
@@ -992,8 +1115,13 @@
     "Live Rosin Dabs": "LIVE ROSIN DABS",
     "Pre-Rolls": "PRE-ROLLS",
     "Flower": "FLOWER",
-    "Pachis Merch": "PACHIS MERCH"
+    "Apparel": "PACHIS APPAREL",
+    "Pleasure Gear": "PLEASURE GEAR",
+    "420 Kit": "420 KIT"
   };
+
+  // Categories marked as coming soon
+  const comingSoonCategories = ["Apparel", "Pleasure Gear", "420 Kit"];
 
   // Current active category
   let currentCategory = "Disposable";
@@ -1271,10 +1399,13 @@
     // Clear grid
     grid.innerHTML = '';
 
+    // Check if category is coming soon
+    const isComingSoon = comingSoonCategories.includes(category);
+
     // Render each product
     filteredProducts.forEach(product => {
       const card = document.createElement('div');
-      card.className = 'product-card';
+      card.className = isComingSoon ? 'product-card coming-soon' : 'product-card';
 
       let sizesHTML = '';
       if (product.sizes && product.sizes.length > 0) {
@@ -1285,7 +1416,16 @@
         `;
       }
 
+      let comingSoonHTML = '';
+      if (isComingSoon) {
+        comingSoonHTML = `
+          <div class="coming-soon-overlay"></div>
+          <div class="coming-soon-banner">Coming Soon</div>
+        `;
+      }
+
       card.innerHTML = `
+        ${comingSoonHTML}
         <div class="product-brand">${product.brand}</div>
         <img src="${product.image}" alt="${product.name}" class="product-image">
         <div class="product-name">${product.name}</div>
