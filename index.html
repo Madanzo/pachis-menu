@@ -994,14 +994,18 @@
       </div>
 
       <div class="form-group">
-        <label for="dob">Date of Birth *</label>
-        <input type="date" id="dob" name="dob" required>
-        <span id="dob-error" class="error-message" style="display: none;"></span>
-      </div>
-
-      <div class="form-group">
-        <label for="idNumber">License or Passport ID Number *</label>
-        <input type="text" id="idNumber" name="idNumber" required placeholder="Enter your ID number">
+        <label style="font-size: 1rem; margin-bottom: 10px;">Are you 21 years or older? *</label>
+        <div style="display: flex; gap: 15px; align-items: center;">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; text-transform: none; font-weight: 500;">
+            <input type="radio" id="age-yes" name="ageConfirm" value="yes" required style="width: auto; cursor: pointer;">
+            <span>Yes, I am 21 or older</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; text-transform: none; font-weight: 500;">
+            <input type="radio" id="age-no" name="ageConfirm" value="no" style="width: auto; cursor: pointer;">
+            <span>No</span>
+          </label>
+        </div>
+        <span id="age-error" class="error-message" style="display: none;"></span>
       </div>
 
       <button type="submit" class="verification-submit">Verify & Enter</button>
@@ -1608,12 +1612,10 @@
     if (verificationDataStr) {
       try {
         const customerData = JSON.parse(verificationDataStr);
-        const age = calculateAge(customerData.dob);
 
         message += '━━━━━━━━━━━━━━━━━━━━━\n';
         message += '👤 *Customer Information*\n\n';
         message += `*Name:* ${customerData.firstName} ${customerData.lastName}\n`;
-        message += `*Age:* ${age} years old\n`;
         message += `*Email:* ${customerData.email}\n\n`;
         message += `*Address:*\n`;
         message += `${customerData.streetAddress}\n`;
@@ -1875,34 +1877,35 @@
     const state = document.getElementById('state').value.trim();
     const zipCode = document.getElementById('zipCode').value.trim();
     const country = document.getElementById('country').value.trim();
-    const dob = document.getElementById('dob').value;
-    const idNumber = document.getElementById('idNumber').value.trim();
+    const ageConfirm = document.querySelector('input[name="ageConfirm"]:checked');
 
     // Validate all fields are filled
-    if (!firstName || !lastName || !email || !streetAddress || !city || !state || !zipCode || !country || !dob || !idNumber) {
+    if (!firstName || !lastName || !email || !streetAddress || !city || !state || !zipCode || !country) {
       showToast('Please fill in all required fields');
       return;
     }
 
-    // Calculate age
-    const age = calculateAge(dob);
-    const dobError = document.getElementById('dob-error');
-    const dobInput = document.getElementById('dob');
+    // Check age confirmation
+    const ageError = document.getElementById('age-error');
 
-    // Check if user is 21 or older
-    if (age < 21) {
-      dobInput.classList.add('error');
-      dobError.textContent = 'You must be 21 years or older to access this site.';
-      dobError.style.display = 'block';
+    if (!ageConfirm) {
+      ageError.textContent = 'Please confirm your age.';
+      ageError.style.display = 'block';
+      showToast('Please confirm your age');
+      return;
+    }
+
+    if (ageConfirm.value === 'no') {
+      ageError.textContent = 'You must be 21 years or older to access this site.';
+      ageError.style.display = 'block';
       showToast('Sorry, you must be 21 or older');
       return;
     }
 
     // Clear any previous errors
-    dobInput.classList.remove('error');
-    dobError.style.display = 'none';
+    ageError.style.display = 'none';
 
-    // Save verification data (encrypted or hashed in production)
+    // Save verification data
     const verificationData = {
       firstName,
       lastName,
@@ -1912,8 +1915,7 @@
       state,
       zipCode,
       country,
-      dob,
-      idNumber,
+      ageConfirmed: true,
       verifiedAt: new Date().toISOString()
     };
 
