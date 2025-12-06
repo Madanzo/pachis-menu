@@ -56,6 +56,13 @@
     padding: 30px 0 20px;
   }
 
+  .menu-logo img {
+    max-width: 250px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 4px 15px var(--pachis-glow));
+  }
+
   .menu-logo h1 {
     font-size: 3.5rem;
     font-weight: 800;
@@ -367,6 +374,10 @@
       gap: 20px;
     }
 
+    .menu-logo img {
+      max-width: 200px;
+    }
+
     .menu-logo h1 {
       font-size: 2.8rem;
     }
@@ -380,6 +391,10 @@
     .product-grid {
       grid-template-columns: 1fr;
       gap: 20px;
+    }
+
+    .menu-logo img {
+      max-width: 180px;
     }
 
     .menu-logo h1 {
@@ -1022,7 +1037,7 @@
 
     <!-- Logo Area -->
     <div class="menu-logo">
-      <h1>PACHIS</h1>
+      <img src="https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/Pachis%20Logo.svg" alt="Pachis Logo">
     </div>
 
     <!-- Menu Header (dynamic) -->
@@ -1104,7 +1119,7 @@
       brand: "Pachis",
       type: "Liquid Diamonds 2G Disposable",
       flavor: "Runtz Candy",
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=RUNTZ"
+      image: "images/runtz-candy.jpg"
     },
     {
       id: "cart_bubblegum_tape",
@@ -1113,7 +1128,7 @@
       brand: "Pachis",
       type: "Liquid Diamonds 2G Disposable",
       flavor: "Bubblegum",
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=BUBBLEGUM"
+      image: "images/bubblegum-tape.jpg"
     },
     {
       id: "cart_fruitier_cereal",
@@ -1122,7 +1137,7 @@
       brand: "Pachis",
       type: "Liquid Diamonds 2G Disposable",
       flavor: "Fruitier Cereal",
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=FRUITIER"
+      image: "images/fruitier-cereal.jpg"
     },
     {
       id: "cart_grape_euphoria",
@@ -1131,7 +1146,7 @@
       brand: "Pachis",
       type: "Liquid Diamonds 2G Disposable",
       flavor: "Grape Euphoria",
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=GRAPE"
+      image: "images/grape-euphoria.jpg"
     },
     {
       id: "cart_guava_galaxy",
@@ -1140,7 +1155,7 @@
       brand: "Pachis",
       type: "Liquid Diamonds 2G Disposable",
       flavor: "Guava Galaxy",
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=GUAVA"
+      image: "images/guava-galaxy.jpg"
     },
     {
       id: "cart_nerdz",
@@ -1149,7 +1164,7 @@
       brand: "Pachis",
       type: "Liquid Diamonds 2G Disposable",
       flavor: "Nerdz",
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=NERDZ"
+      image: "images/nerdz.jpg"
     },
     {
       id: "cart_strawberry_jelly",
@@ -1158,7 +1173,7 @@
       brand: "Pachis",
       type: "Liquid Diamonds 2G Disposable",
       flavor: "Strawberry Jelly",
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=STRAWBERRY"
+      image: "images/strawberry-jelly.jpg"
     },
     {
       id: "cart_peach_rings",
@@ -1167,7 +1182,7 @@
       brand: "Pachis",
       type: "Liquid Diamonds 2G Disposable",
       flavor: "Peach Rings",
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=PEACH"
+      image: "images/peach-rings.jpg"
     },
 
     // LIVE ROSIN DABS
@@ -1177,7 +1192,7 @@
       category: "Live Rosin Dabs",
       brand: "Pachis",
       type: "2G Live Rosin",
-      image: "https://via.placeholder.com/150/FFD700/FFFFFF?text=2G+ROSIN"
+      image: "images/dab-2g.jpg"
     },
     {
       id: "dab_1oz_live_rosin",
@@ -1185,7 +1200,7 @@
       category: "Live Rosin Dabs",
       brand: "Pachis",
       type: "1 OZ Live Rosin",
-      image: "https://via.placeholder.com/150/FFD700/FFFFFF?text=1OZ+ROSIN"
+      image: "images/dab-1oz.jpg"
     },
 
     // PRE-ROLLS
@@ -1195,7 +1210,7 @@
       category: "Pre-Rolls",
       brand: "Pachis",
       type: "Premium Pre-Rolled Joints",
-      image: "https://via.placeholder.com/150/90EE90/FFFFFF?text=PRE-ROLLS"
+      image: "images/prerolls.jpg"
     },
     {
       id: "preroll_infused",
@@ -1203,7 +1218,7 @@
       category: "Pre-Rolls",
       brand: "Pachis",
       type: "Diamond Infused Pre-Rolls",
-      image: "https://via.placeholder.com/150/90EE90/FFFFFF?text=INFUSED"
+      image: "images/infused-prerolls.jpg"
     },
 
     // FLOWER
@@ -1214,7 +1229,7 @@
       brand: "Pachis",
       type: "Indoor Flower",
       sizes: ["1/8 OZ", "1/4 OZ", "1/2 OZ", "1 OZ"],
-      image: "https://via.placeholder.com/150/228B22/FFFFFF?text=FLOWER"
+      image: "images/premium-flower.jpg"
     },
     {
       id: "flower_exotic",
@@ -1223,7 +1238,7 @@
       brand: "Pachis",
       type: "Indoor Flower",
       sizes: ["1/8 OZ", "1/4 OZ", "1/2 OZ", "1 OZ"],
-      image: "https://via.placeholder.com/150/228B22/FFFFFF?text=EXOTIC"
+      image: "images/exotic-strains.jpg"
     },
 
     // APPAREL
@@ -1233,7 +1248,7 @@
       category: "Apparel",
       brand: "Pachis",
       type: "Snapback Hat",
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=HAT"
+      image: "images/hat-classic.jpg"
     },
     {
       id: "apparel_hat_trucker",
@@ -1241,7 +1256,7 @@
       category: "Apparel",
       brand: "Pachis",
       type: "Trucker Hat",
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=TRUCKER"
+      image: "images/hat-trucker.jpg"
     },
     {
       id: "apparel_tshirt_logo",
@@ -1250,7 +1265,7 @@
       brand: "Pachis",
       type: "Cotton T-Shirt",
       sizes: ["S", "M", "L", "XL", "XXL"],
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=TSHIRT"
+      image: "images/tshirt-logo.jpg"
     },
     {
       id: "apparel_tshirt_vintage",
@@ -1259,7 +1274,7 @@
       brand: "Pachis",
       type: "Vintage Wash T-Shirt",
       sizes: ["S", "M", "L", "XL", "XXL"],
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=VINTAGE"
+      image: "images/tshirt-vintage.jpg"
     },
     {
       id: "apparel_hoodie_classic",
@@ -1268,7 +1283,7 @@
       brand: "Pachis",
       type: "Pullover Hoodie",
       sizes: ["S", "M", "L", "XL", "XXL"],
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=HOODIE"
+      image: "images/hoodie-classic.jpg"
     },
     {
       id: "apparel_hoodie_zip",
@@ -1277,7 +1292,7 @@
       brand: "Pachis",
       type: "Zip-Up Hoodie",
       sizes: ["S", "M", "L", "XL", "XXL"],
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=ZIP"
+      image: "images/hoodie-zip.jpg"
     },
     {
       id: "apparel_sneakers_high",
@@ -1286,7 +1301,7 @@
       brand: "Pachis",
       type: "Canvas High Top Sneakers",
       sizes: ["7", "8", "9", "10", "11", "12"],
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=HIGHTOP"
+      image: "images/sneakers-high.jpg"
     },
     {
       id: "apparel_sneakers_low",
@@ -1295,7 +1310,7 @@
       brand: "Pachis",
       type: "Canvas Low Top Sneakers",
       sizes: ["7", "8", "9", "10", "11", "12"],
-      image: "https://via.placeholder.com/150/00C5D8/FFFFFF?text=LOWTOP"
+      image: "images/sneakers-low.jpg"
     },
 
     // PLEASURE GEAR
@@ -1305,7 +1320,7 @@
       category: "Pleasure Gear",
       brand: "Pachis",
       type: "Premium Massager",
-      image: "https://via.placeholder.com/150/FF69B4/FFFFFF?text=MASSAGER"
+      image: "images/massager.jpg"
     },
     {
       id: "pleasure_kit_couples",
@@ -1313,7 +1328,7 @@
       category: "Pleasure Gear",
       brand: "Pachis",
       type: "Couples Experience Kit",
-      image: "https://via.placeholder.com/150/FF69B4/FFFFFF?text=COUPLES"
+      image: "images/couples-kit.jpg"
     },
     {
       id: "pleasure_lubricant",
@@ -1321,7 +1336,7 @@
       category: "Pleasure Gear",
       brand: "Pachis",
       type: "Water-Based Lubricant",
-      image: "https://via.placeholder.com/150/FF69B4/FFFFFF?text=LUBE"
+      image: "images/lubricant.jpg"
     },
     {
       id: "pleasure_accessories",
@@ -1329,7 +1344,7 @@
       category: "Pleasure Gear",
       brand: "Pachis",
       type: "Accessory Set",
-      image: "https://via.placeholder.com/150/FF69B4/FFFFFF?text=ACCESSORIES"
+      image: "images/accessories.jpg"
     },
 
     // 420 KIT
@@ -1339,7 +1354,7 @@
       category: "420 Kit",
       brand: "Pachis",
       type: "4-Piece Metal Grinder",
-      image: "https://via.placeholder.com/150/FFD700/000000?text=GRINDER"
+      image: "images/grinder.jpg"
     },
     {
       id: "kit_rolling_tray",
@@ -1348,7 +1363,7 @@
       brand: "Pachis",
       type: "Metal Rolling Tray",
       sizes: ["Small", "Medium", "Large"],
-      image: "https://via.placeholder.com/150/FFD700/000000?text=TRAY"
+      image: "images/rolling-tray.jpg"
     },
     {
       id: "kit_storage_jar",
@@ -1357,7 +1372,7 @@
       brand: "Pachis",
       type: "UV Glass Storage Jar",
       sizes: ["4oz", "8oz", "16oz"],
-      image: "https://via.placeholder.com/150/FFD700/000000?text=JAR"
+      image: "images/storage-jar.jpg"
     },
     {
       id: "kit_papers",
@@ -1365,7 +1380,7 @@
       category: "420 Kit",
       brand: "Pachis",
       type: "Rolling Papers Pack",
-      image: "https://via.placeholder.com/150/FFD700/000000?text=PAPERS"
+      image: "images/papers.jpg"
     },
     {
       id: "kit_lighter",
@@ -1373,7 +1388,7 @@
       category: "420 Kit",
       brand: "Pachis",
       type: "Branded Lighter",
-      image: "https://via.placeholder.com/150/FFD700/000000?text=LIGHTER"
+      image: "images/lighter.jpg"
     },
     {
       id: "kit_cleaning",
@@ -1381,7 +1396,7 @@
       category: "420 Kit",
       brand: "Pachis",
       type: "Complete Cleaning Kit",
-      image: "https://via.placeholder.com/150/FFD700/000000?text=CLEANING"
+      image: "images/cleaning-kit.jpg"
     }
   ];
 
