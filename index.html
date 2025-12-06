@@ -774,7 +774,216 @@
       padding: 12px 16px;
     }
   }
+
+  /* Age Verification Modal */
+  .age-verification-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .age-verification-modal {
+    background: white;
+    border-radius: 25px;
+    max-width: 500px;
+    width: 100%;
+    padding: 40px 30px;
+    box-shadow: 0 10px 50px rgba(0, 197, 216, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .age-verification-modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: linear-gradient(90deg, var(--pachis-bg-top) 0%, var(--pachis-bg-bottom) 100%);
+  }
+
+  .age-verification-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .age-verification-header h2 {
+    font-size: 2rem;
+    color: var(--pachis-text-accent);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .age-verification-header p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .age-verification-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 15px;
+  }
+
+  .form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .form-group input {
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    outline: none;
+  }
+
+  .form-group input:focus {
+    border-color: var(--pachis-text-accent);
+    box-shadow: 0 0 0 3px rgba(0, 161, 196, 0.1);
+  }
+
+  .form-group input.error {
+    border-color: #ff4444;
+  }
+
+  .error-message {
+    color: #ff4444;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 5px;
+  }
+
+  .verification-submit {
+    background: linear-gradient(135deg, var(--pachis-bg-top) 0%, var(--pachis-bg-bottom) 100%);
+    color: white;
+    border: none;
+    padding: 16px 30px;
+    border-radius: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px var(--pachis-glow);
+  }
+
+  .verification-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--pachis-glow);
+  }
+
+  .verification-submit:active {
+    transform: translateY(0);
+  }
+
+  .age-disclaimer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.75rem;
+    color: #999;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 640px) {
+    .age-verification-modal {
+      padding: 30px 20px;
+    }
+
+    .age-verification-header h2 {
+      font-size: 1.5rem;
+    }
+
+    .form-row {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .verification-submit {
+      padding: 14px 25px;
+      font-size: 0.9rem;
+    }
+  }
 </style>
+
+<!-- Age Verification Modal -->
+<div id="age-verification" class="age-verification-overlay" style="display: none;">
+  <div class="age-verification-modal">
+    <div class="age-verification-header">
+      <h2>Age Verification</h2>
+      <p>You must be 21 years or older to access this site. Please verify your identity to continue.</p>
+    </div>
+
+    <form id="age-verification-form" class="age-verification-form" onsubmit="verifyAge(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name *</label>
+          <input type="text" id="firstName" name="firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name *</label>
+          <input type="text" id="lastName" name="lastName" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="dob">Date of Birth *</label>
+        <input type="date" id="dob" name="dob" required>
+        <span id="dob-error" class="error-message" style="display: none;"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="idNumber">License or Passport ID Number *</label>
+        <input type="text" id="idNumber" name="idNumber" required placeholder="Enter your ID number">
+      </div>
+
+      <button type="submit" class="verification-submit">Verify & Enter</button>
+
+      <div class="age-disclaimer">
+        By submitting this form, you certify that all information provided is accurate and that you are at least 21 years of age. We respect your privacy and will handle your information responsibly.
+      </div>
+    </form>
+  </div>
+</div>
 
 <div class="menu">
   <div class="menu-container">
@@ -1548,6 +1757,113 @@
     addToCart(productID, quantity, size);
   }
 
+  /**
+   * Age Verification Functions
+   */
+  const AGE_VERIFICATION_KEY = 'pachisAgeVerified';
+  const VERIFICATION_DATA_KEY = 'pachisVerificationData';
+
+  /**
+   * Check if user is already verified
+   */
+  function isAgeVerified() {
+    const verified = localStorage.getItem(AGE_VERIFICATION_KEY);
+    return verified === 'true';
+  }
+
+  /**
+   * Show age verification modal
+   */
+  function showAgeVerification() {
+    const modal = document.getElementById('age-verification');
+    if (modal) {
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  /**
+   * Hide age verification modal
+   */
+  function hideAgeVerification() {
+    const modal = document.getElementById('age-verification');
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  }
+
+  /**
+   * Calculate age from date of birth
+   */
+  function calculateAge(dob) {
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    return age;
+  }
+
+  /**
+   * Verify age from form submission
+   */
+  function verifyAge(event) {
+    event.preventDefault();
+
+    // Get form values
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const dob = document.getElementById('dob').value;
+    const idNumber = document.getElementById('idNumber').value.trim();
+
+    // Validate all fields are filled
+    if (!firstName || !lastName || !email || !dob || !idNumber) {
+      showToast('Please fill in all required fields');
+      return;
+    }
+
+    // Calculate age
+    const age = calculateAge(dob);
+    const dobError = document.getElementById('dob-error');
+    const dobInput = document.getElementById('dob');
+
+    // Check if user is 21 or older
+    if (age < 21) {
+      dobInput.classList.add('error');
+      dobError.textContent = 'You must be 21 years or older to access this site.';
+      dobError.style.display = 'block';
+      showToast('Sorry, you must be 21 or older');
+      return;
+    }
+
+    // Clear any previous errors
+    dobInput.classList.remove('error');
+    dobError.style.display = 'none';
+
+    // Save verification data (encrypted or hashed in production)
+    const verificationData = {
+      firstName,
+      lastName,
+      email,
+      dob,
+      idNumber,
+      verifiedAt: new Date().toISOString()
+    };
+
+    localStorage.setItem(AGE_VERIFICATION_KEY, 'true');
+    localStorage.setItem(VERIFICATION_DATA_KEY, JSON.stringify(verificationData));
+
+    // Hide modal and show success
+    hideAgeVerification();
+    showToast('✅ Verification successful! Welcome to Pachis');
+  }
+
   // Navigation action stubs
   function goHome() {
     // Scroll to top and reset to default category
@@ -1563,6 +1879,11 @@
 
   // Event listeners for category tabs
   document.addEventListener('DOMContentLoaded', () => {
+    // Check age verification on page load
+    if (!isAgeVerified()) {
+      showAgeVerification();
+    }
+
     const tabButtons = document.querySelectorAll('.tab-button');
 
     tabButtons.forEach(button => {
