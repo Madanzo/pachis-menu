@@ -6,22 +6,41 @@
   <title>Pachis Menu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Archivo+Black&display=swap" rel="stylesheet">
+  <!-- Satoshi and General Sans fonts -->
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700&f[]=general-sans@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <style>
-  /* CSS Variables for easy theming */
+  /* CSS Variables - Pachis Visual Identity */
   :root {
-    --pachis-bg-top: #00C5D8;
+    /* Primary Colors */
+    --turquoise-core: #00C7C7;
+    --off-white: #F0F5F3;
+    --ink-black: #0A0A0C;
+
+    /* Secondary Colors */
+    --bubblegum-pink: #FF6FAF;
+    --peach-glow: #FFB67A;
+    --jelly-red: #D62A32;
+
+    /* Accents */
+    --chrome-silver: #C8CED6;
+
+    /* Typography Fonts */
+    --font-headline: 'General Sans', 'Satoshi', 'Archivo Black', sans-serif;
+    --font-subhead: 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    /* Legacy mappings for compatibility */
+    --pachis-bg-top: var(--turquoise-core);
     --pachis-bg-bottom: #009FBF;
-    --pachis-card-bg: #FFFFFF;
-    --pachis-card-border: #00B4C7;
-    --pachis-text-main: #FFFFFF;
-    --pachis-text-accent: #00A1C4;
-    --pachis-price: #FFFFFF;
-    --pachis-glow: rgba(0, 197, 216, 0.4);
+    --pachis-card-bg: var(--off-white);
+    --pachis-card-border: var(--turquoise-core);
+    --pachis-text-main: var(--ink-black);
+    --pachis-text-accent: var(--turquoise-core);
+    --pachis-glow: rgba(0, 199, 199, 0.4);
   }
 
   * {
@@ -31,10 +50,10 @@
   }
 
   body {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-body);
     background: linear-gradient(180deg, var(--pachis-bg-top) 0%, var(--pachis-bg-bottom) 100%);
     min-height: 100vh;
-    color: var(--pachis-text-main);
+    color: white;
     overflow-x: hidden;
     padding-bottom: 80px; /* Space for sticky bottom nav */
   }
@@ -81,11 +100,12 @@
   }
 
   .menu-header h2 {
+    font-family: var(--font-headline);
     font-size: 1.8rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--pachis-text-main);
+    letter-spacing: 3px;
+    color: white;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     margin-bottom: 5px;
   }
@@ -114,16 +134,16 @@
   .menu-tabs button {
     background: rgba(255, 255, 255, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.4);
-    color: var(--pachis-text-main);
+    color: white;
     padding: 12px 24px;
     border-radius: 25px;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-subhead);
     font-size: 0.95rem;
     font-weight: 600;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.3s ease;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     backdrop-filter: blur(10px);
   }
 
@@ -209,17 +229,19 @@
   }
 
   .product-name {
+    font-family: var(--font-headline);
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--pachis-text-accent);
     text-transform: uppercase;
     text-align: center;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     margin: 10px 0;
     line-height: 1.3;
   }
 
   .product-descriptor {
+    font-family: var(--font-body);
     font-size: 0.85rem;
     color: #666;
     text-align: center;
@@ -676,13 +698,13 @@
     padding: 14px 20px;
     border: none;
     border-radius: 12px;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-subhead);
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
   }
 
   .btn-clear {
@@ -764,13 +786,13 @@
     border: none;
     padding: 10px 20px;
     border-radius: 20px;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-subhead);
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
   }
 
   .add-to-cart-btn:hover {
@@ -868,11 +890,12 @@
   }
 
   .age-verification-header h2 {
+    font-family: var(--font-headline);
     font-size: 2rem;
     color: var(--pachis-text-accent);
     margin-bottom: 10px;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
   }
 
   .age-verification-header p {
@@ -911,7 +934,7 @@
     padding: 12px 15px;
     border: 2px solid #e0e0e0;
     border-radius: 12px;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.95rem;
     transition: all 0.3s;
     outline: none;
@@ -939,11 +962,11 @@
     border: none;
     padding: 16px 30px;
     border-radius: 15px;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-subhead);
     font-size: 1rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     cursor: pointer;
     transition: all 0.3s;
     margin-top: 10px;
