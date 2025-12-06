@@ -1593,7 +1593,8 @@
     Object.keys(grouped).forEach(category => {
       message += `📦 *${category}:*\n`;
       grouped[category].forEach(item => {
-        message += `• ${item.name} x${item.quantity}\n`;
+        const sizeText = item.size ? ` (${item.size})` : '';
+        message += `• ${item.name}${sizeText} x${item.quantity}\n`;
       });
       message += '\n';
     });
@@ -1601,6 +1602,28 @@
     // Add total
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     message += `*Total Items:* ${totalItems}\n\n`;
+
+    // Add customer information
+    const verificationDataStr = localStorage.getItem(VERIFICATION_DATA_KEY);
+    if (verificationDataStr) {
+      try {
+        const customerData = JSON.parse(verificationDataStr);
+        const age = calculateAge(customerData.dob);
+
+        message += '━━━━━━━━━━━━━━━━━━━━━\n';
+        message += '👤 *Customer Information*\n\n';
+        message += `*Name:* ${customerData.firstName} ${customerData.lastName}\n`;
+        message += `*Age:* ${age} years old\n`;
+        message += `*Email:* ${customerData.email}\n\n`;
+        message += `*Address:*\n`;
+        message += `${customerData.streetAddress}\n`;
+        message += `${customerData.city}, ${customerData.state} ${customerData.zipCode}\n`;
+        message += `${customerData.country}\n\n`;
+      } catch (e) {
+        console.error('Error parsing customer data:', e);
+      }
+    }
+
     message += 'Thank you for ordering from Pachis! 🌿';
 
     return message;
