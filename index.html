@@ -124,8 +124,8 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 4px;
-    color: var(--turquoise-core);
-    text-shadow: var(--neon-glow);
+    color: white;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.2);
     margin-bottom: 5px;
   }
 
@@ -134,9 +134,9 @@
     display: block;
     width: 80px;
     height: 2px;
-    background: linear-gradient(90deg, transparent, var(--turquoise-core), transparent);
+    background: linear-gradient(90deg, transparent, white, transparent);
     margin: 15px auto;
-    box-shadow: var(--neon-glow);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   }
 
   /* Category Tabs */
@@ -225,6 +225,7 @@
     mask-composite: exclude;
     opacity: 0;
     transition: opacity 0.4s ease;
+    pointer-events: none;
   }
 
   .product-card:hover {
