@@ -147,16 +147,6 @@
     filter: drop-shadow(0 4px 15px var(--pachis-glow));
   }
 
-  .menu-logo h1 {
-    font-size: 3.5rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    text-shadow: 0 0 20px var(--pachis-glow),
-                 0 4px 8px rgba(0, 0, 0, 0.3);
-    color: var(--pachis-text-main);
-  }
-
   /* Menu Header */
   .menu-header {
     text-align: center;
@@ -385,7 +375,7 @@
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-subhead);
     text-transform: uppercase;
   }
 
@@ -499,10 +489,6 @@
       max-width: 200px;
     }
 
-    .menu-logo h1 {
-      font-size: 2.8rem;
-    }
-
     .menu-header h2 {
       font-size: 1.5rem;
     }
@@ -516,11 +502,6 @@
 
     .menu-logo img {
       max-width: 180px;
-    }
-
-    .menu-logo h1 {
-      font-size: 2.2rem;
-      letter-spacing: 2px;
     }
 
     .menu-header h2 {
@@ -547,14 +528,6 @@
     .nav-label {
       font-size: 0.7rem;
     }
-  }
-
-  /* Loading state */
-  .loading {
-    text-align: center;
-    padding: 60px 20px;
-    font-size: 1.2rem;
-    color: var(--pachis-text-main);
   }
 
   /* Cart Badge */
@@ -1057,6 +1030,20 @@
     line-height: 1.5;
   }
 
+  .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    text-transform: none;
+    font-weight: 500;
+  }
+
+  .radio-input {
+    width: auto;
+    cursor: pointer;
+  }
+
   @media (max-width: 640px) {
     .age-verification-modal {
       padding: 30px 20px;
@@ -1133,12 +1120,12 @@
       <div class="form-group">
         <label style="font-size: 1rem; margin-bottom: 10px;">Are you 21 years or older? *</label>
         <div style="display: flex; gap: 15px; align-items: center;">
-          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; text-transform: none; font-weight: 500;">
-            <input type="radio" id="age-yes" name="ageConfirm" value="yes" required style="width: auto; cursor: pointer;">
+          <label class="radio-label">
+            <input type="radio" id="age-yes" name="ageConfirm" value="yes" required class="radio-input">
             <span>Yes, I am 21 or older</span>
           </label>
-          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; text-transform: none; font-weight: 500;">
-            <input type="radio" id="age-no" name="ageConfirm" value="no" style="width: auto; cursor: pointer;">
+          <label class="radio-label">
+            <input type="radio" id="age-no" name="ageConfirm" value="no" class="radio-input">
             <span>No</span>
           </label>
         </div>
@@ -2040,22 +2027,6 @@
       modal.style.display = 'none';
       document.body.style.overflow = 'auto';
     }
-  }
-
-  /**
-   * Calculate age from date of birth
-   */
-  function calculateAge(dob) {
-    const birthDate = new Date(dob);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-
-    return age;
   }
 
   /**
