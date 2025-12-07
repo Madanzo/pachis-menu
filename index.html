@@ -260,6 +260,10 @@
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
   }
 
+  .product-image[autoplay] {
+    border-radius: 12px;
+  }
+
   .product-name {
     font-family: var(--font-headline);
     font-size: 1.1rem;
@@ -1331,7 +1335,7 @@
       brand: "Pachis",
       type: "2g Liquid Diamonds",
       flavor: "Peach Rings",
-      image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/peach_ringz.png",
+      image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/peach_ringz.mp4",
       terps: "7% (sativa - tart, sweet)",
       thcMg: "879.5/pkg",
       thcPercent: "88.0%",
@@ -1836,6 +1840,12 @@
         `;
       }
 
+      // Check if image is a video
+      const isVideo = product.image.endsWith('.mp4');
+      const mediaHTML = isVideo
+        ? `<video src="${product.image}" class="product-image" autoplay loop muted playsinline></video>`
+        : `<img src="${product.image}" alt="${product.name}" class="product-image">`;
+
       let detailsHTML = '';
       if (product.terps && product.thcPercent) {
         detailsHTML = `
@@ -1864,7 +1874,7 @@
       card.innerHTML = `
         ${comingSoonHTML}
         <div class="product-brand">${product.brand}</div>
-        <img src="${product.image}" alt="${product.name}" class="product-image">
+        ${mediaHTML}
         <div class="product-name">${product.name}</div>
         <div class="product-descriptor">${product.type}</div>
         ${detailsHTML}
