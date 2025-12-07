@@ -1558,13 +1558,10 @@
   // Current active category
   let currentCategory = "Disposable";
 
-  // Cart management with localStorage
+  // Cart management
   let cart = [];
   const CART_STORAGE_KEY = 'pachisCart';
 
-  /**
-   * Load cart from localStorage
-   */
   function loadCart() {
     const savedCart = localStorage.getItem(CART_STORAGE_KEY);
     if (savedCart) {
@@ -1573,17 +1570,11 @@
     }
   }
 
-  /**
-   * Save cart to localStorage
-   */
   function saveCart() {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
     updateCartBadge();
   }
 
-  /**
-   * Update cart badge count
-   */
   function updateCartBadge() {
     const badge = document.getElementById('cart-badge');
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -1596,22 +1587,13 @@
     }
   }
 
-  /**
-   * Add product to cart
-   * @param {string} productID - The ID of the product to add
-   * @param {number} quantity - Quantity to add
-   * @param {string} size - Optional size selection (for Flower products)
-   */
   function addToCart(productID, quantity = 1, size = null) {
     if (quantity <= 0) return;
 
     const product = products.find(p => p.id === productID);
     if (!product) return;
 
-    // Create unique identifier for cart items (includes size if specified)
     const cartItemId = size ? `${productID}_${size}` : productID;
-
-    // Check if product with same size already in cart
     const existingItem = cart.find(item => item.cartItemId === cartItemId);
 
     if (existingItem) {
@@ -1634,16 +1616,10 @@
     const sizeText = size ? ` (${size})` : '';
     showToast(`Added ${product.name}${sizeText} to cart!`);
 
-    // Reset quantity selector
     const qtyDisplay = document.querySelector(`[data-product-id="${productID}"]`);
-    if (qtyDisplay) {
-      qtyDisplay.textContent = '1';
-    }
+    if (qtyDisplay) qtyDisplay.textContent = '1';
   }
 
-  /**
-   * Update cart item quantity
-   */
   function updateCartItemQuantity(productID, change) {
     const item = cart.find(i => i.id === productID);
     if (!item) return;
@@ -1658,9 +1634,6 @@
     }
   }
 
-  /**
-   * Remove item from cart
-   */
   function removeFromCart(productID) {
     cart = cart.filter(item => item.id !== productID);
     saveCart();
@@ -1668,9 +1641,6 @@
     showToast('Item removed from cart');
   }
 
-  /**
-   * Clear entire cart
-   */
   function clearCart() {
     if (cart.length === 0) return;
 
@@ -1682,26 +1652,17 @@
     }
   }
 
-  /**
-   * Open cart modal
-   */
   function openCart() {
     document.getElementById('cart-modal').style.display = 'flex';
     renderCart();
     document.body.style.overflow = 'hidden';
   }
 
-  /**
-   * Close cart modal
-   */
   function closeCart() {
     document.getElementById('cart-modal').style.display = 'none';
     document.body.style.overflow = 'auto';
   }
 
-  /**
-   * Render cart items in modal
-   */
   function renderCart() {
     const container = document.getElementById('cart-items');
 
@@ -1732,13 +1693,9 @@
     `).join('');
   }
 
-  /**
-   * Format cart for Telegram message
-   */
   function formatCartForTelegram() {
     if (cart.length === 0) return '';
 
-    // Group items by category
     const grouped = {};
     cart.forEach(item => {
       if (!grouped[item.category]) {
@@ -1749,7 +1706,6 @@
 
     let message = '🛒 *Pachis Order*\n\n';
 
-    // Add items by category
     Object.keys(grouped).forEach(category => {
       message += `📦 *${category}:*\n`;
       grouped[category].forEach(item => {
@@ -1759,11 +1715,9 @@
       message += '\n';
     });
 
-    // Add total
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     message += `*Total Items:* ${totalItems}\n\n`;
 
-    // Add customer information
     const verificationDataStr = localStorage.getItem(VERIFICATION_DATA_KEY);
     if (verificationDataStr) {
       try {
@@ -1787,9 +1741,6 @@
     return message;
   }
 
-  /**
-   * Send cart to Telegram
-   */
   function sendToTelegram() {
     if (cart.length === 0) {
       showToast('Your cart is empty!');
@@ -1797,44 +1748,25 @@
     }
 
     const message = formatCartForTelegram();
-
-    // Encode message for URL
     const encodedMessage = encodeURIComponent(message);
-
-    // Create Telegram URL with pre-filled message
     const telegramUrl = `https://t.me/pachisshop?text=${encodedMessage}`;
 
-    // Open Telegram with pre-filled message
     window.open(telegramUrl, '_blank');
-
     showToast('Opening Telegram... Just click Send! 📤');
   }
 
-  /**
-   * Show toast notification
-   */
   function showToast(message) {
-    // Remove existing toasts
     const existingToast = document.querySelector('.toast');
-    if (existingToast) {
-      existingToast.remove();
-    }
+    if (existingToast) existingToast.remove();
 
-    // Create new toast
     const toast = document.createElement('div');
     toast.className = 'toast';
     toast.textContent = message;
     document.body.appendChild(toast);
 
-    // Remove after 2 seconds
-    setTimeout(() => {
-      toast.remove();
-    }, 2000);
+    setTimeout(() => toast.remove(), 2000);
   }
 
-  /**
-   * Update product quantity selector
-   */
   function updateQuantity(productID, change) {
     const qtyDisplay = document.querySelector(`[data-product-id="${productID}"]`);
     if (!qtyDisplay) return;
@@ -1844,39 +1776,26 @@
     qtyDisplay.textContent = current;
   }
 
-  /**
-   * Render products for a given category
-   * @param {string} category - The category to filter and display
-   */
   function renderProducts(category) {
     currentCategory = category;
     const grid = document.getElementById('product-grid');
     const categoryTitle = document.getElementById('category-title');
 
-    // Update header
     categoryTitle.textContent = categoryHeaders[category] || category.toUpperCase();
-
-    // Filter products by category
     const filteredProducts = products.filter(p => p.category === category);
-
-    // Clear grid
     grid.innerHTML = '';
 
-    // Check if category is coming soon
     const isComingSoon = comingSoonCategories.includes(category);
 
-    // Render each product
     filteredProducts.forEach(product => {
       const card = document.createElement('div');
       card.className = isComingSoon ? 'product-card coming-soon' : 'product-card';
 
-      // Check if this is a Flower product (needs size selector)
       const isFlowerProduct = category === 'Flower' && product.sizes && product.sizes.length > 0;
 
       let sizesHTML = '';
       if (product.sizes && product.sizes.length > 0) {
         if (isFlowerProduct) {
-          // For Flower products, create selectable size buttons
           sizesHTML = `
             <div class="size-selector" id="size-selector-${product.id}">
               ${product.sizes.map((size, index) => `
@@ -1889,7 +1808,6 @@
             </div>
           `;
         } else {
-          // For other products (Apparel, 420 Kit), show as badges
           sizesHTML = `
             <div class="product-sizes">
               ${product.sizes.map(size => `<span class="size-badge">${size}</span>`).join('')}
@@ -1906,7 +1824,6 @@
         `;
       }
 
-      // Product details for disposables
       let detailsHTML = '';
       if (product.terps && product.thcPercent) {
         detailsHTML = `
@@ -1954,28 +1871,16 @@
     });
   }
 
-  /**
-   * Select size for a product (for Flower category)
-   */
   function selectSize(productID, size) {
     const selector = document.getElementById(`size-selector-${productID}`);
     if (!selector) return;
 
-    // Remove selected class from all buttons
-    selector.querySelectorAll('.size-option').forEach(btn => {
-      btn.classList.remove('selected');
-    });
+    selector.querySelectorAll('.size-option').forEach(btn => btn.classList.remove('selected'));
 
-    // Add selected class to clicked button
     const clickedBtn = selector.querySelector(`[data-size="${size}"]`);
-    if (clickedBtn) {
-      clickedBtn.classList.add('selected');
-    }
+    if (clickedBtn) clickedBtn.classList.add('selected');
   }
 
-  /**
-   * Get selected size for a product
-   */
   function getSelectedSize(productID) {
     const selector = document.getElementById(`size-selector-${productID}`);
     if (!selector) return null;
@@ -1984,32 +1889,21 @@
     return selectedBtn ? selectedBtn.getAttribute('data-size') : null;
   }
 
-  /**
-   * Add to cart with size selection
-   */
   function addToCartWithSize(productID) {
     const quantity = parseInt(document.querySelector(`[data-product-id="${productID}"]`).textContent);
     const size = getSelectedSize(productID);
     addToCart(productID, quantity, size);
   }
 
-  /**
-   * Age Verification Functions
-   */
+  // Age Verification
   const AGE_VERIFICATION_KEY = 'pachisAgeVerified';
   const VERIFICATION_DATA_KEY = 'pachisVerificationData';
 
-  /**
-   * Check if user is already verified
-   */
   function isAgeVerified() {
     const verified = localStorage.getItem(AGE_VERIFICATION_KEY);
     return verified === 'true';
   }
 
-  /**
-   * Show age verification modal
-   */
   function showAgeVerification() {
     const modal = document.getElementById('age-verification');
     if (modal) {
@@ -2018,9 +1912,6 @@
     }
   }
 
-  /**
-   * Hide age verification modal
-   */
   function hideAgeVerification() {
     const modal = document.getElementById('age-verification');
     if (modal) {
@@ -2029,13 +1920,9 @@
     }
   }
 
-  /**
-   * Verify age from form submission
-   */
   function verifyAge(event) {
     event.preventDefault();
 
-    // Get form values
     const firstName = document.getElementById('firstName').value.trim();
     const lastName = document.getElementById('lastName').value.trim();
     const email = document.getElementById('email').value.trim();
@@ -2046,13 +1933,11 @@
     const country = document.getElementById('country').value.trim();
     const ageConfirm = document.querySelector('input[name="ageConfirm"]:checked');
 
-    // Validate all fields are filled
     if (!firstName || !lastName || !email || !streetAddress || !city || !state || !zipCode || !country) {
       showToast('Please fill in all required fields');
       return;
     }
 
-    // Check age confirmation
     const ageError = document.getElementById('age-error');
 
     if (!ageConfirm) {
@@ -2069,10 +1954,8 @@
       return;
     }
 
-    // Clear any previous errors
     ageError.style.display = 'none';
 
-    // Save verification data
     const verificationData = {
       firstName,
       lastName,
@@ -2089,51 +1972,36 @@
     localStorage.setItem(AGE_VERIFICATION_KEY, 'true');
     localStorage.setItem(VERIFICATION_DATA_KEY, JSON.stringify(verificationData));
 
-    // Hide modal and show success
     hideAgeVerification();
     showToast('✅ Verification successful! Welcome to Pachis');
   }
 
-  // Navigation action stubs
+  // Navigation functions
   function goHome() {
-    // Scroll to top and reset to default category
     window.scrollTo({ top: 0, behavior: 'smooth' });
     const firstTab = document.querySelector('.tab-button[data-category="Disposable"]');
     if (firstTab) firstTab.click();
   }
 
   function openTelegram() {
-    // Open Telegram chat with @pachisshop
     window.open('https://t.me/pachisshop', '_blank');
   }
 
-  // Event listeners for category tabs
   document.addEventListener('DOMContentLoaded', () => {
-    // Check age verification on page load
-    if (!isAgeVerified()) {
-      showAgeVerification();
-    }
+    if (!isAgeVerified()) showAgeVerification();
 
     const tabButtons = document.querySelectorAll('.tab-button');
 
     tabButtons.forEach(button => {
       button.addEventListener('click', () => {
-        // Remove active class from all buttons
         tabButtons.forEach(btn => btn.classList.remove('active'));
-
-        // Add active class to clicked button
         button.classList.add('active');
-
-        // Render products for selected category
         const category = button.getAttribute('data-category');
         renderProducts(category);
       });
     });
 
-    // Load cart from localStorage
     loadCart();
-
-    // Initialize with default category (Disposable)
     renderProducts('Disposable');
   });
 </script>
