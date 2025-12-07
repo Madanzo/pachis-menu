@@ -1225,8 +1225,8 @@
         <div class="nav-label">Cart</div>
       </button>
       <button class="nav-button" onclick="openSettings()">
-        <div class="nav-icon">⚙️</div>
-        <div class="nav-label">Settings</div>
+        <div class="nav-icon">👤</div>
+        <div class="nav-label">Profile</div>
       </button>
     </div>
   </nav>
@@ -1236,7 +1236,7 @@
     <div class="cart-modal-overlay" onclick="closeSettings()"></div>
     <div class="cart-modal-content">
       <div class="cart-modal-header">
-        <h2>⚙️ Settings</h2>
+        <h2>👤 Profile</h2>
         <button class="cart-close-btn" onclick="closeSettings()">✕</button>
       </div>
 
@@ -2119,7 +2119,7 @@
     };
 
     localStorage.setItem(VERIFICATION_DATA_KEY, JSON.stringify(updatedData));
-    showToast('✅ Settings updated successfully!');
+    showToast('✅ Profile updated successfully!');
     closeSettings();
   }
 
