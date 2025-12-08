@@ -1,5 +1,6 @@
 import { products } from './products.js';
 import { loadCart, addToCart, openCart as cartOpen, renderCart, clearCart as cartClear, sendToTelegram as cartSend } from './cart.js';
+import { showToast } from './utils.js';
 
 // Category header mapping
 const categoryHeaders = {
@@ -21,18 +22,6 @@ let currentCategory = "Disposable";
 // Age Verification
 const AGE_VERIFICATION_KEY = 'pachisAgeVerified';
 const VERIFICATION_DATA_KEY = 'pachisVerificationData';
-
-export function showToast(message) {
-    const existingToast = document.querySelector('.toast');
-    if (existingToast) existingToast.remove();
-
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    document.body.appendChild(toast);
-
-    setTimeout(() => toast.remove(), 2000);
-}
 
 function updateQuantity(productID, change) {
     const qtyDisplay = document.querySelector(`[data-product-id="${productID}"]`);

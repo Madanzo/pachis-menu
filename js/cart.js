@@ -1,6 +1,6 @@
 // Cart management
 import { products } from './products.js';
-import { showToast } from './app.js';
+import { showToast } from './utils.js';
 
 let cart = [];
 const CART_STORAGE_KEY = 'pachisCart';
