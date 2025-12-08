@@ -1,2146 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pachis Menu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Archivo+Black&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Archivo+Black&display=swap"
+    rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700&f[]=general-sans@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
 
-<style>
-  /* CSS Variables - Futuristic Minimal Design */
-  :root {
-    /* Primary Colors */
-    --turquoise-core: #00C7C7;
-    --turquoise-light: #00E5E5;
-    --turquoise-dark: #008B8B;
-    --bg-dark: #0D1B1E;
-    --bg-medium: #162A2E;
-
-    /* Typography Fonts */
-    --font-headline: 'General Sans', 'Satoshi', 'Archivo Black', sans-serif;
-    --font-subhead: 'Inter', sans-serif;
-    --font-body: 'Inter', sans-serif;
-
-    /* Effects */
-    --neon-glow: 0 0 10px rgba(0, 199, 199, 0.5), 0 0 20px rgba(0, 199, 199, 0.3);
-    --neon-glow-strong: 0 0 15px rgba(0, 199, 199, 0.8), 0 0 30px rgba(0, 199, 199, 0.4);
-
-    /* Semantic Mappings */
-    --pachis-bg-top: var(--bg-dark);
-    --pachis-bg-bottom: var(--bg-medium);
-    --pachis-text-accent: var(--turquoise-core);
-    --pachis-glow: rgba(0, 199, 199, 0.4);
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    font-family: var(--font-body);
-    background: linear-gradient(180deg, #00C7C7 0%, #009FBF 100%);
-    min-height: 100vh;
-    color: white;
-    overflow-x: hidden;
-    padding-bottom: 80px;
-    position: relative;
-  }
-
-  /* Subtle grid pattern overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 50px 50px;
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.3;
-  }
-
-  /* Subtle ambient glow */
-  body::after {
-    content: '';
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .menu {
-    width: 100%;
-    min-height: 100vh;
-    position: relative;
-    z-index: 1;
-  }
-
-  .menu-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Logo Area */
-  .menu-logo {
-    text-align: center;
-    padding: 30px 0 20px;
-  }
-
-  .menu-logo img {
-    max-width: 250px;
-    width: 100%;
-    height: auto;
-    filter: drop-shadow(var(--neon-glow));
-  }
-
-  /* Menu Header */
-  .menu-header {
-    text-align: center;
-    margin: 20px 0 30px;
-    position: relative;
-  }
-
-  .menu-header h2 {
-    font-family: var(--font-headline);
-    font-size: 1.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    color: white;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.2);
-    margin-bottom: 5px;
-  }
-
-  .menu-header::after {
-    content: '';
-    display: block;
-    width: 80px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, white, transparent);
-    margin: 15px auto;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-  }
-
-  /* Category Tabs */
-  .menu-tabs {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 30px 0;
-    padding: 0 10px;
-  }
-
-  .menu-tabs button {
-    background: rgba(255, 255, 255, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 12px;
-    font-family: var(--font-subhead);
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    letter-spacing: 1.5px;
-    backdrop-filter: blur(10px);
-    box-shadow:
-      inset 2px 2px 5px rgba(255, 255, 255, 0.1),
-      inset -2px -2px 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .menu-tabs button:hover {
-    background: rgba(255, 255, 255, 0.35);
-    border-color: rgba(255, 255, 255, 0.6);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  .menu-tabs button.active {
-    background: white;
-    color: var(--turquoise-core);
-    border-color: white;
-    box-shadow: var(--neon-glow), 0 4px 15px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Product Grid */
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
-    margin: 40px 0;
-    padding: 0 10px;
-  }
-
-  /* Product Card - Neumorphic 3D */
-  .product-card {
-    background: linear-gradient(145deg, #ffffff, #e6e6e6);
-    border: 1px solid rgba(0, 199, 199, 0.3);
-    border-radius: 24px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    box-shadow:
-      8px 8px 16px rgba(0, 0, 0, 0.1),
-      -8px -8px 16px rgba(255, 255, 255, 0.5),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-  }
-
-  .product-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 24px;
-    padding: 1px;
-    background: linear-gradient(145deg, var(--turquoise-core), transparent, var(--turquoise-light));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-  }
-
-  .product-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow:
-      12px 12px 24px rgba(0, 0, 0, 0.15),
-      -12px -12px 24px rgba(255, 255, 255, 0.6),
-      var(--neon-glow),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.6);
-    border-color: var(--turquoise-core);
-  }
-
-  .product-card:hover::before {
-    opacity: 1;
-  }
-
-  .product-brand {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--pachis-text-accent);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
-  }
-
-  .product-image {
-    width: 100%;
-    max-width: 150px;
-    height: 150px;
-    object-fit: contain;
-    margin: 15px 0;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-  }
-
-  .product-image[autoplay] {
-    border-radius: 12px;
-  }
-
-  .product-name {
-    font-family: var(--font-headline);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--pachis-text-accent);
-    text-transform: uppercase;
-    text-align: center;
-    letter-spacing: 2px;
-    margin: 10px 0;
-    line-height: 1.3;
-  }
-
-  .product-descriptor {
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-    color: #666;
-    text-align: center;
-    margin-top: 5px;
-    font-weight: 400;
-  }
-
-  .product-details {
-    width: 100%;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #e0e0e0;
-  }
-
-  .product-detail-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 6px 0;
-    font-size: 0.75rem;
-  }
-
-  .product-detail-label {
-    color: #888;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .product-detail-value {
-    color: var(--pachis-text-accent);
-    font-weight: 700;
-  }
-
-  .product-terps {
-    font-size: 0.7rem;
-    color: #666;
-    font-style: italic;
-    margin-top: 4px;
-  }
-
-  /* Size options for flower */
-  .product-sizes {
-    display: flex;
-    gap: 8px;
-    margin-top: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .size-badge {
-    background: var(--pachis-text-accent);
-    color: white;
-    padding: 5px 12px;
-    border-radius: 15px;
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-
-  /* Size selector buttons */
-  .size-selector {
-    display: flex;
-    gap: 8px;
-    margin: 15px 0;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .size-option {
-    background: linear-gradient(145deg, #f5f5f5, #e0e0e0);
-    border: 1px solid rgba(0, 199, 199, 0.3);
-    color: var(--turquoise-dark);
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-family: var(--font-subhead);
-    text-transform: uppercase;
-    box-shadow:
-      3px 3px 6px rgba(0, 0, 0, 0.1),
-      -3px -3px 6px rgba(255, 255, 255, 0.5);
-  }
-
-  .size-option:hover {
-    border-color: var(--turquoise-core);
-    transform: translateY(-2px);
-    box-shadow:
-      4px 4px 8px rgba(0, 0, 0, 0.15),
-      -4px -4px 8px rgba(255, 255, 255, 0.6);
-  }
-
-  .size-option.selected {
-    background: var(--turquoise-core);
-    color: white;
-    border-color: var(--turquoise-core);
-    box-shadow: var(--neon-glow), inset 0 2px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Coming Soon Overlay */
-  .coming-soon-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(3px);
-    border-radius: 20px;
-    z-index: 10;
-    pointer-events: none;
-  }
-
-  .coming-soon-banner {
-    position: absolute;
-    top: 30px;
-    right: -35px;
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    color: #333;
-    padding: 8px 45px;
-    font-size: 0.85rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    transform: rotate(45deg);
-    box-shadow: 0 4px 15px rgba(255, 165, 0, 0.4);
-    z-index: 11;
-  }
-
-  .product-card.coming-soon {
-    opacity: 0.7;
-    pointer-events: none;
-  }
-
-  /* Bottom Navigation - Futuristic */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 159, 191, 0.95);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2), 0 -1px 0 rgba(255, 255, 255, 0.2);
-    z-index: 1000;
-  }
-
-  .bottom-nav-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 12px 0;
-  }
-
-  .nav-button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 8px 15px;
-    border-radius: 10px;
-    text-shadow:
-      0 2px 4px rgba(0, 0, 0, 0.5),
-      0 0 15px rgba(255, 255, 255, 0.3);
-  }
-
-  .nav-button:hover {
-    color: white;
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
-    text-shadow:
-      0 2px 6px rgba(0, 0, 0, 0.6),
-      0 0 20px rgba(255, 255, 255, 0.6),
-      0 0 30px rgba(255, 255, 255, 0.4);
-  }
-
-  .nav-icon {
-    font-size: 1.5rem;
-    font-weight: 700;
-  }
-
-  .nav-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  /* Responsive Design */
-  @media (max-width: 1024px) {
-    .product-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-
-    .menu-logo img {
-      max-width: 200px;
-    }
-
-    .menu-header h2 {
-      font-size: 1.5rem;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .product-grid {
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-
-    .menu-logo img {
-      max-width: 180px;
-    }
-
-    .menu-header h2 {
-      font-size: 1.2rem;
-    }
-
-    .menu-tabs {
-      gap: 8px;
-    }
-
-    .menu-tabs button {
-      padding: 10px 16px;
-      font-size: 0.85rem;
-    }
-
-    .product-card {
-      padding: 20px 15px;
-    }
-
-    .nav-icon {
-      font-size: 1.3rem;
-    }
-
-    .nav-label {
-      font-size: 0.7rem;
-    }
-  }
-
-  /* Cart Badge */
-  .cart-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: #FF4444;
-    color: white;
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 10px;
-    min-width: 18px;
-    text-align: center;
-  }
-
-  .nav-icon {
-    position: relative;
-  }
-
-  /* Cart Modal */
-  .cart-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-
-  .cart-modal-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
-  }
-
-  .cart-modal-content {
-    position: relative;
-    background: white;
-    border-radius: 20px;
-    max-width: 500px;
-    width: 100%;
-    max-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    z-index: 1;
-  }
-
-  .cart-modal-header {
-    padding: 20px;
-    border-bottom: 2px solid #f0f0f0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .cart-modal-header h2 {
-    font-size: 1.5rem;
-    color: var(--pachis-text-accent);
-    margin: 0;
-  }
-
-  .cart-close-btn {
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    color: #999;
-    cursor: pointer;
-    transition: color 0.3s;
-    padding: 0;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cart-close-btn:hover {
-    color: #333;
-  }
-
-  .cart-items {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
-  }
-
-  .cart-item {
-    background: #f8f9fa;
-    border-radius: 15px;
-    padding: 15px;
-    margin-bottom: 15px;
-    display: flex;
-    gap: 15px;
-    align-items: center;
-  }
-
-  .cart-item-image {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    flex-shrink: 0;
-  }
-
-  .cart-item-details {
-    flex: 1;
-  }
-
-  .cart-item-name {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--pachis-text-accent);
-    margin-bottom: 5px;
-  }
-
-  .cart-item-type {
-    font-size: 0.8rem;
-    color: #666;
-  }
-
-  .cart-item-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .cart-qty-btn {
-    background: var(--pachis-text-accent);
-    color: white;
-    border: none;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    font-size: 1.1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
-  }
-
-  .cart-qty-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 2px 8px var(--pachis-glow);
-  }
-
-  .cart-qty-btn:active {
-    transform: scale(0.95);
-  }
-
-  .cart-qty {
-    font-weight: 700;
-    font-size: 1rem;
-    min-width: 30px;
-    text-align: center;
-    color: #333;
-  }
-
-  .cart-remove-btn {
-    background: #ff4444;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-weight: 600;
-  }
-
-  .cart-remove-btn:hover {
-    background: #cc0000;
-    transform: translateY(-1px);
-  }
-
-  .cart-empty {
-    text-align: center;
-    padding: 40px 20px;
-    color: #999;
-  }
-
-  .cart-empty-icon {
-    font-size: 3rem;
-    margin-bottom: 15px;
-  }
-
-  .cart-modal-footer {
-    padding: 20px;
-    border-top: 2px solid #f0f0f0;
-    display: flex;
-    gap: 10px;
-  }
-
-  .btn {
-    flex: 1;
-    padding: 14px 20px;
-    border: none;
-    border-radius: 12px;
-    font-family: var(--font-subhead);
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .btn-clear {
-    background: #f0f0f0;
-    color: #666;
-  }
-
-  .btn-clear:hover {
-    background: #e0e0e0;
-    transform: translateY(-2px);
-  }
-
-  .btn-telegram {
-    background: var(--turquoise-core);
-    color: white;
-    border: 1px solid var(--turquoise-core);
-    box-shadow: var(--neon-glow);
-  }
-
-  .btn-telegram:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--neon-glow-strong);
-  }
-
-  /* Quantity controls on product cards */
-  .product-card-actions {
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-  }
-
-  .qty-btn {
-    background: linear-gradient(145deg, #f5f5f5, #e0e0e0);
-    color: var(--turquoise-core);
-    border: 1px solid rgba(0, 199, 199, 0.3);
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-weight: 700;
-    box-shadow:
-      3px 3px 6px rgba(0, 0, 0, 0.1),
-      -3px -3px 6px rgba(255, 255, 255, 0.5);
-  }
-
-  .qty-btn:hover {
-    background: var(--turquoise-core);
-    color: white;
-    border-color: var(--turquoise-core);
-    transform: scale(1.1);
-    box-shadow: var(--neon-glow);
-  }
-
-  .qty-btn:active {
-    transform: scale(0.95);
-    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
-  .qty-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-
-  .qty-btn:disabled:hover {
-    transform: none;
-    background: linear-gradient(145deg, #f5f5f5, #e0e0e0);
-    color: var(--turquoise-core);
-    box-shadow:
-      3px 3px 6px rgba(0, 0, 0, 0.1),
-      -3px -3px 6px rgba(255, 255, 255, 0.5);
-  }
-
-  .qty-display {
-    font-weight: 700;
-    font-size: 1.1rem;
-    min-width: 35px;
-    text-align: center;
-    color: var(--pachis-text-accent);
-  }
-
-  .add-to-cart-btn {
-    background: var(--turquoise-core);
-    color: white;
-    border: 1px solid var(--turquoise-core);
-    padding: 10px 20px;
-    border-radius: 12px;
-    font-family: var(--font-subhead);
-    font-size: 0.8rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    box-shadow:
-      4px 4px 8px rgba(0, 0, 0, 0.15),
-      -2px -2px 6px rgba(255, 255, 255, 0.3),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.2);
-  }
-
-  .add-to-cart-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--neon-glow-strong), 4px 4px 12px rgba(0, 0, 0, 0.2);
-  }
-
-  .add-to-cart-btn:active {
-    transform: translateY(-1px);
-    box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Toast notification - Neon */
-  .toast {
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.95);
-    color: var(--turquoise-core);
-    padding: 14px 28px;
-    border-radius: 12px;
-    border: 1px solid var(--turquoise-core);
-    font-weight: 600;
-    font-size: 0.9rem;
-    z-index: 3000;
-    animation: slideUp 0.3s ease;
-    backdrop-filter: blur(10px);
-    box-shadow: var(--neon-glow), 0 8px 20px rgba(0, 0, 0, 0.2);
-  }
-
-  @keyframes slideUp {
-    from {
-      bottom: 80px;
-      opacity: 0;
-    }
-    to {
-      bottom: 100px;
-      opacity: 1;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .cart-modal-content {
-      max-height: 90vh;
-    }
-
-    .cart-modal-header h2 {
-      font-size: 1.3rem;
-    }
-
-    .btn {
-      font-size: 0.85rem;
-      padding: 12px 16px;
-    }
-  }
-
-  /* Age Verification Modal */
-  .age-verification-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-
-  .age-verification-modal {
-    background: white;
-    border-radius: 25px;
-    max-width: 500px;
-    width: 100%;
-    max-height: 90vh;
-    padding: 40px 30px;
-    box-shadow: 0 10px 50px rgba(0, 197, 216, 0.3);
-    position: relative;
-    overflow-y: auto;
-  }
-
-  .age-verification-modal::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 8px;
-    background: linear-gradient(90deg, var(--pachis-bg-top) 0%, var(--pachis-bg-bottom) 100%);
-  }
-
-  .age-verification-header {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-
-  .age-verification-header h2 {
-    font-family: var(--font-headline);
-    font-size: 2rem;
-    color: var(--pachis-text-accent);
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-  }
-
-  .age-verification-header p {
-    color: #666;
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-
-  .age-verification-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .form-row {
-    display: flex;
-    gap: 15px;
-  }
-
-  .form-group {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .form-group label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #333;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .form-group input {
-    padding: 12px 15px;
-    border: 2px solid #e0e0e0;
-    border-radius: 12px;
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    transition: all 0.3s;
-    outline: none;
-  }
-
-  .form-group input:focus {
-    border-color: var(--pachis-text-accent);
-    box-shadow: 0 0 0 3px rgba(0, 161, 196, 0.1);
-  }
-
-  .form-group input.error {
-    border-color: #ff4444;
-  }
-
-  .error-message {
-    color: #ff4444;
-    font-size: 0.8rem;
-    font-weight: 500;
-    margin-top: 5px;
-  }
-
-  .verification-submit {
-    background: linear-gradient(135deg, var(--pachis-bg-top) 0%, var(--pachis-bg-bottom) 100%);
-    color: white;
-    border: none;
-    padding: 16px 30px;
-    border-radius: 15px;
-    font-family: var(--font-subhead);
-    font-size: 1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-top: 10px;
-    box-shadow: 0 4px 15px var(--pachis-glow);
-  }
-
-  .verification-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px var(--pachis-glow);
-  }
-
-  .verification-submit:active {
-    transform: translateY(0);
-  }
-
-  .age-disclaimer {
-    text-align: center;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #e0e0e0;
-    font-size: 0.75rem;
-    color: #999;
-    line-height: 1.5;
-  }
-
-  .radio-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    text-transform: none;
-    font-weight: 500;
-  }
-
-  .radio-input {
-    width: auto;
-    cursor: pointer;
-  }
-
-  @media (max-width: 640px) {
-    .age-verification-modal {
-      padding: 30px 20px;
-    }
-
-    .age-verification-header h2 {
-      font-size: 1.5rem;
-    }
-
-    .form-row {
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .verification-submit {
-      padding: 14px 25px;
-      font-size: 0.9rem;
-    }
-  }
-</style>
-
-<!-- Age Verification Modal -->
-<div id="age-verification" class="age-verification-overlay" style="display: none;">
-  <div class="age-verification-modal">
-    <div class="age-verification-header">
-      <h2>Age Verification</h2>
-      <p>You must be 21 years or older to access this site. Please verify your identity to continue.</p>
+  <!-- Age Verification Modal -->
+  <div id="age-verification" class="age-verification-overlay" style="display: none;">
+    <div class="age-verification-modal">
+      <div class="age-verification-header">
+        <h2>Age Verification</h2>
+        <p>You must be 21 years or older to access this site. Please verify your identity to continue.</p>
+      </div>
+
+      <!-- Removed onsubmit="verifyAge(event)" in favor of JS listener, but keeping ID for selection -->
+      <form id="age-verification-form" class="age-verification-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name *</label>
+            <input type="text" id="firstName" name="firstName" required>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name *</label>
+            <input type="text" id="lastName" name="lastName" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="streetAddress">Street Address *</label>
+          <input type="text" id="streetAddress" name="streetAddress" required placeholder="123 Main Street">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="city">City *</label>
+            <input type="text" id="city" name="city" required>
+          </div>
+          <div class="form-group">
+            <label for="state">State/Province *</label>
+            <input type="text" id="state" name="state" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="zipCode">ZIP / Postal Code *</label>
+            <input type="text" id="zipCode" name="zipCode" required>
+          </div>
+          <div class="form-group">
+            <label for="country">Country *</label>
+            <input type="text" id="country" name="country" required placeholder="USA">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label style="font-size: 1rem; margin-bottom: 10px;">Are you 21 years or older? *</label>
+          <div style="display: flex; gap: 15px; align-items: center;">
+            <label class="radio-label">
+              <input type="radio" id="age-yes" name="ageConfirm" value="yes" required class="radio-input">
+              <span>Yes, I am 21 or older</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" id="age-no" name="ageConfirm" value="no" class="radio-input">
+              <span>No</span>
+            </label>
+          </div>
+          <span id="age-error" class="error-message" style="display: none;"></span>
+        </div>
+
+        <button type="submit" class="verification-submit">Verify & Enter</button>
+
+        <div class="age-disclaimer">
+          By submitting this form, you certify that all information provided is accurate and that you are at least 21
+          years of age. We respect your privacy and will handle your information responsibly.
+        </div>
+      </form>
     </div>
-
-    <form id="age-verification-form" class="age-verification-form" onsubmit="verifyAge(event)">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="firstName">First Name *</label>
-          <input type="text" id="firstName" name="firstName" required>
-        </div>
-        <div class="form-group">
-          <label for="lastName">Last Name *</label>
-          <input type="text" id="lastName" name="lastName" required>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email Address *</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-
-      <div class="form-group">
-        <label for="streetAddress">Street Address *</label>
-        <input type="text" id="streetAddress" name="streetAddress" required placeholder="123 Main Street">
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="city">City *</label>
-          <input type="text" id="city" name="city" required>
-        </div>
-        <div class="form-group">
-          <label for="state">State/Province *</label>
-          <input type="text" id="state" name="state" required>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="zipCode">ZIP / Postal Code *</label>
-          <input type="text" id="zipCode" name="zipCode" required>
-        </div>
-        <div class="form-group">
-          <label for="country">Country *</label>
-          <input type="text" id="country" name="country" required placeholder="USA">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label style="font-size: 1rem; margin-bottom: 10px;">Are you 21 years or older? *</label>
-        <div style="display: flex; gap: 15px; align-items: center;">
-          <label class="radio-label">
-            <input type="radio" id="age-yes" name="ageConfirm" value="yes" required class="radio-input">
-            <span>Yes, I am 21 or older</span>
-          </label>
-          <label class="radio-label">
-            <input type="radio" id="age-no" name="ageConfirm" value="no" class="radio-input">
-            <span>No</span>
-          </label>
-        </div>
-        <span id="age-error" class="error-message" style="display: none;"></span>
-      </div>
-
-      <button type="submit" class="verification-submit">Verify & Enter</button>
-
-      <div class="age-disclaimer">
-        By submitting this form, you certify that all information provided is accurate and that you are at least 21 years of age. We respect your privacy and will handle your information responsibly.
-      </div>
-    </form>
-  </div>
-</div>
-
-<div class="menu">
-  <div class="menu-container">
-
-    <!-- Logo Area -->
-    <div class="menu-logo">
-      <img src="https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/Pachis.png" alt="Pachis Logo">
-    </div>
-
-    <!-- Menu Header (dynamic) -->
-    <div class="menu-header">
-      <h2 id="category-title">LIQUID DIAMONDS – 2G DISPOSABLE</h2>
-    </div>
-
-    <!-- Category Tabs -->
-    <div class="menu-tabs">
-      <button class="tab-button active" data-category="Disposable">Disposable</button>
-      <button class="tab-button" data-category="Live Rosin Dabs">Dabs</button>
-      <button class="tab-button" data-category="Pre-Rolls">Pre-Rolls</button>
-      <button class="tab-button" data-category="Flower">Flower</button>
-      <button class="tab-button" data-category="Apparel">Apparel</button>
-      <button class="tab-button" data-category="420 Kit">420 Kit</button>
-      <button class="tab-button" data-category="Pleasure Gear">Pleasure Gear</button>
-    </div>
-
-    <!-- Product Grid -->
-    <div id="product-grid" class="product-grid">
-      <!-- Products will be dynamically inserted here -->
-    </div>
-
   </div>
 
-  <!-- Cart Modal -->
-  <div id="cart-modal" class="cart-modal" style="display: none;">
-    <div class="cart-modal-overlay" onclick="closeCart()"></div>
-    <div class="cart-modal-content">
-      <div class="cart-modal-header">
-        <h2>🛒 Your Cart</h2>
-        <button class="cart-close-btn" onclick="closeCart()">✕</button>
+  <main class="menu">
+    <div class="menu-container">
+
+      <!-- Logo Area -->
+      <div class="menu-logo">
+        <img src="https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/Pachis.png" alt="Pachis Logo">
       </div>
 
-      <div id="cart-items" class="cart-items">
-        <!-- Cart items will be rendered here -->
+      <!-- Menu Header (dynamic) -->
+      <div class="menu-header">
+        <h2 id="category-title">LIQUID DIAMONDS – 2G DISPOSABLE</h2>
       </div>
 
-      <div class="cart-modal-footer">
-        <button class="btn btn-clear" onclick="clearCart()">Clear Cart</button>
-        <button class="btn btn-telegram" onclick="sendToTelegram()">
-          ✈️ Send to Telegram
+      <!-- Category Tabs -->
+      <div class="menu-tabs">
+        <button class="tab-button active" data-category="Disposable">Disposable</button>
+        <button class="tab-button" data-category="Live Rosin Dabs">Dabs</button>
+        <button class="tab-button" data-category="Pre-Rolls">Pre-Rolls</button>
+        <button class="tab-button" data-category="Flower">Flower</button>
+        <button class="tab-button" data-category="Apparel">Apparel</button>
+        <button class="tab-button" data-category="420 Kit">420 Kit</button>
+        <button class="tab-button" data-category="Pleasure Gear">Pleasure Gear</button>
+      </div>
+
+      <!-- Product Grid -->
+      <div id="product-grid" class="product-grid">
+        <!-- Products will be dynamically inserted here -->
+      </div>
+
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="cart-modal" style="display: none;">
+      <!-- Listeners added in JS -->
+      <div class="cart-modal-overlay"></div>
+      <div class="cart-modal-content">
+        <div class="cart-modal-header">
+          <h2>🛒 Your Cart</h2>
+          <button class="cart-close-btn">✕</button>
+        </div>
+
+        <div id="cart-items" class="cart-items">
+          <!-- Cart items will be rendered here -->
+        </div>
+
+        <div class="cart-modal-footer">
+          <button class="btn btn-clear" onclick="clearCart()">Clear Cart</button>
+          <button class="btn btn-telegram" onclick="sendToTelegram()">
+            ✈️ Send to Telegram
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <div class="bottom-nav-container">
+        <button class="nav-button" onclick="goHome()">
+          <div class="nav-icon">🏠</div>
+          <div class="nav-label">Home</div>
+        </button>
+        <button class="nav-button" onclick="openCart()">
+          <div class="nav-icon">
+            🛒
+            <span id="cart-badge" class="cart-badge" style="display: none;">0</span>
+          </div>
+          <div class="nav-label">Cart</div>
+        </button>
+        <button class="nav-button" onclick="openSettings()">
+          <div class="nav-icon">👤</div>
+          <div class="nav-label">Profile</div>
         </button>
       </div>
-    </div>
-  </div>
+    </nav>
 
-  <!-- Bottom Navigation -->
-  <nav class="bottom-nav">
-    <div class="bottom-nav-container">
-      <button class="nav-button" onclick="goHome()">
-        <div class="nav-icon">🏠</div>
-        <div class="nav-label">Home</div>
-      </button>
-      <button class="nav-button" onclick="openCart()">
-        <div class="nav-icon">
-          🛒
-          <span id="cart-badge" class="cart-badge" style="display: none;">0</span>
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="cart-modal" style="display: none;">
+      <div class="cart-modal-overlay"></div>
+      <div class="cart-modal-content">
+        <div class="cart-modal-header">
+          <h2>👤 Profile</h2>
+          <button class="cart-close-btn">✕</button>
         </div>
-        <div class="nav-label">Cart</div>
-      </button>
-      <button class="nav-button" onclick="openSettings()">
-        <div class="nav-icon">👤</div>
-        <div class="nav-label">Profile</div>
-      </button>
-    </div>
-  </nav>
 
-  <!-- Settings Modal -->
-  <div id="settings-modal" class="cart-modal" style="display: none;">
-    <div class="cart-modal-overlay" onclick="closeSettings()"></div>
-    <div class="cart-modal-content">
-      <div class="cart-modal-header">
-        <h2>👤 Profile</h2>
-        <button class="cart-close-btn" onclick="closeSettings()">✕</button>
-      </div>
-
-      <div class="cart-items">
-        <form id="settings-form" class="age-verification-form" onsubmit="updateSettings(event)">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="settingsFirstName">First Name *</label>
-              <input type="text" id="settingsFirstName" name="firstName" required>
+        <div class="cart-items">
+          <form id="settings-form" class="age-verification-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="settingsFirstName">First Name *</label>
+                <input type="text" id="settingsFirstName" name="firstName" required>
+              </div>
+              <div class="form-group">
+                <label for="settingsLastName">Last Name *</label>
+                <input type="text" id="settingsLastName" name="lastName" required>
+              </div>
             </div>
+
             <div class="form-group">
-              <label for="settingsLastName">Last Name *</label>
-              <input type="text" id="settingsLastName" name="lastName" required>
+              <label for="settingsEmail">Email Address *</label>
+              <input type="email" id="settingsEmail" name="email" required>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label for="settingsEmail">Email Address *</label>
-            <input type="email" id="settingsEmail" name="email" required>
-          </div>
-
-          <div class="form-group">
-            <label for="settingsStreetAddress">Street Address *</label>
-            <input type="text" id="settingsStreetAddress" name="streetAddress" required placeholder="123 Main Street">
-          </div>
-
-          <div class="form-row">
             <div class="form-group">
-              <label for="settingsCity">City *</label>
-              <input type="text" id="settingsCity" name="city" required>
+              <label for="settingsStreetAddress">Street Address *</label>
+              <input type="text" id="settingsStreetAddress" name="streetAddress" required placeholder="123 Main Street">
             </div>
-            <div class="form-group">
-              <label for="settingsState">State/Province *</label>
-              <input type="text" id="settingsState" name="state" required>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="settingsCity">City *</label>
+                <input type="text" id="settingsCity" name="city" required>
+              </div>
+              <div class="form-group">
+                <label for="settingsState">State/Province *</label>
+                <input type="text" id="settingsState" name="state" required>
+              </div>
             </div>
-          </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="settingsZipCode">ZIP / Postal Code *</label>
-              <input type="text" id="settingsZipCode" name="zipCode" required>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="settingsZipCode">ZIP / Postal Code *</label>
+                <input type="text" id="settingsZipCode" name="zipCode" required>
+              </div>
+              <div class="form-group">
+                <label for="settingsCountry">Country *</label>
+                <input type="text" id="settingsCountry" name="country" required placeholder="USA">
+              </div>
             </div>
-            <div class="form-group">
-              <label for="settingsCountry">Country *</label>
-              <input type="text" id="settingsCountry" name="country" required placeholder="USA">
-            </div>
-          </div>
 
-          <button type="submit" class="btn btn-telegram" style="width: 100%; margin-top: 20px;">
-            💾 Save Changes
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<script>
-  // Products Database
-  const products = [
-    // DISPOSABLE - Liquid Diamonds 2G
-    {
-      id: "cart_runtz_candy",
-      name: "RUNTZ CANDY",
-      category: "Disposable",
-      brand: "Pachis",
-      type: "2g Liquid Diamonds",
-      flavor: "Runtz Candy",
-      image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/runtz_candy.png",
-      terps: "7% (indica - fruity, tangy)",
-      thcMg: "879.5/pkg",
-      thcPercent: "88.0%",
-      cbd: "0.0/pkg"
-    },
-    {
-      id: "cart_bubblegum_tape",
-      name: "BUBBLEGUM TAPE",
-      category: "Disposable",
-      brand: "Pachis",
-      type: "2g Liquid Diamonds",
-      flavor: "Bubblegum Tape",
-      image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/bubblegum_tape.mp4",
-      terps: "7% (hybrid - playful, sweet)",
-      thcMg: "879.5/pkg",
-      thcPercent: "88.0%",
-      cbd: "0.0/pkg"
-    },
-    {
-      id: "cart_fruitier_cereal",
-      name: "FRUITIER CEREAL",
-      category: "Disposable",
-      brand: "Pachis",
-      type: "2g Liquid Diamonds",
-      flavor: "Fruitier Cereal",
-      image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/fruitier_cereal.mp4",
-      terps: "7% (hybrid - playful, sweet)",
-      thcMg: "879.5/pkg",
-      thcPercent: "88.0%",
-      cbd: "0.0/pkg"
-    },
-    {
-      id: "cart_grape_euphoria",
-      name: "GRAPE EUPHORIA",
-      category: "Disposable",
-      brand: "Pachis",
-      type: "2g Liquid Diamonds",
-      flavor: "Grape Euphoria",
-      image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/grape_euphoria.png",
-      terps: "7% (indica - fruity, tangy)",
-      thcMg: "879.5/pkg",
-      thcPercent: "88.0%",
-      cbd: "0.0/pkg"
-    },
-    {
-      id: "cart_guava_galaxy",
-      name: "GUAVA GALAXY",
-      category: "Disposable",
-      brand: "Pachis",
-      type: "2g Liquid Diamonds",
-      flavor: "Guava Galaxy",
-      image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/guava_galaxy.png",
-      terps: "7% (indica - fruity, tangy)",
-      thcMg: "879.5/pkg",
-      thcPercent: "88.0%",
-      cbd: "0.0/pkg"
-    },
-    {
-      id: "cart_nerdz",
-      name: "NERDZ",
-      category: "Disposable",
-      brand: "Pachis",
-      type: "2g Liquid Diamonds",
-      flavor: "Nerdz",
-      image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/nerdz.png",
-      terps: "7% (indica - fruity, tangy)",
-      thcMg: "879.5/pkg",
-      thcPercent: "88.0%",
-      cbd: "0.0/pkg"
-    },
-    {
-      id: "cart_strawberry_jelly",
-      name: "STRAWBERRY JELLY",
-      category: "Disposable",
-      brand: "Pachis",
-      type: "2g Liquid Diamonds",
-      flavor: "Strawberry Jelly",
-      image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/strawberry_jelly.mp4",
-      terps: "7% (indica - fruity, tangy)",
-      thcMg: "879.5/pkg",
-      thcPercent: "88.0%",
-      cbd: "0.0/pkg"
-    },
-    {
-      id: "cart_peach_rings",
-      name: "PEACH RINGS",
-      category: "Disposable",
-      brand: "Pachis",
-      type: "2g Liquid Diamonds",
-      flavor: "Peach Rings",
-      image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/peach_ringz.mp4",
-      terps: "7% (sativa - tart, sweet)",
-      thcMg: "879.5/pkg",
-      thcPercent: "88.0%",
-      cbd: "0.0/pkg"
-    },
-
-    // LIVE ROSIN DABS
-    {
-      id: "dab_2g_live_rosin",
-      name: "DAB IT PACHIS 2G",
-      category: "Live Rosin Dabs",
-      brand: "Pachis",
-      type: "2G Live Rosin",
-      image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dabs_2g.png"
-    },
-    {
-      id: "dab_1oz_live_rosin",
-      name: "DAB IT PACHIS 1OZ",
-      category: "Live Rosin Dabs",
-      brand: "Pachis",
-      type: "1 OZ Live Rosin",
-      image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dabs_1oz.png"
-    },
-
-    // PRE-ROLLS
-    {
-      id: "preroll_classic",
-      name: "PREROLLS PACHIS",
-      category: "Pre-Rolls",
-      brand: "Pachis",
-      type: "Premium Pre-Rolled Joints",
-      image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/pre_rolls.png"
-    },
-    {
-      id: "preroll_infused",
-      name: "INFUSED PREROLLS",
-      category: "Pre-Rolls",
-      brand: "Pachis",
-      type: "Diamond Infused Pre-Rolls",
-      image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/pre_rolls.png"
-    },
-
-    // FLOWER
-    {
-      id: "flower_eighths",
-      name: "PREMIUM FLOWER",
-      category: "Flower",
-      brand: "Pachis",
-      type: "Indoor Flower",
-      sizes: ["1/8 OZ", "1/4 OZ", "1/2 OZ", "1 OZ"],
-      image: "images/premium-flower.jpg"
-    },
-    {
-      id: "flower_exotic",
-      name: "EXOTIC STRAINS",
-      category: "Flower",
-      brand: "Pachis",
-      type: "Indoor Flower",
-      sizes: ["1/8 OZ", "1/4 OZ", "1/2 OZ", "1 OZ"],
-      image: "images/exotic-strains.jpg"
-    },
-
-    // APPAREL
-    {
-      id: "apparel_hat_classic",
-      name: "PACHIS CLASSIC HAT",
-      category: "Apparel",
-      brand: "Pachis",
-      type: "Snapback Hat",
-      image: "images/hat-classic.jpg"
-    },
-    {
-      id: "apparel_hat_trucker",
-      name: "PACHIS TRUCKER HAT",
-      category: "Apparel",
-      brand: "Pachis",
-      type: "Trucker Hat",
-      image: "images/hat-trucker.jpg"
-    },
-    {
-      id: "apparel_tshirt_logo",
-      name: "PACHIS LOGO T-SHIRT",
-      category: "Apparel",
-      brand: "Pachis",
-      type: "Cotton T-Shirt",
-      sizes: ["S", "M", "L", "XL", "XXL"],
-      image: "images/tshirt-logo.jpg"
-    },
-    {
-      id: "apparel_tshirt_vintage",
-      name: "PACHIS VINTAGE TEE",
-      category: "Apparel",
-      brand: "Pachis",
-      type: "Vintage Wash T-Shirt",
-      sizes: ["S", "M", "L", "XL", "XXL"],
-      image: "images/tshirt-vintage.jpg"
-    },
-    {
-      id: "apparel_hoodie_classic",
-      name: "PACHIS CLASSIC HOODIE",
-      category: "Apparel",
-      brand: "Pachis",
-      type: "Pullover Hoodie",
-      sizes: ["S", "M", "L", "XL", "XXL"],
-      image: "images/hoodie-classic.jpg"
-    },
-    {
-      id: "apparel_hoodie_zip",
-      name: "PACHIS ZIP HOODIE",
-      category: "Apparel",
-      brand: "Pachis",
-      type: "Zip-Up Hoodie",
-      sizes: ["S", "M", "L", "XL", "XXL"],
-      image: "images/hoodie-zip.jpg"
-    },
-    {
-      id: "apparel_sneakers_high",
-      name: "PACHIS HIGH TOPS",
-      category: "Apparel",
-      brand: "Pachis",
-      type: "Canvas High Top Sneakers",
-      sizes: ["7", "8", "9", "10", "11", "12"],
-      image: "images/sneakers-high.jpg"
-    },
-    {
-      id: "apparel_sneakers_low",
-      name: "PACHIS LOW TOPS",
-      category: "Apparel",
-      brand: "Pachis",
-      type: "Canvas Low Top Sneakers",
-      sizes: ["7", "8", "9", "10", "11", "12"],
-      image: "images/sneakers-low.jpg"
-    },
-
-    // PLEASURE GEAR
-    {
-      id: "pleasure_massager",
-      name: "INTIMATE MASSAGER",
-      category: "Pleasure Gear",
-      brand: "Pachis",
-      type: "Premium Massager",
-      image: "images/massager.jpg"
-    },
-    {
-      id: "pleasure_kit_couples",
-      name: "COUPLES KIT",
-      category: "Pleasure Gear",
-      brand: "Pachis",
-      type: "Couples Experience Kit",
-      image: "images/couples-kit.jpg"
-    },
-    {
-      id: "pleasure_lubricant",
-      name: "PREMIUM LUBRICANT",
-      category: "Pleasure Gear",
-      brand: "Pachis",
-      type: "Water-Based Lubricant",
-      image: "images/lubricant.jpg"
-    },
-    {
-      id: "pleasure_accessories",
-      name: "INTIMACY ACCESSORIES",
-      category: "Pleasure Gear",
-      brand: "Pachis",
-      type: "Accessory Set",
-      image: "images/accessories.jpg"
-    },
-
-    // 420 KIT
-    {
-      id: "kit_grinder_premium",
-      name: "PREMIUM GRINDER",
-      category: "420 Kit",
-      brand: "Pachis",
-      type: "4-Piece Metal Grinder",
-      image: "images/grinder.jpg"
-    },
-    {
-      id: "kit_rolling_tray",
-      name: "ROLLING TRAY",
-      category: "420 Kit",
-      brand: "Pachis",
-      type: "Metal Rolling Tray",
-      sizes: ["Small", "Medium", "Large"],
-      image: "images/rolling-tray.jpg"
-    },
-    {
-      id: "kit_storage_jar",
-      name: "AIRTIGHT STORAGE JAR",
-      category: "420 Kit",
-      brand: "Pachis",
-      type: "UV Glass Storage Jar",
-      sizes: ["4oz", "8oz", "16oz"],
-      image: "images/storage-jar.jpg"
-    },
-    {
-      id: "kit_papers",
-      name: "PREMIUM PAPERS",
-      category: "420 Kit",
-      brand: "Pachis",
-      type: "Rolling Papers Pack",
-      image: "images/papers.jpg"
-    },
-    {
-      id: "kit_lighter",
-      name: "PACHIS LIGHTER",
-      category: "420 Kit",
-      brand: "Pachis",
-      type: "Branded Lighter",
-      image: "images/lighter.jpg"
-    },
-    {
-      id: "kit_cleaning",
-      name: "CLEANING KIT",
-      category: "420 Kit",
-      brand: "Pachis",
-      type: "Complete Cleaning Kit",
-      image: "images/cleaning-kit.jpg"
-    }
-  ];
-
-  // Category header mapping
-  const categoryHeaders = {
-    "Disposable": "LIQUID DIAMONDS – 2G DISPOSABLE",
-    "Live Rosin Dabs": "LIVE ROSIN DABS",
-    "Pre-Rolls": "PRE-ROLLS",
-    "Flower": "FLOWER",
-    "Apparel": "PACHIS APPAREL",
-    "Pleasure Gear": "PLEASURE GEAR",
-    "420 Kit": "420 KIT"
-  };
-
-  // Categories marked as coming soon
-  const comingSoonCategories = ["Apparel", "Pleasure Gear", "420 Kit"];
-
-  // Current active category
-  let currentCategory = "Disposable";
-
-  // Cart management
-  let cart = [];
-  const CART_STORAGE_KEY = 'pachisCart';
-
-  function loadCart() {
-    const savedCart = localStorage.getItem(CART_STORAGE_KEY);
-    if (savedCart) {
-      cart = JSON.parse(savedCart);
-      updateCartBadge();
-    }
-  }
-
-  function saveCart() {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
-    updateCartBadge();
-  }
-
-  function updateCartBadge() {
-    const badge = document.getElementById('cart-badge');
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-    if (totalItems > 0) {
-      badge.textContent = totalItems;
-      badge.style.display = 'block';
-    } else {
-      badge.style.display = 'none';
-    }
-  }
-
-  function addToCart(productID, quantity = 1, size = null) {
-    if (quantity <= 0) return;
-
-    const product = products.find(p => p.id === productID);
-    if (!product) return;
-
-    const cartItemId = size ? `${productID}_${size}` : productID;
-    const existingItem = cart.find(item => item.cartItemId === cartItemId);
-
-    if (existingItem) {
-      existingItem.quantity += quantity;
-    } else {
-      cart.push({
-        cartItemId: cartItemId,
-        id: productID,
-        name: product.name,
-        type: product.type,
-        category: product.category,
-        image: product.image,
-        size: size,
-        quantity: quantity
-      });
-    }
-
-    saveCart();
-
-    const sizeText = size ? ` (${size})` : '';
-    showToast(`Added ${product.name}${sizeText} to cart!`);
-
-    const qtyDisplay = document.querySelector(`[data-product-id="${productID}"]`);
-    if (qtyDisplay) qtyDisplay.textContent = '1';
-  }
-
-  function updateCartItemQuantity(productID, change) {
-    const item = cart.find(i => i.id === productID);
-    if (!item) return;
-
-    item.quantity += change;
-
-    if (item.quantity <= 0) {
-      removeFromCart(productID);
-    } else {
-      saveCart();
-      renderCart();
-    }
-  }
-
-  function removeFromCart(productID) {
-    cart = cart.filter(item => item.id !== productID);
-    saveCart();
-    renderCart();
-    showToast('Item removed from cart');
-  }
-
-  function clearCart() {
-    if (cart.length === 0) return;
-
-    if (confirm('Are you sure you want to clear your cart?')) {
-      cart = [];
-      saveCart();
-      renderCart();
-      showToast('Cart cleared');
-    }
-  }
-
-  function openCart() {
-    document.getElementById('cart-modal').style.display = 'flex';
-    renderCart();
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeCart() {
-    document.getElementById('cart-modal').style.display = 'none';
-    document.body.style.overflow = 'auto';
-  }
-
-  function renderCart() {
-    const container = document.getElementById('cart-items');
-
-    if (cart.length === 0) {
-      container.innerHTML = `
-        <div class="cart-empty">
-          <div class="cart-empty-icon">🛒</div>
-          <p>Your cart is empty</p>
-        </div>
-      `;
-      return;
-    }
-
-    container.innerHTML = cart.map(item => `
-      <div class="cart-item">
-        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-        <div class="cart-item-details">
-          <div class="cart-item-name">${item.name}</div>
-          <div class="cart-item-type">${item.type}</div>
-        </div>
-        <div class="cart-item-controls">
-          <button class="cart-qty-btn" onclick="updateCartItemQuantity('${item.id}', -1)">−</button>
-          <span class="cart-qty">${item.quantity}</span>
-          <button class="cart-qty-btn" onclick="updateCartItemQuantity('${item.id}', 1)">+</button>
-          <button class="cart-remove-btn" onclick="removeFromCart('${item.id}')">Remove</button>
+            <button type="submit" class="btn btn-telegram" style="width: 100%; margin-top: 20px;">
+              💾 Save Changes
+            </button>
+          </form>
         </div>
       </div>
-    `).join('');
-  }
+    </div>
 
-  function formatCartForTelegram() {
-    if (cart.length === 0) return '';
+  </main>
 
-    const grouped = {};
-    cart.forEach(item => {
-      if (!grouped[item.category]) {
-        grouped[item.category] = [];
-      }
-      grouped[item.category].push(item);
-    });
-
-    let message = '🛒 *Pachis Order*\n\n';
-
-    Object.keys(grouped).forEach(category => {
-      message += `📦 *${category}:*\n`;
-      grouped[category].forEach(item => {
-        const sizeText = item.size ? ` (${item.size})` : '';
-        message += `• ${item.name}${sizeText} x${item.quantity}\n`;
-      });
-      message += '\n';
-    });
-
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    message += `*Total Items:* ${totalItems}\n\n`;
-
-    const verificationDataStr = localStorage.getItem(VERIFICATION_DATA_KEY);
-    if (verificationDataStr) {
-      try {
-        const customerData = JSON.parse(verificationDataStr);
-
-        message += '━━━━━━━━━━━━━━━━━━━━━\n';
-        message += '👤 *Customer Information*\n\n';
-        message += `*Name:* ${customerData.firstName} ${customerData.lastName}\n`;
-        message += `*Email:* ${customerData.email}\n\n`;
-        message += `*Address:*\n`;
-        message += `${customerData.streetAddress}\n`;
-        message += `${customerData.city}, ${customerData.state} ${customerData.zipCode}\n`;
-        message += `${customerData.country}\n\n`;
-      } catch (e) {
-        console.error('Error parsing customer data:', e);
-      }
-    }
-
-    message += 'Thank you for ordering from Pachis! 🌿';
-
-    return message;
-  }
-
-  function sendToTelegram() {
-    if (cart.length === 0) {
-      showToast('Your cart is empty!');
-      return;
-    }
-
-    const message = formatCartForTelegram();
-    const encodedMessage = encodeURIComponent(message);
-    const telegramUrl = `https://t.me/pachisshop?text=${encodedMessage}`;
-
-    window.open(telegramUrl, '_blank');
-    showToast('Opening Telegram... Just click Send! 📤');
-  }
-
-  function showToast(message) {
-    const existingToast = document.querySelector('.toast');
-    if (existingToast) existingToast.remove();
-
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    document.body.appendChild(toast);
-
-    setTimeout(() => toast.remove(), 2000);
-  }
-
-  function updateQuantity(productID, change) {
-    const qtyDisplay = document.querySelector(`[data-product-id="${productID}"]`);
-    if (!qtyDisplay) return;
-
-    let current = parseInt(qtyDisplay.textContent);
-    current = Math.max(1, current + change);
-    qtyDisplay.textContent = current;
-  }
-
-  function renderProducts(category) {
-    currentCategory = category;
-    const grid = document.getElementById('product-grid');
-    const categoryTitle = document.getElementById('category-title');
-
-    categoryTitle.textContent = categoryHeaders[category] || category.toUpperCase();
-    const filteredProducts = products.filter(p => p.category === category);
-    grid.innerHTML = '';
-
-    const isComingSoon = comingSoonCategories.includes(category);
-
-    filteredProducts.forEach(product => {
-      const card = document.createElement('div');
-      card.className = isComingSoon ? 'product-card coming-soon' : 'product-card';
-
-      const isFlowerProduct = category === 'Flower' && product.sizes && product.sizes.length > 0;
-
-      let sizesHTML = '';
-      if (product.sizes && product.sizes.length > 0) {
-        if (isFlowerProduct) {
-          sizesHTML = `
-            <div class="size-selector" id="size-selector-${product.id}">
-              ${product.sizes.map((size, index) => `
-                <button class="size-option ${index === 0 ? 'selected' : ''}"
-                        data-size="${size}"
-                        onclick="selectSize('${product.id}', '${size}')">
-                  ${size}
-                </button>
-              `).join('')}
-            </div>
-          `;
-        } else {
-          sizesHTML = `
-            <div class="product-sizes">
-              ${product.sizes.map(size => `<span class="size-badge">${size}</span>`).join('')}
-            </div>
-          `;
-        }
-      }
-
-      let comingSoonHTML = '';
-      if (isComingSoon) {
-        comingSoonHTML = `
-          <div class="coming-soon-overlay"></div>
-          <div class="coming-soon-banner">Coming Soon</div>
-        `;
-      }
-
-      // Check if image is a video
-      const isVideo = product.image.endsWith('.mp4');
-      const mediaHTML = isVideo
-        ? `<video src="${product.image}" class="product-image" autoplay loop muted playsinline></video>`
-        : `<img src="${product.image}" alt="${product.name}" class="product-image">`;
-
-      let detailsHTML = '';
-      if (product.terps && product.thcPercent) {
-        detailsHTML = `
-          <div class="product-details">
-            <div class="product-detail-row">
-              <span class="product-detail-label">Terps:</span>
-              <span class="product-detail-value">${product.terps.split('(')[0].trim()}</span>
-            </div>
-            <div class="product-terps">${product.terps.match(/\((.*?)\)/)?.[1] || ''}</div>
-            <div class="product-detail-row">
-              <span class="product-detail-label">THC:</span>
-              <span class="product-detail-value">${product.thcPercent}</span>
-            </div>
-            <div class="product-detail-row">
-              <span class="product-detail-label">THC(mg):</span>
-              <span class="product-detail-value">${product.thcMg}</span>
-            </div>
-            <div class="product-detail-row">
-              <span class="product-detail-label">CBD(mg):</span>
-              <span class="product-detail-value">${product.cbd}</span>
-            </div>
-          </div>
-        `;
-      }
-
-      card.innerHTML = `
-        ${comingSoonHTML}
-        <div class="product-brand">${product.brand}</div>
-        ${mediaHTML}
-        <div class="product-name">${product.name}</div>
-        <div class="product-descriptor">${product.type}</div>
-        ${detailsHTML}
-        ${sizesHTML}
-        <div class="product-card-actions" onclick="event.stopPropagation()">
-          <button class="qty-btn" onclick="updateQuantity('${product.id}', -1)">−</button>
-          <span class="qty-display" data-product-id="${product.id}">1</span>
-          <button class="qty-btn" onclick="updateQuantity('${product.id}', 1)">+</button>
-          <button class="add-to-cart-btn" onclick="addToCartWithSize('${product.id}')">
-            Add to Cart
-          </button>
-        </div>
-      `;
-
-      grid.appendChild(card);
-    });
-  }
-
-  function selectSize(productID, size) {
-    const selector = document.getElementById(`size-selector-${productID}`);
-    if (!selector) return;
-
-    selector.querySelectorAll('.size-option').forEach(btn => btn.classList.remove('selected'));
-
-    const clickedBtn = selector.querySelector(`[data-size="${size}"]`);
-    if (clickedBtn) clickedBtn.classList.add('selected');
-  }
-
-  function getSelectedSize(productID) {
-    const selector = document.getElementById(`size-selector-${productID}`);
-    if (!selector) return null;
-
-    const selectedBtn = selector.querySelector('.size-option.selected');
-    return selectedBtn ? selectedBtn.getAttribute('data-size') : null;
-  }
-
-  function addToCartWithSize(productID) {
-    const quantity = parseInt(document.querySelector(`[data-product-id="${productID}"]`).textContent);
-    const size = getSelectedSize(productID);
-    addToCart(productID, quantity, size);
-  }
-
-  // Age Verification
-  const AGE_VERIFICATION_KEY = 'pachisAgeVerified';
-  const VERIFICATION_DATA_KEY = 'pachisVerificationData';
-
-  function isAgeVerified() {
-    const verified = localStorage.getItem(AGE_VERIFICATION_KEY);
-    return verified === 'true';
-  }
-
-  function showAgeVerification() {
-    const modal = document.getElementById('age-verification');
-    if (modal) {
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-  }
-
-  function hideAgeVerification() {
-    const modal = document.getElementById('age-verification');
-    if (modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-  }
-
-  function verifyAge(event) {
-    event.preventDefault();
-
-    const firstName = document.getElementById('firstName').value.trim();
-    const lastName = document.getElementById('lastName').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const streetAddress = document.getElementById('streetAddress').value.trim();
-    const city = document.getElementById('city').value.trim();
-    const state = document.getElementById('state').value.trim();
-    const zipCode = document.getElementById('zipCode').value.trim();
-    const country = document.getElementById('country').value.trim();
-    const ageConfirm = document.querySelector('input[name="ageConfirm"]:checked');
-
-    if (!firstName || !lastName || !email || !streetAddress || !city || !state || !zipCode || !country) {
-      showToast('Please fill in all required fields');
-      return;
-    }
-
-    const ageError = document.getElementById('age-error');
-
-    if (!ageConfirm) {
-      ageError.textContent = 'Please confirm your age.';
-      ageError.style.display = 'block';
-      showToast('Please confirm your age');
-      return;
-    }
-
-    if (ageConfirm.value === 'no') {
-      ageError.textContent = 'You must be 21 years or older to access this site.';
-      ageError.style.display = 'block';
-      showToast('Sorry, you must be 21 or older');
-      return;
-    }
-
-    ageError.style.display = 'none';
-
-    const verificationData = {
-      firstName,
-      lastName,
-      email,
-      streetAddress,
-      city,
-      state,
-      zipCode,
-      country,
-      ageConfirmed: true,
-      verifiedAt: new Date().toISOString()
-    };
-
-    localStorage.setItem(AGE_VERIFICATION_KEY, 'true');
-    localStorage.setItem(VERIFICATION_DATA_KEY, JSON.stringify(verificationData));
-
-    hideAgeVerification();
-    showToast('✅ Verification successful! Welcome to Pachis');
-  }
-
-  // Navigation functions
-  function goHome() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    const firstTab = document.querySelector('.tab-button[data-category="Disposable"]');
-    if (firstTab) firstTab.click();
-  }
-
-  function openTelegram() {
-    window.open('https://t.me/pachisshop', '_blank');
-  }
-
-  // Settings Modal Functions
-  function openSettings() {
-    document.getElementById('settings-modal').style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    loadSettingsData();
-  }
-
-  function closeSettings() {
-    document.getElementById('settings-modal').style.display = 'none';
-    document.body.style.overflow = 'auto';
-  }
-
-  function loadSettingsData() {
-    const verificationDataStr = localStorage.getItem(VERIFICATION_DATA_KEY);
-    if (verificationDataStr) {
-      try {
-        const data = JSON.parse(verificationDataStr);
-        document.getElementById('settingsFirstName').value = data.firstName || '';
-        document.getElementById('settingsLastName').value = data.lastName || '';
-        document.getElementById('settingsEmail').value = data.email || '';
-        document.getElementById('settingsStreetAddress').value = data.streetAddress || '';
-        document.getElementById('settingsCity').value = data.city || '';
-        document.getElementById('settingsState').value = data.state || '';
-        document.getElementById('settingsZipCode').value = data.zipCode || '';
-        document.getElementById('settingsCountry').value = data.country || '';
-      } catch (e) {
-        console.error('Error loading settings data:', e);
-      }
-    }
-  }
-
-  function updateSettings(event) {
-    event.preventDefault();
-
-    const updatedData = {
-      firstName: document.getElementById('settingsFirstName').value.trim(),
-      lastName: document.getElementById('settingsLastName').value.trim(),
-      email: document.getElementById('settingsEmail').value.trim(),
-      streetAddress: document.getElementById('settingsStreetAddress').value.trim(),
-      city: document.getElementById('settingsCity').value.trim(),
-      state: document.getElementById('settingsState').value.trim(),
-      zipCode: document.getElementById('settingsZipCode').value.trim(),
-      country: document.getElementById('settingsCountry').value.trim(),
-      ageConfirmed: true,
-      verifiedAt: new Date().toISOString()
-    };
-
-    localStorage.setItem(VERIFICATION_DATA_KEY, JSON.stringify(updatedData));
-    showToast('✅ Profile updated successfully!');
-    closeSettings();
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    if (!isAgeVerified()) showAgeVerification();
-
-    const tabButtons = document.querySelectorAll('.tab-button');
-
-    tabButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        const category = button.getAttribute('data-category');
-        renderProducts(category);
-      });
-    });
-
-    loadCart();
-    renderProducts('Disposable');
-  });
-</script>
+  <script type="module" src="js/app.js"></script>
 
 </body>
+
 </html>
