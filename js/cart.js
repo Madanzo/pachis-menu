@@ -137,19 +137,90 @@ export function renderCart() {
     });
 }
 
-function formatCartForTelegram() {
-    if (cart.length === 0) return '';
+export async function sendToTelegram() {
+    if (cart.length === 0) {
+        showToast('Your cart is empty!');
+        return;
+    }
+
+    const verificationDataStr = localStorage.getItem(VERIFICATION_DATA_KEY);
+    if (!verificationDataStr) {
+        showToast('⚠️ Please verify your profile first in settings.');
+        return;
+    }
+
+    let customerData;
+    try {
+        customerData = JSON.parse(verificationDataStr);
+    } catch (e) {
+        showToast('Error reading profile data.');
+        return;
+    }
+
+    const sendBtn = document.querySelector('.btn-telegram');
+    const originalText = sendBtn ? sendBtn.innerHTML : 'Send to Telegram';
+    if (sendBtn) {
+        sendBtn.disabled = true;
+        sendBtn.innerHTML = '⏳ Sending...';
+    }
+
+    try {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+        const response = await fetch('/api/send-order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                cart: cart,
+                customer: customerData,
+                totalItems: totalItems
+            })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            cart = [];
+            saveCart();
+            renderCart();
+            showToast('✅ Order sent successfully! We will contact you soon.');
+            // Close modal after success
+            const closeBtn = document.querySelector('.cart-close-btn');
+            if (closeBtn) closeBtn.click();
+        } else {
+            throw new Error(result.error || 'Failed to send');
+        }
+
+    } catch (error) {
+        console.error('Order Error:', error);
+        showToast('❌ Failed to send order automatically.');
+
+        // Fallback to manual method if API fails (e.g. env vars missing)
+        if (confirm('Automatic sending failed. Open Telegram manually?')) {
+            sendToTelegramManual();
+        }
+
+    } finally {
+        if (sendBtn) {
+            sendBtn.disabled = false;
+            sendBtn.innerHTML = originalText;
+        }
+    }
+}
+
+// Fallback manual method
+function sendToTelegramManual() {
+    if (cart.length === 0) return;
 
     const grouped = {};
     cart.forEach(item => {
-        if (!grouped[item.category]) {
-            grouped[item.category] = [];
-        }
+        if (!grouped[item.category]) grouped[item.category] = [];
         grouped[item.category].push(item);
     });
 
-    let message = '🛒 *Pachis Order*\n\n';
-
+    let message = '🛒 *Pachis Order (Manual)*\n\n';
     Object.keys(grouped).forEach(category => {
         message += `📦 *${category}:*\n`;
         grouped[category].forEach(item => {
@@ -159,44 +230,19 @@ function formatCartForTelegram() {
         message += '\n';
     });
 
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    message += `*Total Items:* ${totalItems}\n\n`;
-
     const verificationDataStr = localStorage.getItem(VERIFICATION_DATA_KEY);
     if (verificationDataStr) {
         try {
-            const customerData = JSON.parse(verificationDataStr);
-
+            const customer = JSON.parse(verificationDataStr);
             message += '━━━━━━━━━━━━━━━━━━━━━\n';
-            message += '👤 *Customer Information*\n\n';
-            message += `*Name:* ${customerData.firstName} ${customerData.lastName}\n`;
-            message += `*Email:* ${customerData.email}\n\n`;
-            message += `*Address:*\n`;
-            message += `${customerData.streetAddress}\n`;
-            message += `${customerData.city}, ${customerData.state} ${customerData.zipCode}\n`;
-            message += `${customerData.country}\n\n`;
-        } catch (e) {
-            console.error('Error parsing customer data:', e);
-        }
+            message += `👤 *${customer.firstName} ${customer.lastName}*\n`;
+            message += `${customer.email}\n`;
+            message += `${customer.streetAddress}, ${customer.city}\n`;
+        } catch (e) { }
     }
 
-    message += 'Thank you for ordering from Pachis! 🌿';
-
-    return message;
-}
-
-export function sendToTelegram() {
-    if (cart.length === 0) {
-        showToast('Your cart is empty!');
-        return;
-    }
-
-    const message = formatCartForTelegram();
     const encodedMessage = encodeURIComponent(message);
-    const telegramUrl = `https://t.me/pachisshop?text=${encodedMessage}`;
-
-    window.open(telegramUrl, '_blank');
-    showToast('Opening Telegram... Just click Send! 📤');
+    window.open(`https://t.me/pachisshop?text=${encodedMessage}`, '_blank');
 }
 
 export { cart };
