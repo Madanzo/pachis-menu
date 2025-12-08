@@ -1,6 +1,8 @@
 import { products } from './products.js';
-import { loadCart, addToCart, openCart as cartOpen, renderCart, clearCart as cartClear, sendToTelegram as cartSend } from './cart.js';
+import { loadCart, addToCart, renderCart, clearCart as cartClear, sendToTelegram as cartSend } from './cart.js';
 import { showToast } from './utils.js';
+
+console.log('App module loaded');
 
 // Category header mapping
 const categoryHeaders = {
@@ -66,6 +68,11 @@ function renderProducts(category) {
         categoryTitle.textContent = categoryHeaders[category] || category.toUpperCase();
     }
 
+    if (!products) {
+        console.error('Products array is undefined!');
+        return;
+    }
+
     const filteredProducts = products.filter(p => p.category === category);
 
     if (grid) {
@@ -111,10 +118,10 @@ function renderProducts(category) {
             }
 
             // Check if image is a video
-            const isVideo = product.image.endsWith('.mp4');
+            const isVideo = product.image ? product.image.endsWith('.mp4') : false;
             const mediaHTML = isVideo
                 ? `<video src="${product.image}" class="product-image" autoplay loop muted playsinline></video>`
-                : `<img src="${product.image}" alt="${product.name}" class="product-image">`;
+                : `<img src="${product.image || ''}" alt="${product.name}" class="product-image">`;
 
             let detailsHTML = '';
             if (product.terps && product.thcPercent) {
