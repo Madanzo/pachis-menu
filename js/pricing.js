@@ -1,49 +1,135 @@
 // Pricing Configuration for Pachis Menu
-// All prices are in USD
+// Supports USD (USA) and MXN (Mexico) pricing
 
+// Region storage key
+const REGION_KEY = 'pachis_region';
+
+// Get current region (defaults to USA)
+export function getRegion() {
+    return localStorage.getItem(REGION_KEY) || 'USA';
+}
+
+// Set region based on country
+export function setRegion(country) {
+    const mexicoVariants = ['mexico', 'méxico', 'mx', 'mex'];
+    const isMexico = mexicoVariants.includes(country.toLowerCase().trim());
+    const region = isMexico ? 'MX' : 'USA';
+    localStorage.setItem(REGION_KEY, region);
+    return region;
+}
+
+// Currency configuration
+const currencyConfig = {
+    USA: { code: 'USD', symbol: '$', locale: 'en-US' },
+    MX: { code: 'MXN', symbol: 'MX$', locale: 'es-MX' }
+};
+
+// Pricing tiers for each region
 export const pricingTiers = {
-    // Disposables: 1 for $60, 2 for $100, 3 for $150
-    Disposable: {
-        type: 'quantity',
-        tiers: [
-            { qty: 1, price: 60, label: '1 unit', pricePerUnit: 60 },
-            { qty: 2, price: 100, label: '2 units', pricePerUnit: 50 },
-            { qty: 3, price: 150, label: '3 units', pricePerUnit: 50 }
-        ],
-        basePrice: 60,
-        description: '2G Liquid Diamonds'
+    USA: {
+        Disposable: {
+            type: 'quantity',
+            tiers: [
+                { qty: 1, price: 60, label: '1 unit', pricePerUnit: 60 },
+                { qty: 2, price: 100, label: '2 units', pricePerUnit: 50 },
+                { qty: 3, price: 150, label: '3 units', pricePerUnit: 50 }
+            ],
+            basePrice: 60,
+            description: '2G Liquid Diamonds'
+        },
+        'Live Rosin Dabs': {
+            type: 'fixed',
+            description: 'Live Rosin Jars'
+        },
+        'Pre-Rolls': {
+            type: 'fixed',
+            description: 'Premium Pre-Rolled Joints'
+        },
+        Flower: {
+            type: 'fixed',
+            description: 'Indoor Premium Flower'
+        }
     },
-
-    // Dabs: Now uses fixed prices per product (defined in products.js)
-    // Each jar option is a separate product with its own price
-    'Live Rosin Dabs': {
-        type: 'fixed',
-        description: 'Live Rosin Jars'
-    },
-
-    // PreRolls: Now uses fixed prices per product (defined in products.js)
-    // Black Box = $75, Blue Box = $400
-    'Pre-Rolls': {
-        type: 'fixed',
-        description: 'Premium Pre-Rolled Joints'
-    },
-
-    // Flower: Now uses fixed prices per product (defined in products.js)
-    // ¼oz (7g) = $80, ½oz (14g) = $150, 1oz (28g) = $280
-    Flower: {
-        type: 'fixed',
-        description: 'Indoor Premium Flower'
+    MX: {
+        Disposable: {
+            type: 'quantity',
+            tiers: [
+                { qty: 1, price: 1800, label: '1 unit', pricePerUnit: 1800 },
+                { qty: 2, price: 3200, label: '2 units', pricePerUnit: 1600 },
+                { qty: 3, price: 4800, label: '3 units', pricePerUnit: 1600 }
+            ],
+            basePrice: 1800,
+            description: '2G Liquid Diamonds'
+        },
+        'Live Rosin Dabs': {
+            type: 'fixed',
+            description: 'Live Rosin Jars'
+        },
+        'Pre-Rolls': {
+            type: 'fixed',
+            description: 'Premium Pre-Rolled Joints'
+        },
+        Flower: {
+            type: 'fixed',
+            description: 'Indoor Premium Flower'
+        }
     }
 };
+
+// Product size options for each region
+export const regionSizeOptions = {
+    USA: {
+        dab_pachis: [
+            { id: "1jar_2g", name: "1 Jar (2g)", price: 120 },
+            { id: "7jars_halfoz", name: "7 Jars - ½oz (14g)", price: 750 },
+            { id: "14jars_1oz", name: "14 Jars - 1oz (28g)", price: 1400 }
+        ],
+        preroll_pachis: [
+            { id: "black_box", name: "Black Box (3 pre-rolls)", price: 75 },
+            { id: "blue_box", name: "Blue Box (18 pre-rolls)", price: 400 }
+        ],
+        flower_premium: [
+            { id: "quarter_oz", name: "¼ oz (7g)", price: 80 },
+            { id: "half_oz", name: "½ oz (14g)", price: 150 },
+            { id: "full_oz", name: "1 oz (28g)", price: 280 }
+        ]
+    },
+    MX: {
+        dab_pachis: [
+            { id: "1jar_2g", name: "1 Jar (2g)", price: 2600 }
+        ],
+        preroll_pachis: [
+            { id: "black_box", name: "Black Box (3 pre-rolls)", price: 2100 },
+            { id: "blue_box", name: "Blue Box (18 pre-rolls)", price: 9900 }
+        ],
+        flower_premium: [
+            { id: "quarter_oz", name: "¼ oz (7g)", price: 400 },
+            { id: "half_oz", name: "½ oz (14g)", price: 700 },
+            { id: "full_oz", name: "1 oz (28g)", price: 1200 }
+        ]
+    }
+};
+
+// Get size options for a product based on current region
+export function getSizeOptionsForProduct(productId) {
+    const region = getRegion();
+    return regionSizeOptions[region]?.[productId] || regionSizeOptions['USA']?.[productId] || null;
+}
+
+// Get pricing tiers for current region
+export function getCurrentPricingTiers() {
+    const region = getRegion();
+    return pricingTiers[region] || pricingTiers['USA'];
+}
 
 /**
  * Calculate price for a given category and quantity/size
  */
 export function calculatePrice(category, quantity = 1, sizeOrVariant = null) {
-    const pricing = pricingTiers[category];
+    const pricing = getCurrentPricingTiers()[category];
 
     if (!pricing) {
-        return null; // No pricing defined for this category
+        return null;
     }
 
     switch (pricing.type) {
@@ -59,10 +145,9 @@ export function calculatePrice(category, quantity = 1, sizeOrVariant = null) {
 }
 
 /**
- * Calculate price for quantity-based tiers (Disposables, Dabs)
+ * Calculate price for quantity-based tiers (Disposables)
  */
 function calculateQuantityPrice(pricing, quantity) {
-    // Find the best tier for the quantity
     let applicableTier = pricing.tiers[0];
 
     for (const tier of pricing.tiers) {
@@ -71,9 +156,7 @@ function calculateQuantityPrice(pricing, quantity) {
         }
     }
 
-    // Calculate how many "packs" of the tier and remaining units
     if (quantity <= pricing.tiers[pricing.tiers.length - 1].qty) {
-        // Find exact tier match or calculate based on tiers
         const exactTier = pricing.tiers.find(t => t.qty === quantity);
         if (exactTier) {
             return {
@@ -85,7 +168,6 @@ function calculateQuantityPrice(pricing, quantity) {
         }
     }
 
-    // For quantities beyond defined tiers, calculate based on best tier
     const baseTier = pricing.tiers[pricing.tiers.length - 1];
     const packs = Math.floor(quantity / baseTier.qty);
     const remaining = quantity % baseTier.qty;
@@ -105,7 +187,7 @@ function calculateQuantityPrice(pricing, quantity) {
 }
 
 /**
- * Calculate price for variant-based pricing (Pre-Rolls)
+ * Calculate price for variant-based pricing
  */
 function calculateVariantPrice(pricing, variantId, quantity) {
     const variant = pricing.variants.find(v => v.id === variantId) || pricing.variants[0];
@@ -119,7 +201,7 @@ function calculateVariantPrice(pricing, variantId, quantity) {
 }
 
 /**
- * Calculate price for size-based pricing (Flower)
+ * Calculate price for size-based pricing
  */
 function calculateSizePrice(pricing, sizeId, quantity) {
     const size = pricing.sizes.find(s => s.id === sizeId) || pricing.sizes[0];
@@ -133,22 +215,33 @@ function calculateSizePrice(pricing, sizeId, quantity) {
 }
 
 /**
- * Format price for display
+ * Format price for display with correct currency
  */
 export function formatPrice(amount) {
-    return new Intl.NumberFormat('en-US', {
+    const region = getRegion();
+    const config = currencyConfig[region] || currencyConfig['USA'];
+
+    return new Intl.NumberFormat(config.locale, {
         style: 'currency',
-        currency: 'USD',
+        currency: config.code,
         minimumFractionDigits: 0,
         maximumFractionDigits: 2
     }).format(amount);
 }
 
 /**
+ * Get currency symbol for current region
+ */
+export function getCurrencySymbol() {
+    const region = getRegion();
+    return currencyConfig[region]?.symbol || '$';
+}
+
+/**
  * Get pricing options for a category (for UI display)
  */
 export function getPricingOptions(category) {
-    const pricing = pricingTiers[category];
+    const pricing = getCurrentPricingTiers()[category];
     if (!pricing) return null;
 
     switch (pricing.type) {
@@ -196,8 +289,8 @@ export function getPricingOptions(category) {
 export function calculateCartTotal(cartItems) {
     let total = 0;
     const itemizedPrices = [];
+    const currentPricing = getCurrentPricingTiers();
 
-    // Group items by category for tier calculation
     const groupedByCategory = {};
 
     for (const item of cartItems) {
@@ -207,12 +300,10 @@ export function calculateCartTotal(cartItems) {
         groupedByCategory[item.category].push(item);
     }
 
-    // Calculate prices for each category group
     for (const [category, items] of Object.entries(groupedByCategory)) {
-        const pricing = pricingTiers[category];
+        const pricing = currentPricing[category];
 
         if (!pricing) {
-            // No pricing for this category, skip
             itemizedPrices.push(...items.map(item => ({
                 ...item,
                 price: null,
@@ -222,11 +313,9 @@ export function calculateCartTotal(cartItems) {
         }
 
         if (pricing.type === 'quantity') {
-            // For quantity-based pricing, sum all items in category
             const totalQty = items.reduce((sum, item) => sum + item.quantity, 0);
             const priceInfo = calculateQuantityPrice(pricing, totalQty);
 
-            // Distribute price across items proportionally
             items.forEach(item => {
                 const proportion = item.quantity / totalQty;
                 const itemSubtotal = priceInfo.total * proportion;
@@ -239,7 +328,6 @@ export function calculateCartTotal(cartItems) {
                 });
             });
         } else if (pricing.type === 'fixed') {
-            // For fixed-price products (price defined on product itself)
             for (const item of items) {
                 if (item.price !== undefined) {
                     const subtotal = item.price * item.quantity;
@@ -258,7 +346,6 @@ export function calculateCartTotal(cartItems) {
                 }
             }
         } else {
-            // For variant/size-based, calculate each item individually
             for (const item of items) {
                 const priceInfo = calculatePrice(category, item.quantity, item.variant || item.size);
                 if (priceInfo) {

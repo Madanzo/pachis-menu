@@ -129,8 +129,8 @@ export const products = [
         brand: "Pachis",
         type: "Premium Pre-Rolled Joints",
         sizeOptions: [
-            { id: "black_box", name: "Black Box", price: 75 },
-            { id: "blue_box", name: "Blue Box", price: 400 }
+            { id: "black_box", name: "Black Box (3 pre-rolls)", price: 75 },
+            { id: "blue_box", name: "Blue Box (18 pre-rolls)", price: 400 }
         ],
         image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/pre_rolls.png"
     },

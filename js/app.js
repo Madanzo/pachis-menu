@@ -1,6 +1,7 @@
 import { products } from './products.js';
 import { loadCart, addToCart, renderCart, clearCart as cartClear, sendToTelegram as cartSend } from './cart.js';
 import { showToast } from './utils.js';
+import { setRegion, getSizeOptionsForProduct, getRegion } from './pricing.js';
 
 console.log('App module loaded');
 
@@ -92,14 +93,17 @@ function renderProducts(category) {
             const card = document.createElement('div');
             card.className = isComingSoon ? 'product-card coming-soon' : 'product-card';
 
-            const hasSizeOptions = product.sizeOptions && product.sizeOptions.length > 0;
+            // Get region-specific size options if available
+            const regionSizeOptions = getSizeOptionsForProduct(product.id);
+            const sizeOptions = regionSizeOptions || product.sizeOptions;
+            const hasSizeOptions = sizeOptions && sizeOptions.length > 0;
 
             let sizesHTML = '';
             if (hasSizeOptions) {
                 // Products with selectable size options (like Flower)
                 sizesHTML = `
               <div class="size-selector" id="size-selector-${product.id}">
-                ${product.sizeOptions.map((opt, index) => `
+                ${sizeOptions.map((opt, index) => `
                   <button class="size-option ${index === 0 ? 'selected' : ''}"
                           data-size="${opt.id}"
                           data-price="${opt.price}"
@@ -274,8 +278,17 @@ function verifyAge(event) {
     localStorage.setItem(AGE_VERIFICATION_KEY, 'true');
     localStorage.setItem(VERIFICATION_DATA_KEY, JSON.stringify(verificationData));
 
+    // Set region based on country for pricing
+    const region = setRegion(country);
+    console.log('Region set to:', region);
+
     hideAgeVerification();
-    showToast('✅ Verification successful! Welcome to Pachis');
+
+    // Re-render products with region-specific pricing
+    renderProducts(currentCategory);
+
+    const regionMsg = region === 'MX' ? ' (México)' : ' (USA)';
+    showToast(`✅ Verification successful! Welcome to Pachis${regionMsg}`);
 }
 
 // Navigation functions
@@ -355,7 +368,16 @@ function updateSettings(event) {
     };
 
     localStorage.setItem(VERIFICATION_DATA_KEY, JSON.stringify(updatedData));
-    showToast('✅ Profile updated successfully!');
+
+    // Update region if country changed
+    const region = setRegion(updatedData.country);
+    console.log('Region updated to:', region);
+
+    // Re-render products with new region pricing
+    renderProducts(currentCategory);
+
+    const regionMsg = region === 'MX' ? ' (México)' : ' (USA)';
+    showToast(`✅ Profile updated successfully!${regionMsg}`);
     closeSettings();
 }
 
