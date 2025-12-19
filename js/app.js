@@ -26,7 +26,7 @@ const AGE_VERIFICATION_KEY = 'pachisAgeVerified';
 const VERIFICATION_DATA_KEY = 'pachisVerificationData';
 
 function updateQuantity(productID, change) {
-    const qtyDisplay = document.querySelector(`[data-product-id="${productID}"]`);
+    const qtyDisplay = document.querySelector(`.qty-display[data-product-id="${productID}"]`);
     if (!qtyDisplay) return;
 
     let current = parseInt(qtyDisplay.textContent);
@@ -49,13 +49,21 @@ function getSelectedSize(productID) {
     if (!selector) return null;
 
     const selectedBtn = selector.querySelector('.size-option.selected');
-    return selectedBtn ? selectedBtn.getAttribute('data-size') : null;
+    if (!selectedBtn) return null;
+
+    return {
+        id: selectedBtn.getAttribute('data-size'),
+        price: selectedBtn.getAttribute('data-price') ? parseFloat(selectedBtn.getAttribute('data-price')) : null
+    };
 }
 
 function addToCartWithSize(productID) {
-    const quantity = parseInt(document.querySelector(`[data-product-id="${productID}"]`).textContent);
-    const size = getSelectedSize(productID);
-    addToCart(productID, quantity, size);
+    const qtyDisplay = document.querySelector(`.qty-display[data-product-id="${productID}"]`);
+    const quantity = qtyDisplay ? parseInt(qtyDisplay.textContent) : 1;
+    const sizeData = getSelectedSize(productID);
+    const size = sizeData ? sizeData.id : null;
+    const sizePrice = sizeData ? sizeData.price : null;
+    addToCart(productID, quantity, size, sizePrice);
 }
 
 function renderProducts(category) {
@@ -84,29 +92,30 @@ function renderProducts(category) {
             const card = document.createElement('div');
             card.className = isComingSoon ? 'product-card coming-soon' : 'product-card';
 
-            const isFlowerProduct = category === 'Flower' && product.sizes && product.sizes.length > 0;
+            const hasSizeOptions = product.sizeOptions && product.sizeOptions.length > 0;
 
             let sizesHTML = '';
-            if (product.sizes && product.sizes.length > 0) {
-                if (isFlowerProduct) {
-                    sizesHTML = `
+            if (hasSizeOptions) {
+                // Products with selectable size options (like Flower)
+                sizesHTML = `
               <div class="size-selector" id="size-selector-${product.id}">
-                ${product.sizes.map((size, index) => `
+                ${product.sizeOptions.map((opt, index) => `
                   <button class="size-option ${index === 0 ? 'selected' : ''}"
-                          data-size="${size}"
+                          data-size="${opt.id}"
+                          data-price="${opt.price}"
                           data-product-id="${product.id}">
-                    ${size}
+                    ${opt.name}
                   </button>
                 `).join('')}
               </div>
             `;
-                } else {
-                    sizesHTML = `
+            } else if (product.sizes && product.sizes.length > 0) {
+                // Legacy size badges (for apparel etc.)
+                sizesHTML = `
               <div class="product-sizes">
                 ${product.sizes.map(size => `<span class="size-badge">${size}</span>`).join('')}
               </div>
             `;
-                }
             }
 
             let comingSoonHTML = '';
@@ -180,7 +189,7 @@ function renderProducts(category) {
             );
 
             // Add event listeners for size options
-            if (isFlowerProduct) {
+            if (hasSizeOptions) {
                 card.querySelectorAll('.size-option').forEach(btn => {
                     btn.addEventListener('click', (e) => selectSize(e.target.dataset.productId, e.target.dataset.size));
                 });

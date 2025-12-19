@@ -1,6 +1,7 @@
 // Cart management
 import { products } from './products.js';
 import { showToast } from './utils.js';
+import { calculateCartTotal, formatPrice, pricingTiers } from './pricing.js';
 
 let cart = [];
 const CART_STORAGE_KEY = 'pachisCart';
@@ -31,7 +32,7 @@ export function updateCartBadge() {
     }
 }
 
-export function addToCart(productID, quantity = 1, size = null) {
+export function addToCart(productID, quantity = 1, size = null, sizePrice = null) {
     if (quantity <= 0) return;
 
     const product = products.find(p => p.id === productID);
@@ -40,6 +41,13 @@ export function addToCart(productID, quantity = 1, size = null) {
     const cartItemId = size ? `${productID}_${size}` : productID;
     const existingItem = cart.find(item => item.cartItemId === cartItemId);
 
+    // Get size name if this product has sizeOptions
+    let sizeName = null;
+    if (size && product.sizeOptions) {
+        const sizeOpt = product.sizeOptions.find(s => s.id === size);
+        if (sizeOpt) sizeName = sizeOpt.name;
+    }
+
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
@@ -47,39 +55,43 @@ export function addToCart(productID, quantity = 1, size = null) {
             cartItemId: cartItemId,
             id: productID,
             name: product.name,
-            type: product.type,
+            type: sizeName || product.type, // Use size name if available
             category: product.category,
             image: product.image,
             size: size,
+            sizeName: sizeName,
+            price: sizePrice || product.price || null, // Use size price, then product price
             quantity: quantity
         });
     }
 
     saveCart();
 
-    const sizeText = size ? ` (${size})` : '';
+    const sizeText = sizeName ? ` (${sizeName})` : '';
     showToast(`Added ${product.name}${sizeText} to cart!`);
 
-    const qtyDisplay = document.querySelector(`[data-product-id="${productID}"]`);
+    const qtyDisplay = document.querySelector(`.qty-display[data-product-id="${productID}"]`);
     if (qtyDisplay) qtyDisplay.textContent = '1';
 }
 
-export function updateCartItemQuantity(productID, change) {
-    const item = cart.find(i => i.id === productID);
+export function updateCartItemQuantity(itemId, change) {
+    // Support both cartItemId and regular id
+    const item = cart.find(i => i.cartItemId === itemId || i.id === itemId);
     if (!item) return;
 
     item.quantity += change;
 
     if (item.quantity <= 0) {
-        removeFromCart(productID);
+        removeFromCart(itemId);
     } else {
         saveCart();
         renderCart();
     }
 }
 
-export function removeFromCart(productID) {
-    cart = cart.filter(item => item.id !== productID);
+export function removeFromCart(itemId) {
+    // Support both cartItemId and regular id
+    cart = cart.filter(item => item.cartItemId !== itemId && item.id !== itemId);
     saveCart();
     renderCart();
     showToast('Item removed from cart');
@@ -106,24 +118,44 @@ export function renderCart() {
         <p>Your cart is empty</p>
       </div>
     `;
+        updateCartTotal(0);
         return;
     }
 
-    container.innerHTML = cart.map(item => `
+    // Calculate prices with tier discounts
+    const cartData = calculateCartTotal(cart);
+
+    container.innerHTML = cartData.items.map(item => {
+        const priceDisplay = item.subtotal !== null
+            ? `<div class="cart-item-price">${formatPrice(item.subtotal)}</div>`
+            : '';
+        const tierBadge = item.tierApplied
+            ? `<span class="cart-tier-badge">${item.tierApplied}</span>`
+            : '';
+
+        return `
     <div class="cart-item">
       <img src="${item.image}" alt="${item.name}" class="cart-item-image">
       <div class="cart-item-details">
-        <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-type">${item.type}</div>
+        <div class="cart-item-name">${item.name} ${tierBadge}</div>
+        <div class="cart-item-type">${item.type}${item.size ? ` • ${item.size}` : ''}${item.variant ? ` • ${item.variant}` : ''}</div>
+        ${item.pricePerUnit ? `<div class="cart-item-unit-price">${formatPrice(item.pricePerUnit)} each</div>` : ''}
       </div>
       <div class="cart-item-controls">
-        <button class="cart-qty-btn" data-action="decrease" data-id="${item.id}">−</button>
-        <span class="cart-qty">${item.quantity}</span>
-        <button class="cart-qty-btn" data-action="increase" data-id="${item.id}">+</button>
-        <button class="cart-remove-btn" data-action="remove" data-id="${item.id}">Remove</button>
+        ${priceDisplay}
+        <div class="cart-qty-controls">
+          <button class="cart-qty-btn" data-action="decrease" data-id="${item.cartItemId || item.id}">−</button>
+          <span class="cart-qty">${item.quantity}</span>
+          <button class="cart-qty-btn" data-action="increase" data-id="${item.cartItemId || item.id}">+</button>
+        </div>
+        <button class="cart-remove-btn" data-action="remove" data-id="${item.cartItemId || item.id}">Remove</button>
       </div>
     </div>
-  `).join('');
+  `;
+    }).join('');
+
+    // Update total display
+    updateCartTotal(cartData.total);
 
     // Add event listeners for dynamic cart buttons
     container.querySelectorAll('[data-action="decrease"]').forEach(btn => {
@@ -135,6 +167,23 @@ export function renderCart() {
     container.querySelectorAll('[data-action="remove"]').forEach(btn => {
         btn.addEventListener('click', () => removeFromCart(btn.dataset.id));
     });
+}
+
+function updateCartTotal(total) {
+    let totalEl = document.getElementById('cart-total');
+    if (!totalEl) {
+        const footer = document.querySelector('.cart-modal-footer');
+        if (footer) {
+            const totalDiv = document.createElement('div');
+            totalDiv.className = 'cart-total-display';
+            totalDiv.innerHTML = `<span>Total:</span><span id="cart-total">${formatPrice(total)}</span>`;
+            footer.insertBefore(totalDiv, footer.firstChild);
+            totalEl = document.getElementById('cart-total');
+        }
+    }
+    if (totalEl) {
+        totalEl.textContent = formatPrice(total);
+    }
 }
 
 export async function sendToTelegram() {
@@ -214,8 +263,11 @@ export async function sendToTelegram() {
 function sendToTelegramManual() {
     if (cart.length === 0) return;
 
+    // Calculate cart total with pricing
+    const cartData = calculateCartTotal(cart);
+
     const grouped = {};
-    cart.forEach(item => {
+    cartData.items.forEach(item => {
         if (!grouped[item.category]) grouped[item.category] = [];
         grouped[item.category].push(item);
     });
@@ -225,16 +277,22 @@ function sendToTelegramManual() {
         message += `📦 *${category}:*\n`;
         grouped[category].forEach(item => {
             const sizeText = item.size ? ` (${item.size})` : '';
-            message += `• ${item.name}${sizeText} x${item.quantity}\n`;
+            const variantText = item.variant ? ` (${item.variant})` : '';
+            const priceText = item.subtotal !== null ? ` - ${formatPrice(item.subtotal)}` : '';
+            message += `• ${item.name}${sizeText}${variantText} x${item.quantity}${priceText}\n`;
         });
         message += '\n';
     });
+
+    // Add total
+    message += '━━━━━━━━━━━━━━━━━━━━━\n';
+    message += `💰 *Total: ${cartData.formattedTotal}*\n`;
+    message += '━━━━━━━━━━━━━━━━━━━━━\n\n';
 
     const verificationDataStr = localStorage.getItem(VERIFICATION_DATA_KEY);
     if (verificationDataStr) {
         try {
             const customer = JSON.parse(verificationDataStr);
-            message += '━━━━━━━━━━━━━━━━━━━━━\n';
             message += `👤 *${customer.firstName} ${customer.lastName}*\n`;
             message += `${customer.email}\n`;
             message += `${customer.streetAddress}, ${customer.city}\n`;

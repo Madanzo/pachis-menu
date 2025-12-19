@@ -106,60 +106,48 @@ export const products = [
         cbd: "0.0/pkg"
     },
 
-    // LIVE ROSIN DABS
+    // LIVE ROSIN DABS - Single product with jar quantity selector
     {
-        id: "dab_2g_live_rosin",
-        name: "DAB IT PACHIS 2G",
+        id: "dab_pachis",
+        name: "DAB IT PACHIS",
         category: "Live Rosin Dabs",
         brand: "Pachis",
-        type: "2G Live Rosin",
+        type: "Live Rosin Dabs",
+        sizeOptions: [
+            { id: "1jar_2g", name: "1 Jar (2g)", price: 120 },
+            { id: "7jars_halfoz", name: "7 Jars - ½oz (14g)", price: 750 },
+            { id: "14jars_1oz", name: "14 Jars - 1oz (28g)", price: 1400 }
+        ],
         image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dabs_2g.png"
     },
-    {
-        id: "dab_1oz_live_rosin",
-        name: "DAB IT PACHIS 1OZ",
-        category: "Live Rosin Dabs",
-        brand: "Pachis",
-        type: "1 OZ Live Rosin",
-        image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dabs_1oz.png"
-    },
 
-    // PRE-ROLLS
+    // PRE-ROLLS - Single product with box type selector
     {
-        id: "preroll_classic",
+        id: "preroll_pachis",
         name: "PREROLLS PACHIS",
         category: "Pre-Rolls",
         brand: "Pachis",
         type: "Premium Pre-Rolled Joints",
-        image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/pre_rolls.png"
-    },
-    {
-        id: "preroll_infused",
-        name: "INFUSED PREROLLS",
-        category: "Pre-Rolls",
-        brand: "Pachis",
-        type: "Diamond Infused Pre-Rolls",
+        sizeOptions: [
+            { id: "black_box", name: "Black Box", price: 75 },
+            { id: "blue_box", name: "Blue Box", price: 400 }
+        ],
         image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/pre_rolls.png"
     },
 
-    // FLOWER
+    // FLOWER - Single product with size selector
     {
-        id: "flower_eighths",
+        id: "flower_premium",
         name: "PREMIUM FLOWER",
         category: "Flower",
         brand: "Pachis",
-        type: "Indoor Flower",
-        sizes: ["1/8 OZ", "1/4 OZ", "1/2 OZ", "1 OZ"],
+        type: "Indoor Premium Flower",
+        sizeOptions: [
+            { id: "quarter_oz", name: "¼ oz (7g)", price: 80 },
+            { id: "half_oz", name: "½ oz (14g)", price: 150 },
+            { id: "full_oz", name: "1 oz (28g)", price: 280 }
+        ],
         image: "images/premium-flower.jpg"
-    },
-    {
-        id: "flower_exotic",
-        name: "EXOTIC STRAINS",
-        category: "Flower",
-        brand: "Pachis",
-        type: "Indoor Flower",
-        sizes: ["1/8 OZ", "1/4 OZ", "1/2 OZ", "1 OZ"],
-        image: "images/exotic-strains.jpg"
     },
 
     // APPAREL
