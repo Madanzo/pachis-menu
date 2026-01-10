@@ -105,6 +105,45 @@ export const products = [
         thcPercent: "88.0%",
         cbd: "0.0/pkg"
     },
+    {
+        id: "cart_banana_bonanza",
+        name: "BANANA BONANZA",
+        category: "Disposable",
+        brand: "Pachis",
+        type: "2g Liquid Diamonds",
+        flavor: "Banana Bonanza",
+        image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/Pachis%20Banana%20Bonanza.png",
+        terps: "7% (indica - creamy, tropical)",
+        thcMg: "879.5/pkg",
+        thcPercent: "88.0%",
+        cbd: "0.0/pkg"
+    },
+    {
+        id: "cart_cherry_jubilee",
+        name: "CHERRY JUBILEE",
+        category: "Disposable",
+        brand: "Pachis",
+        type: "2g Liquid Diamonds",
+        flavor: "Cherry Jubilee",
+        image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/Pachis%20Cherry%20Jubilee.png",
+        terps: "7% (hybrid - sweet, tart)",
+        thcMg: "879.5/pkg",
+        thcPercent: "88.0%",
+        cbd: "0.0/pkg"
+    },
+    {
+        id: "cart_watermelon_marshmallow",
+        name: "WATERMELON MARSHMALLOW",
+        category: "Disposable",
+        brand: "Pachis",
+        type: "2g Liquid Diamonds",
+        flavor: "Watermelon Marshmallow",
+        image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/pachis%20watermelon%20marshmallow.png",
+        terps: "7% (sativa - fresh, sweet)",
+        thcMg: "879.5/pkg",
+        thcPercent: "88.0%",
+        cbd: "0.0/pkg"
+    },
 
     // LIVE ROSIN DABS - Single product with jar quantity selector
     {
