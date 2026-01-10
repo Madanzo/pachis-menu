@@ -71,10 +71,16 @@ function renderProducts(category) {
     currentCategory = category;
     const grid = document.getElementById('product-grid');
     const categoryTitle = document.getElementById('category-title');
+    const promoBanner = document.getElementById('promo-banner');
 
     // Handle category title potentially missing if elements aren't ready
     if (categoryTitle) {
         categoryTitle.textContent = categoryHeaders[category] || category.toUpperCase();
+    }
+
+    // Show promo banner only for Disposable category
+    if (promoBanner) {
+        promoBanner.style.display = category === 'Disposable' ? 'block' : 'none';
     }
 
     if (!products) {

@@ -113,9 +113,9 @@ export const products = [
         type: "2g Liquid Diamonds",
         flavor: "Banana Bonanza",
         image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/Pachis%20Banana%20Bonanza.png",
-        terps: "7% (indica - creamy, tropical)",
-        thcMg: "879.5/pkg",
-        thcPercent: "88.0%",
+        terps: "7.2% (indica - fruity, sweet)",
+        thcMg: "889.5/pkg",
+        thcPercent: "89.0%",
         cbd: "0.0/pkg"
     },
     {
@@ -126,7 +126,7 @@ export const products = [
         type: "2g Liquid Diamonds",
         flavor: "Cherry Jubilee",
         image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/Pachis%20Cherry%20Jubilee.png",
-        terps: "7% (hybrid - sweet, tart)",
+        terps: "7% (sativa - tart, sweet)",
         thcMg: "879.5/pkg",
         thcPercent: "88.0%",
         cbd: "0.0/pkg"
@@ -139,7 +139,7 @@ export const products = [
         type: "2g Liquid Diamonds",
         flavor: "Watermelon Marshmallow",
         image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/pachis%20watermelon%20marshmallow.png",
-        terps: "7% (sativa - fresh, sweet)",
+        terps: "7% (sativa - tart, sweet)",
         thcMg: "879.5/pkg",
         thcPercent: "88.0%",
         cbd: "0.0/pkg"
