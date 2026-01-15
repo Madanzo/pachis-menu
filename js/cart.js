@@ -2,6 +2,7 @@
 import { products } from './products.js';
 import { showToast } from './utils.js';
 import { calculateCartTotal, formatPrice, pricingTiers } from './pricing.js';
+import { t } from './i18n.js';
 
 let cart = [];
 const CART_STORAGE_KEY = 'pachisCart';
@@ -68,7 +69,7 @@ export function addToCart(productID, quantity = 1, size = null, sizePrice = null
     saveCart();
 
     const sizeText = sizeName ? ` (${sizeName})` : '';
-    showToast(`Added ${product.name}${sizeText} to cart!`);
+    showToast(`${product.name}${sizeText} ${t('addedToCart')}`);
 
     const qtyDisplay = document.querySelector(`.qty-display[data-product-id="${productID}"]`);
     if (qtyDisplay) qtyDisplay.textContent = '1';
@@ -94,17 +95,17 @@ export function removeFromCart(itemId) {
     cart = cart.filter(item => item.cartItemId !== itemId && item.id !== itemId);
     saveCart();
     renderCart();
-    showToast('Item removed from cart');
+    showToast(t('itemRemoved'));
 }
 
 export function clearCart() {
     if (cart.length === 0) return;
 
-    if (confirm('Are you sure you want to clear your cart?')) {
+    if (confirm(t('confirmClearCart'))) {
         cart = [];
         saveCart();
         renderCart();
-        showToast('Cart cleared');
+        showToast(t('cartCleared'));
     }
 }
 
@@ -115,7 +116,7 @@ export function renderCart() {
         container.innerHTML = `
       <div class="cart-empty">
         <div class="cart-empty-icon">🛒</div>
-        <p>Your cart is empty</p>
+        <p>${t('cartEmpty')}</p>
       </div>
     `;
         updateCartTotal(0);
@@ -186,9 +187,35 @@ function updateCartTotal(total) {
     }
 }
 
+// Show order success modal with Telegram link
+function showOrderSuccessModal(orderId = null) {
+    const modal = document.getElementById('order-success-modal');
+    if (modal) {
+        if (orderId) {
+            const btn = modal.querySelector('.order-success-btn');
+            if (btn) {
+                // Update link to Pachis Bot with Order ID context
+                // Using the specific bot username retrieved earlier
+                btn.href = `https://t.me/Pachis_Shop_bot?start=${orderId}`;
+            }
+        }
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+// Close order success modal (exposed globally)
+export function closeOrderSuccess() {
+    const modal = document.getElementById('order-success-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
 export async function sendToTelegram() {
     if (cart.length === 0) {
-        showToast('Your cart is empty!');
+        showToast(t('cartEmpty'));
         return;
     }
 
@@ -215,6 +242,7 @@ export async function sendToTelegram() {
 
     try {
         const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const cartData = calculateCartTotal(cart);
 
         const response = await fetch('/api/send-order', {
             method: 'POST',
@@ -224,7 +252,9 @@ export async function sendToTelegram() {
             body: JSON.stringify({
                 cart: cart,
                 customer: customerData,
-                totalItems: totalItems
+                totalItems: totalItems,
+                orderTotal: cartData.formattedTotal,
+                orderTotalValue: cartData.total
             })
         });
 
@@ -234,20 +264,22 @@ export async function sendToTelegram() {
             cart = [];
             saveCart();
             renderCart();
-            showToast('✅ Order sent successfully! We will contact you soon.');
-            // Close modal after success
-            const closeBtn = document.querySelector('.cart-close-btn');
-            if (closeBtn) closeBtn.click();
+            // Close cart modal
+            const cartModal = document.getElementById('cart-modal');
+            if (cartModal) cartModal.style.display = 'none';
+
+            // Show order success modal with dynamic Telegram link
+            showOrderSuccessModal(result.orderId);
         } else {
             throw new Error(result.error || 'Failed to send');
         }
 
     } catch (error) {
         console.error('Order Error:', error);
-        showToast('❌ Failed to send order automatically.');
+        showToast(t('orderFailed'));
 
         // Fallback to manual method if API fails (e.g. env vars missing)
-        if (confirm('Automatic sending failed. Open Telegram manually?')) {
+        if (confirm(t('openTelegramManually'))) {
             sendToTelegramManual();
         }
 

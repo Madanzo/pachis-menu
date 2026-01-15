@@ -1,7 +1,8 @@
 import { products } from './products.js';
-import { loadCart, addToCart, renderCart, clearCart as cartClear, sendToTelegram as cartSend } from './cart.js';
+import { loadCart, addToCart, renderCart, clearCart as cartClear, sendToTelegram as cartSend, closeOrderSuccess as cartCloseOrderSuccess } from './cart.js';
 import { showToast } from './utils.js';
-import { setRegion, getSizeOptionsForProduct, getRegion } from './pricing.js';
+import { setRegion, getSizeOptionsForProduct, getRegion, getCurrentPricingTiers, formatPrice } from './pricing.js';
+import { setLanguage, getLanguage, t, initLanguage, applyTranslations } from './i18n.js';
 
 console.log('App module loaded');
 
@@ -75,12 +76,28 @@ function renderProducts(category) {
 
     // Handle category title potentially missing if elements aren't ready
     if (categoryTitle) {
-        categoryTitle.textContent = categoryHeaders[category] || category.toUpperCase();
+        categoryTitle.textContent = t('categoryHeaders')[category] || category.toUpperCase();
     }
 
     // Show promo banner only for Disposable category
     if (promoBanner) {
-        promoBanner.style.display = category === 'Disposable' ? 'block' : 'none';
+        if (category === 'Disposable') {
+            promoBanner.style.display = 'block';
+
+            // Update banner prices based on current region
+            const tiers = getCurrentPricingTiers()['Disposable'].tiers;
+            if (tiers) {
+                const dealsContainer = promoBanner.querySelector('.promo-deals');
+                if (dealsContainer) {
+                    dealsContainer.innerHTML = tiers.map((tier, index) => {
+                        const separator = index < tiers.length - 1 ? '<span class="promo-divider">|</span>' : '';
+                        return `<span class="promo-deal">${tier.qty} for <strong>${formatPrice(tier.price)}</strong></span>${separator}`;
+                    }).join('');
+                }
+            }
+        } else {
+            promoBanner.style.display = 'none';
+        }
     }
 
     if (!products) {
@@ -221,6 +238,28 @@ function showAgeVerification() {
     if (modal) {
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
+
+        // Pre-fill form with any saved customer data
+        prefillVerificationForm();
+    }
+}
+
+function prefillVerificationForm() {
+    const verificationDataStr = localStorage.getItem(VERIFICATION_DATA_KEY);
+    if (verificationDataStr) {
+        try {
+            const data = JSON.parse(verificationDataStr);
+            const fields = ['firstName', 'lastName', 'email', 'phone', 'streetAddress', 'city', 'state', 'zipCode', 'country'];
+
+            fields.forEach(field => {
+                const input = document.getElementById(field);
+                if (input && data[field]) {
+                    input.value = data[field];
+                }
+            });
+        } catch (e) {
+            console.error('Error pre-filling verification form:', e);
+        }
     }
 }
 
@@ -243,9 +282,10 @@ function verifyAge(event) {
     const state = document.getElementById('state').value.trim();
     const zipCode = document.getElementById('zipCode').value.trim();
     const country = document.getElementById('country').value.trim();
+    const phone = document.getElementById('phone').value.trim();
     const ageConfirm = document.querySelector('input[name="ageConfirm"]:checked');
 
-    if (!firstName || !lastName || !email || !streetAddress || !city || !state || !zipCode || !country) {
+    if (!firstName || !lastName || !email || !phone || !streetAddress || !city || !state || !zipCode || !country) {
         showToast('Please fill in all required fields');
         return;
     }
@@ -272,6 +312,7 @@ function verifyAge(event) {
         firstName,
         lastName,
         email,
+        phone,
         streetAddress,
         city,
         state,
@@ -284,17 +325,66 @@ function verifyAge(event) {
     localStorage.setItem(AGE_VERIFICATION_KEY, 'true');
     localStorage.setItem(VERIFICATION_DATA_KEY, JSON.stringify(verificationData));
 
+    // Save customer to Firebase CRM (async, don't block UI)
+    saveCustomerToFirebase(verificationData);
+
     // Set region based on country for pricing
     const region = setRegion(country);
     console.log('Region set to:', region);
+
+    // Set language based on country
+    const countryLower = country.toLowerCase().trim();
+    if (countryLower === 'mexico' || countryLower === 'méxico' || countryLower === 'mx') {
+        setLanguage('es');
+    } else {
+        setLanguage('en');
+    }
 
     hideAgeVerification();
 
     // Re-render products with region-specific pricing
     renderProducts(currentCategory);
 
-    const regionMsg = region === 'MX' ? ' (México)' : ' (USA)';
-    showToast(`✅ Verification successful! Welcome to Pachis${regionMsg}`);
+    const regionMsg = region === 'MX' ? t('regionMexico') : t('regionUSA');
+    showToast(`${t('verificationSuccess')}${regionMsg}`);
+}
+
+// CRM API Functions
+const CRM_API_BASE = 'https://us-central1-pachis-menu-app.cloudfunctions.net';
+
+async function saveCustomerToFirebase(customerData) {
+    try {
+        await fetch(`${CRM_API_BASE}/saveCustomer`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ customer: customerData })
+        });
+        console.log('Customer saved to CRM');
+    } catch (error) {
+        console.error('Failed to save customer to CRM:', error);
+        // Don't block - localStorage is the fallback
+    }
+}
+
+async function lookupCustomerByEmail(email) {
+    try {
+        const response = await fetch(`${CRM_API_BASE}/lookupCustomer`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data.found) {
+                return data.customer;
+            }
+        }
+        return null;
+    } catch (error) {
+        console.error('Failed to lookup customer:', error);
+        return null;
+    }
 }
 
 // Navigation functions
@@ -346,6 +436,7 @@ function loadSettingsData() {
             document.getElementById('settingsFirstName').value = data.firstName || '';
             document.getElementById('settingsLastName').value = data.lastName || '';
             document.getElementById('settingsEmail').value = data.email || '';
+            document.getElementById('settingsPhone').value = data.phone || '';
             document.getElementById('settingsStreetAddress').value = data.streetAddress || '';
             document.getElementById('settingsCity').value = data.city || '';
             document.getElementById('settingsState').value = data.state || '';
@@ -364,6 +455,7 @@ function updateSettings(event) {
         firstName: document.getElementById('settingsFirstName').value.trim(),
         lastName: document.getElementById('settingsLastName').value.trim(),
         email: document.getElementById('settingsEmail').value.trim(),
+        phone: document.getElementById('settingsPhone').value.trim(),
         streetAddress: document.getElementById('settingsStreetAddress').value.trim(),
         city: document.getElementById('settingsCity').value.trim(),
         state: document.getElementById('settingsState').value.trim(),
@@ -375,20 +467,34 @@ function updateSettings(event) {
 
     localStorage.setItem(VERIFICATION_DATA_KEY, JSON.stringify(updatedData));
 
+    // Sync to Firebase CRM
+    saveCustomerToFirebase(updatedData);
+
     // Update region if country changed
     const region = setRegion(updatedData.country);
     console.log('Region updated to:', region);
 
+    // Update language if country changed
+    const countryLower = updatedData.country.toLowerCase().trim();
+    if (countryLower === 'mexico' || countryLower === 'méxico' || countryLower === 'mx') {
+        setLanguage('es');
+    } else {
+        setLanguage('en');
+    }
+
     // Re-render products with new region pricing
     renderProducts(currentCategory);
 
-    const regionMsg = region === 'MX' ? ' (México)' : ' (USA)';
-    showToast(`✅ Profile updated successfully!${regionMsg}`);
+    showToast(t('profileUpdated'));
     closeSettings();
 }
 
 // Initialization
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize language from stored preference or verification data
+    initLanguage();
+    applyTranslations();
+
     // expose functions to window for HTML onclick compatibility (transition step)
     window.verifyAge = verifyAge;
     window.updateSettings = updateSettings;
@@ -399,6 +505,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.closeSettings = closeSettings;
     window.clearCart = cartClear;
     window.sendToTelegram = cartSend;
+    window.closeOrderSuccess = cartCloseOrderSuccess;
     // Note: addToCart is internal now via listeners, or exposed if needed.
 
     if (!isAgeVerified()) showAgeVerification();

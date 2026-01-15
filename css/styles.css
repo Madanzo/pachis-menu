@@ -132,12 +132,48 @@ body::after {
   padding: 0 20px;
 }
 
+/* Wholesale Banner - Teal Theme */
+.wholesale-banner .promo-content {
+  background: linear-gradient(135deg, rgba(0, 206, 201, 0.95) 0%, rgba(0, 173, 181, 0.95) 100%);
+  box-shadow:
+    0 4px 20px rgba(0, 173, 181, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.wholesale-banner .promo-title,
+.wholesale-banner .promo-deal,
+.wholesale-banner .promo-deal strong {
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Wholesale Button */
+.wholesale-btn {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.95);
+  color: #00ada5;
+  font-family: var(--font-subhead);
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.wholesale-btn:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
 .promo-content {
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.95) 0%, rgba(255, 165, 0, 0.95) 100%);
   border-radius: 16px;
   padding: 16px 24px;
   text-align: center;
-  box-shadow: 
+  box-shadow:
     0 4px 20px rgba(255, 165, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -184,19 +220,19 @@ body::after {
   .promo-content {
     padding: 14px 16px;
   }
-  
+
   .promo-title {
     font-size: 0.9rem;
   }
-  
+
   .promo-deals {
     gap: 8px;
   }
-  
+
   .promo-deal {
     font-size: 0.85rem;
   }
-  
+
   .promo-deal strong {
     font-size: 1rem;
   }
@@ -1258,4 +1294,71 @@ body::after {
     padding: 14px 25px;
     font-size: 0.9rem;
   }
+}
+
+/* Order Success Modal */
+.order-success-content {
+  text-align: center;
+  padding: 40px 30px;
+  max-height: none;
+}
+
+.order-success-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.order-success-title {
+  font-family: var(--font-headline);
+  font-size: 1.8rem;
+  color: var(--turquoise-core);
+  margin-bottom: 15px;
+}
+
+.order-success-message {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.order-success-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px 30px;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  text-decoration: none;
+}
+
+.order-success-close {
+  width: 100%;
+  background: #f0f0f0;
+  color: #666;
+  border: none;
+  padding: 14px 25px;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.order-success-close:hover {
+  background: #e0e0e0;
 }
