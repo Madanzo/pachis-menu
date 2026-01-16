@@ -9,6 +9,7 @@ console.log('App module loaded');
 // Category header mapping
 const categoryHeaders = {
     "Disposable": "LIQUID DIAMONDS – 2G DISPOSABLE",
+    "Dual Dispo": "PACHIS DUAL DISPO'S – 4G",
     "Live Rosin Dabs": "LIVE ROSIN DABS",
     "Pre-Rolls": "PRE-ROLLS",
     "Flower": "FLOWER",
@@ -79,21 +80,33 @@ function renderProducts(category) {
         categoryTitle.textContent = t('categoryHeaders')[category] || category.toUpperCase();
     }
 
-    // Show promo banner only for Disposable category
+    // Show promo banner for categories with bundle pricing
     if (promoBanner) {
-        if (category === 'Disposable') {
+        const currentPricing = getCurrentPricingTiers();
+        const categoryPricing = currentPricing[category];
+
+        // Show banner if category has quantity-based pricing tiers
+        if (categoryPricing && categoryPricing.type === 'quantity' && categoryPricing.tiers) {
             promoBanner.style.display = 'block';
 
-            // Update banner prices based on current region
-            const tiers = getCurrentPricingTiers()['Disposable'].tiers;
-            if (tiers) {
-                const dealsContainer = promoBanner.querySelector('.promo-deals');
-                if (dealsContainer) {
-                    dealsContainer.innerHTML = tiers.map((tier, index) => {
-                        const separator = index < tiers.length - 1 ? '<span class="promo-divider">|</span>' : '';
-                        return `<span class="promo-deal">${tier.qty} for <strong>${formatPrice(tier.price)}</strong></span>${separator}`;
-                    }).join('');
+            // Update banner title based on category
+            const promoTitle = promoBanner.querySelector('.promo-title');
+            if (promoTitle) {
+                if (category === 'Dual Dispo') {
+                    promoTitle.textContent = '🔥 DUAL DISPO BUNDLE';
+                } else {
+                    promoTitle.textContent = t('bundleAndSave') || '🔥 BUNDLE & SAVE';
                 }
+            }
+
+            // Update banner prices based on current region and category
+            const tiers = categoryPricing.tiers;
+            const dealsContainer = promoBanner.querySelector('.promo-deals');
+            if (dealsContainer) {
+                dealsContainer.innerHTML = tiers.map((tier, index) => {
+                    const separator = index < tiers.length - 1 ? '<span class="promo-divider">|</span>' : '';
+                    return `<span class="promo-deal">${tier.qty} for <strong>${formatPrice(tier.price)}</strong></span>${separator}`;
+                }).join('');
             }
         } else {
             promoBanner.style.display = 'none';
@@ -153,6 +166,24 @@ function renderProducts(category) {
           `;
             }
 
+            // Check if product is sold out
+            let soldOutHTML = '';
+            if (product.soldOut) {
+                card.classList.add('sold-out');
+                soldOutHTML = `
+            <div class="coming-soon-banner sold-out-banner">SOLD OUT</div>
+          `;
+            }
+
+            // Check if product is coming soon (product-level, no overlay)
+            let productComingSoonHTML = '';
+            if (product.comingSoon) {
+                card.classList.add('product-coming-soon');
+                productComingSoonHTML = `
+            <div class="coming-soon-banner">COMING SOON</div>
+          `;
+            }
+
             // Check if image is a video
             const isVideo = product.image ? product.image.endsWith('.mp4') : false;
             const mediaHTML = isVideo
@@ -186,6 +217,8 @@ function renderProducts(category) {
 
             card.innerHTML = `
           ${comingSoonHTML}
+          ${soldOutHTML}
+          ${productComingSoonHTML}
           <div class="product-brand">${product.brand}</div>
           ${mediaHTML}
           <div class="product-name">${product.name}</div>
@@ -193,11 +226,11 @@ function renderProducts(category) {
           ${detailsHTML}
           ${sizesHTML}
           <div class="product-card-actions">
-            <button class="qty-btn" data-action="decrease-qty" data-id="${product.id}">−</button>
+            <button class="qty-btn" data-action="decrease-qty" data-id="${product.id}" ${product.soldOut || product.comingSoon ? 'disabled' : ''}>−</button>
             <span class="qty-display" data-product-id="${product.id}">1</span>
-            <button class="qty-btn" data-action="increase-qty" data-id="${product.id}">+</button>
-            <button class="add-to-cart-btn" data-action="add-to-cart" data-id="${product.id}">
-              Add to Cart
+            <button class="qty-btn" data-action="increase-qty" data-id="${product.id}" ${product.soldOut || product.comingSoon ? 'disabled' : ''}>+</button>
+            <button class="add-to-cart-btn" data-action="add-to-cart" data-id="${product.id}" ${product.soldOut || product.comingSoon ? 'disabled' : ''}>
+              ${product.soldOut ? 'Sold Out' : product.comingSoon ? 'Coming Soon' : 'Add to Cart'}
             </button>
           </div>
         `;

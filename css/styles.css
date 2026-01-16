@@ -512,6 +512,39 @@ body::after {
   pointer-events: none;
 }
 
+/* Sold Out Banner */
+.sold-out-banner {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 15px rgba(238, 90, 90, 0.4) !important;
+}
+
+.product-card.sold-out {
+  opacity: 0.85;
+}
+
+.product-card.sold-out .add-to-cart-btn {
+  background: #666 !important;
+  cursor: not-allowed;
+}
+
+.product-card.sold-out .qty-btn {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Product-level Coming Soon (no overlay, fully visible) */
+.product-card.product-coming-soon .add-to-cart-btn {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
+  color: #333 !important;
+  cursor: not-allowed;
+}
+
+.product-card.product-coming-soon .qty-btn {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* Bottom Navigation - Futuristic */
 .bottom-nav {
   position: fixed;

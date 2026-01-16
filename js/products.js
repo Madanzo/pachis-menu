@@ -38,7 +38,8 @@ export const products = [
         terps: "7% (hybrid - playful, sweet)",
         thcMg: "879.5/pkg",
         thcPercent: "88.0%",
-        cbd: "0.0/pkg"
+        cbd: "0.0/pkg",
+        soldOut: true
     },
     {
         id: "cart_grape_euphoria",
@@ -143,6 +144,142 @@ export const products = [
         thcMg: "879.5/pkg",
         thcPercent: "88.0%",
         cbd: "0.0/pkg"
+    },
+    {
+        id: "cart_coco",
+        name: "COCO",
+        category: "Disposable",
+        brand: "Pachis",
+        type: "2g Liquid Diamonds",
+        flavor: "Coco",
+        image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Prodcuts%2Fcoco.png?alt=media&token=c7d24ac2-2f1d-4efa-8f1b-a5c81f424bdc",
+        terps: "7% (indica - nutty, creamy)",
+        thcMg: "879.5/pkg",
+        thcPercent: "88.0%",
+        cbd: "0.0/pkg"
+    },
+    {
+        id: "cart_hazelnut",
+        name: "HAZELNUT",
+        category: "Disposable",
+        brand: "Pachis",
+        type: "2g Liquid Diamonds",
+        flavor: "Hazelnut",
+        image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Prodcuts%2Fhazelnut.png?alt=media&token=4c8cdb45-b0fe-4f3b-9301-0536a30a6d34",
+        terps: "7% (indica - nutty, creamy)",
+        thcMg: "879.5/pkg",
+        thcPercent: "88.0%",
+        cbd: "0.0/pkg"
+    },
+    {
+        id: "cart_mango_tango",
+        name: "MANGO TANGO",
+        category: "Disposable",
+        brand: "Pachis",
+        type: "2g Liquid Diamonds",
+        flavor: "Mango Tango",
+        image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Prodcuts%2Fmango_tango.png?alt=media&token=a55c8f72-4b9a-4d29-ab68-14f63d7c8034",
+        terps: "7% (sativa - fruity, sweet)",
+        thcMg: "879.5/pkg",
+        thcPercent: "88.0%",
+        cbd: "0.0/pkg"
+    },
+
+    // DUAL DISPO - 4G Dual Flavor Disposables (2g + 2g)
+    {
+        id: "dual_coco_hazelnut",
+        name: "4K COCO CREAMSICLE x 4K HAZELNUT HEAVEN",
+        category: "Dual Dispo",
+        brand: "Pachis",
+        type: "4g Dual Flavor (2g + 2g)",
+        flavor: "4K Coco Creamsicle x 4K Hazelnut Heaven",
+        color: "Yellow/Gold",
+        image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_coco_hazelnut.png",
+        terps: "7% (hybrid – fruity, tangy)",
+        thcMg: "1759/pkg",
+        thcPercent: "88.0%",
+        cbd: "0.0/pkg",
+        dualInfo: {
+            flavor1: { name: "Hazelnut (4K)", terps: "7% (hybrid – fruity, tangy)", thc: "88.0%" },
+            flavor2: { name: "Coco (4K)", terps: "7% (hybrid – fruity, tangy)", thc: "88.0%" }
+        },
+        comingSoon: true
+    },
+    {
+        id: "dual_strawberry_banana",
+        name: "STRAWBERRY JELLY x 4K BANANA BONANZA",
+        category: "Dual Dispo",
+        brand: "Pachis",
+        type: "4g Dual Flavor (2g + 2g)",
+        flavor: "Strawberry Jelly x 4K Banana Bonanza",
+        color: "Pink",
+        image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_strawberry_banana.png",
+        terps: "7% / 7.2% (indica – fruity, sweet)",
+        thcMg: "1769/pkg",
+        thcPercent: "88-89%",
+        cbd: "0.0/pkg",
+        dualInfo: {
+            flavor1: { name: "Strawberry Jelly", terps: "7% (indica – fruity, tangy)", thc: "88.0%" },
+            flavor2: { name: "Banana Bonanza (4K)", terps: "7.2% (indica – fruity, sweet)", thc: "89.0%" }
+        },
+        comingSoon: true
+    },
+    {
+        id: "dual_guava_grape",
+        name: "GUAVA GALAXY x GRAPE EUPHORIA",
+        category: "Dual Dispo",
+        brand: "Pachis",
+        type: "4g Dual Flavor (2g + 2g)",
+        flavor: "Guava Galaxy x Grape Euphoria",
+        color: "Purple",
+        image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_guava_grape.png",
+        terps: "7% (indica – fruity, tangy)",
+        thcMg: "1759/pkg",
+        thcPercent: "88.0%",
+        cbd: "0.0/pkg",
+        dualInfo: {
+            flavor1: { name: "Guava Galaxy", terps: "7% (indica – fruity, tangy)", thc: "88.0%" },
+            flavor2: { name: "Grape Euphoria", terps: "7% (indica – fruity, tangy)", thc: "88.0%" }
+        },
+        comingSoon: true
+    },
+    {
+        id: "dual_mango_peach",
+        name: "MANGO TANGO x PEACH RINGS",
+        category: "Dual Dispo",
+        brand: "Pachis",
+        type: "4g Dual Flavor (2g + 2g)",
+        flavor: "Mango Tango x Peach Rings",
+        color: "Orange",
+        image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_mango_peach.png",
+        terps: "7% (sativa – tart, sweet)",
+        thcMg: "1759/pkg",
+        thcPercent: "88.0%",
+        cbd: "0.0/pkg",
+        dualInfo: {
+            flavor1: { name: "Mango Tango", terps: "7% (sativa – tart, sweet)", thc: "88.0%" },
+            flavor2: { name: "Peach Rings", terps: "7% (sativa – tart, sweet)", thc: "88.0%" }
+        },
+        comingSoon: true
+    },
+    {
+        id: "dual_nerdz_runtz",
+        name: "NERDZ x 4K RUNTZ CANDY",
+        category: "Dual Dispo",
+        brand: "Pachis",
+        type: "4g Dual Flavor (2g + 2g)",
+        flavor: "Nerdz x 4K Runtz Candy",
+        color: "Teal",
+        image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_nerdz_runtz.png",
+        terps: "7% (indica – fruity, tangy)",
+        thcMg: "1759/pkg",
+        thcPercent: "88.0%",
+        cbd: "0.0/pkg",
+        dualInfo: {
+            flavor1: { name: "Nerdz", terps: "7% (indica – fruity, tangy)", thc: "88.0%" },
+            flavor2: { name: "Runtz Candy", terps: "7% (indica – fruity, tangy)", thc: "88.0%" }
+        },
+        comingSoon: true
     },
 
     // LIVE ROSIN DABS - Single product with jar quantity selector

@@ -65,6 +65,7 @@ export const translations = {
         // Categories
         categories: {
             "Disposable": "Disposable",
+            "Dual Dispo": "Dual Dispo's",
             "Live Rosin Dabs": "Dabs",
             "Pre-Rolls": "Pre-Rolls",
             "Flower": "Flower",
@@ -76,6 +77,7 @@ export const translations = {
         // Category Headers
         categoryHeaders: {
             "Disposable": "LIQUID DIAMONDS – 2G DISPOSABLE",
+            "Dual Dispo": "PACHIS DUAL DISPO'S – 4G",
             "Live Rosin Dabs": "LIVE ROSIN DABS",
             "Pre-Rolls": "PRE-ROLLS",
             "Flower": "FLOWER",
@@ -157,6 +159,7 @@ export const translations = {
         // Categories
         categories: {
             "Disposable": "Desechables",
+            "Dual Dispo": "Dual Dispo's",
             "Live Rosin Dabs": "Dabs",
             "Pre-Rolls": "Pre-Rolls",
             "Flower": "Flor",
@@ -168,6 +171,7 @@ export const translations = {
         // Category Headers
         categoryHeaders: {
             "Disposable": "DIAMANTES LÍQUIDOS – 2G DESECHABLE",
+            "Dual Dispo": "PACHIS DUAL DISPO'S – 4G",
             "Live Rosin Dabs": "DABS DE LIVE ROSIN",
             "Pre-Rolls": "PRE-ROLLS",
             "Flower": "FLOR",

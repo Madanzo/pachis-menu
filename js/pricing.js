@@ -37,6 +37,15 @@ export const pricingTiers = {
             basePrice: 60,
             description: '2G Liquid Diamonds'
         },
+        'Dual Dispo': {
+            type: 'quantity',
+            tiers: [
+                { qty: 1, price: 70, label: '1 unit', pricePerUnit: 70 },
+                { qty: 2, price: 120, label: '2 units', pricePerUnit: 60 }
+            ],
+            basePrice: 70,
+            description: '4G Dual Flavor (2g + 2g)'
+        },
         'Live Rosin Dabs': {
             type: 'fixed',
             description: 'Live Rosin Jars'
@@ -60,6 +69,15 @@ export const pricingTiers = {
             ],
             basePrice: 1800,
             description: '2G Liquid Diamonds'
+        },
+        'Dual Dispo': {
+            type: 'quantity',
+            tiers: [
+                { qty: 1, price: 1900, label: '1 unit', pricePerUnit: 1900 },
+                { qty: 2, price: 3500, label: '2 units', pricePerUnit: 1750 }
+            ],
+            basePrice: 1900,
+            description: '4G Dual Flavor (2g + 2g)'
         },
         'Live Rosin Dabs': {
             type: 'fixed',
