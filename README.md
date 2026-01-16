@@ -23,29 +23,29 @@ A responsive, modern product menu app for Pachis with a beautiful turquoise grad
 3. **Pre-Rolls** - Premium and Infused options
 4. **Flower** - Available in multiple sizes (1/8 OZ, 1/4 OZ, 1/2 OZ, 1 OZ)
 
-## Deployment to Vercel
+## Deployment to Firebase
 
-### Option 1: Using Vercel CLI
+### Prerequisites
 
-1. Install Vercel CLI:
+1. Install Firebase CLI:
    ```bash
-   npm i -g vercel
+   npm install -g firebase-tools
+   ```
+2. Login to Firebase:
+   ```bash
+   firebase login
    ```
 
-2. Deploy:
+### Deploying
+
+1. Build the project:
    ```bash
-   vercel
+   npm run build
    ```
-
-3. Follow the prompts to deploy
-
-### Option 2: Using Vercel Dashboard
-
-1. Go to [vercel.com](https://vercel.com)
-2. Click "Add New Project"
-3. Import your GitHub repository
-4. Vercel will auto-detect the configuration
-5. Click "Deploy"
+2. Deploy (Hosting + Functions):
+   ```bash
+   firebase deploy
+   ```
 
 ## Customization
 
