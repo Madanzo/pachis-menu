@@ -4,8 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pachis Admin - Customer Dashboard</title>
+    <title>Pachis Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #00cec9;
+            --primary-dark: #00b894;
+            --secondary: #6c5ce7;
+            --dark-bg: #1a1a2e;
+            --dark-surface: #16213e;
+            --light-text: #ffffff;
+            --gray-text: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #ff7675;
+            --sidebar-width: 260px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,148 +32,246 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background-color: var(--dark-bg);
+            color: var(--light-text);
             min-height: 100vh;
-            color: #fff;
+            overflow-x: hidden;
         }
 
+        /* Login Screen */
         .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
         }
 
         .login-box {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
+            background: rgba(22, 33, 62, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
             padding: 40px;
             max-width: 400px;
             width: 100%;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .login-box h1 {
-            margin-bottom: 10px;
-            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .login-box p {
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 30px;
-        }
-
-        .login-box input {
+        .login-input {
             width: 100%;
-            padding: 15px 20px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            margin-bottom: 15px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #333;
-        }
-
-        .login-box button {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #00cec9 0%, #00b894 100%);
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.2);
             color: #fff;
+            margin-bottom: 1rem;
             font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 206, 201, 0.2);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #fff;
             font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s ease;
         }
 
-        .login-box button:hover {
+        .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 206, 201, 0.4);
+            box-shadow: 0 10px 20px rgba(0, 206, 201, 0.3);
         }
 
-        .error-msg {
-            color: #ff6b6b;
-            margin-top: 15px;
-            display: none;
+        /* Layout */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
         }
 
-        /* Dashboard Styles */
-        .dashboard {
-            display: none;
-            padding: 20px;
-            max-width: 1400px;
-            margin: 0 auto;
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--dark-surface);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem;
+            position: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        .dashboard-header {
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+        }
+
+        .nav-menu {
+            list-style: none;
+            flex: 1;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            color: var(--gray-text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(0, 206, 201, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 2rem 3rem;
+        }
+
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 15px;
+            margin-bottom: 2rem;
         }
 
-        .dashboard-header h1 {
+        .page-title {
             font-size: 1.8rem;
+            font-weight: 700;
         }
 
-        .stats-bar {
+        .user-profile {
             display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px 30px;
-            flex: 1;
-            min-width: 150px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--dark-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .stat-card .number {
+        .stat-title {
+            color: var(--gray-text);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .stat-value {
             font-size: 2rem;
             font-weight: 700;
-            color: #00cec9;
-        }
-
-        .stat-card .label {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-        }
-
-        .search-bar {
-            margin-bottom: 20px;
-        }
-
-        .search-bar input {
-            width: 100%;
-            max-width: 400px;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            background: rgba(255, 255, 255, 0.1);
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .search-bar input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+        .stat-change {
+            font-size: 0.85rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
+        /* Tables */
         .table-container {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
+            background: var(--dark-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 1.5rem;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .search-box {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 10px;
+            color: #fff;
+            width: 300px;
         }
 
         table {
@@ -163,152 +279,281 @@
             border-collapse: collapse;
         }
 
-        th,
-        td {
-            padding: 15px 20px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
         th {
-            background: rgba(0, 206, 201, 0.2);
-            font-weight: 600;
-            cursor: pointer;
-            user-select: none;
+            text-align: left;
+            padding: 1rem;
+            color: var(--gray-text);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        th:hover {
-            background: rgba(0, 206, 201, 0.3);
-        }
-
-        tr:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .btn-logout {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
             color: #fff;
-            cursor: pointer;
-            transition: background 0.2s;
         }
 
-        .btn-logout:hover {
-            background: rgba(255, 255, 255, 0.2);
+        tr:last-child td {
+            border-bottom: none;
         }
 
-        .btn-refresh {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #00cec9 0%, #00b894 100%);
-            color: #fff;
-            cursor: pointer;
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: rgba(253, 203, 110, 0.2);
+            color: var(--warning);
+        }
+
+        .status-completed {
+            background: rgba(0, 184, 148, 0.2);
+            color: var(--success);
+        }
+
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            color: var(--primary);
+            font-size: 1.2rem;
             font-weight: 600;
         }
 
-        .loading {
-            text-align: center;
-            padding: 50px;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        @media (max-width: 768px) {
-
-            th,
-            td {
-                padding: 10px;
-                font-size: 0.85rem;
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 80px;
+                padding: 2rem 1rem;
             }
 
-            .table-container {
-                overflow-x: auto;
+            .nav-link span {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 80px;
+                padding: 1.5rem;
+            }
+
+            .nav-link {
+                justify-content: center;
+                padding: 14px;
             }
         }
     </style>
 </head>
 
 <body>
+
     <!-- Login Screen -->
     <div class="login-container" id="loginScreen">
         <div class="login-box">
             <h1>🌿 Pachis Admin</h1>
-            <p>Enter admin password to access customer dashboard</p>
-            <input type="password" id="passwordInput" placeholder="Admin Password"
+            <p style="color: var(--gray-text); margin-bottom: 2rem;">Secure Dashboard Access</p>
+            <input type="password" class="login-input" id="passwordInput" placeholder="Enter Admin Password"
                 onkeypress="if(event.key === 'Enter') login()">
-            <button onclick="login()">Access Dashboard</button>
-            <p class="error-msg" id="errorMsg">Invalid password</p>
+            <button class="btn-primary" onclick="login()">Access Dashboard</button>
+            <p id="errorMsg" style="color: var(--danger); margin-top: 1rem; display: none;">Invalid Password</p>
         </div>
     </div>
 
-    <!-- Dashboard -->
-    <div class="dashboard" id="dashboard">
-        <div class="dashboard-header">
-            <h1>🌿 Pachis Customer Dashboard</h1>
-            <div>
-                <button class="btn-refresh" onclick="loadCustomers()">🔄 Refresh</button>
-                <button class="btn-logout" onclick="logout()">Logout</button>
-            </div>
-        </div>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        Loading data...
+    </div>
 
-        <div class="stats-bar">
-            <div class="stat-card">
-                <div class="number" id="totalCustomers">0</div>
-                <div class="label">Total Customers</div>
-            </div>
-            <div class="stat-card">
-                <div class="number" id="usaCustomers">0</div>
-                <div class="label">USA</div>
-            </div>
-            <div class="stat-card">
-                <div class="number" id="mxCustomers">0</div>
-                <div class="label">Mexico</div>
-            </div>
-        </div>
+    <!-- App Container -->
+    <div class="app-container" id="appContainer" style="display: none;">
 
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="🔍 Search by name, email, or city..."
-                oninput="filterTable()">
-        </div>
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <span>🌿</span>
+                <span style="color: #fff;">Pachis</span>
+            </div>
 
-        <div class="table-container">
-            <table id="customersTable">
-                <thead>
-                    <tr>
-                        <th onclick="sortTable(0)">Name ↕</th>
-                        <th onclick="sortTable(1)">Email ↕</th>
-                        <th onclick="sortTable(2)">Phone ↕</th>
-                        <th onclick="sortTable(3)">City ↕</th>
-                        <th onclick="sortTable(4)">State ↕</th>
-                        <th onclick="sortTable(5)">Country ↕</th>
-                        <th onclick="sortTable(6)">Registered ↕</th>
-                    </tr>
-                </thead>
-                <tbody id="customersBody">
-                    <tr>
-                        <td colspan="7" class="loading">Loading customers...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a class="nav-link active" onclick="switchView('dashboard')">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="switchView('orders')">
+                        <span class="nav-icon">🛍️</span>
+                        <span>Orders</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="switchView('customers')">
+                        <span class="nav-icon">👥</span>
+                        <span>Loyalty & Customers</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="nav-item">
+                <a class="nav-link" onclick="logout()" style="color: var(--danger);">
+                    <span class="nav-icon">🚪</span>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Header -->
+            <header class="header">
+                <h2 class="page-title" id="pageTitle">Overview</h2>
+                <div class="user-profile">
+                    <div class="avatar">A</div>
+                    <div>
+                        <div style="font-weight: 600;">Admin</div>
+                        <div style="font-size: 0.8rem; color: var(--gray-text);">Super User</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- DASHBOARD VIEW -->
+            <div id="view-dashboard" class="view-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-title">Total Orders</div>
+                        <div class="stat-value" id="dashTotalOrders">0</div>
+                        <div class="stat-change">All time</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Total Customers</div>
+                        <div class="stat-value" id="dashTotalCustomers">0</div>
+                        <div class="stat-change">Registered users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">Total Revenue Estimate</div>
+                        <div class="stat-value" id="dashTotalRevenue">$0.00</div>
+                        <div class="stat-change">Based on order history</div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <div class="table-title">Recent Orders</div>
+                        <button class="btn-primary" style="width: auto; padding: 8px 16px; font-size: 0.9rem;"
+                            onclick="switchView('orders')">View All</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentOrdersTable">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ORDERS VIEW -->
+            <div id="view-orders" class="view-section">
+                <div class="table-container">
+                    <div class="table-header">
+                        <div class="table-title">All Orders</div>
+                        <input type="text" class="search-box" placeholder="Search orders..." id="searchOrders"
+                            oninput="filterOrders()">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Items Summary</th>
+                                <th>Total</th>
+                                <th>Date</th>
+                                <th>Connected</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allOrdersTable">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CUSTOMERS VIEW -->
+            <div id="view-customers" class="view-section">
+                <div class="table-container">
+                    <div class="table-header">
+                        <div class="table-title">Customer Loyalty Program</div>
+                        <input type="text" class="search-box" placeholder="Search customers..." id="searchCustomers"
+                            oninput="filterCustomers()">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email / Contact</th>
+                                <th>Total Orders</th>
+                                <th>Lifetime Value</th>
+                                <th>Location</th>
+                                <th>Joined</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allCustomersTable">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
     </div>
 
     <script>
-        // Admin password - you can change this
+        // CONFIG
         const ADMIN_PASSWORD = '@Pachis2026';
         const API_BASE = 'https://us-central1-pachis-menu-app.cloudfunctions.net';
 
+        // STATE
+        let allOrders = [];
         let allCustomers = [];
+        let customerStats = {}; // Map of email -> { orderCount, totalSpend }
 
+        // AUTH
         function login() {
-            const password = document.getElementById('passwordInput').value;
-            if (password === ADMIN_PASSWORD) {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
+            const pwd = document.getElementById('passwordInput').value;
+            if (pwd === ADMIN_PASSWORD) {
                 sessionStorage.setItem('pachisAdminAuth', 'true');
-                loadCustomers();
+                initApp();
             } else {
                 document.getElementById('errorMsg').style.display = 'block';
             }
@@ -316,94 +561,256 @@
 
         function logout() {
             sessionStorage.removeItem('pachisAdminAuth');
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('loginScreen').style.display = 'flex';
-            document.getElementById('passwordInput').value = '';
+            window.location.reload();
         }
 
-        async function loadCustomers() {
-            const tbody = document.getElementById('customersBody');
-            tbody.innerHTML = '<tr><td colspan="7" class="loading">Loading customers...</td></tr>';
-
-            try {
-                const response = await fetch(`${API_BASE}/getAllCustomers`);
-                const data = await response.json();
-
-                if (data.customers && data.customers.length > 0) {
-                    allCustomers = data.customers;
-                    renderTable(allCustomers);
-                    updateStats(allCustomers);
-                } else {
-                    tbody.innerHTML = '<tr><td colspan="7" class="loading">No customers found</td></tr>';
-                }
-            } catch (error) {
-                console.error('Error loading customers:', error);
-                tbody.innerHTML = '<tr><td colspan="7" class="loading">Error loading customers</td></tr>';
+        function checkAuth() {
+            if (sessionStorage.getItem('pachisAdminAuth') === 'true') {
+                initApp();
             }
         }
 
-        function renderTable(customers) {
-            const tbody = document.getElementById('customersBody');
-            tbody.innerHTML = customers.map(c => `
+        // INIT
+        async function initApp() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('appContainer').style.display = 'flex';
+            document.getElementById('loadingOverlay').style.display = 'flex';
+
+            await Promise.all([
+                fetchOrders(),
+                fetchCustomers()
+            ]);
+
+            processLoyaltyStats();
+            updateDashboard();
+            renderTables();
+
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // DATA FETCHING
+        async function fetchOrders() {
+            try {
+                const res = await fetch(`${API_BASE}/getAllOrders`);
+                const data = await res.json();
+                if (data.success) {
+                    allOrders = data.orders;
+                }
+            } catch (e) {
+                console.error("Error fetching orders:", e);
+            }
+        }
+
+        async function fetchCustomers() {
+            try {
+                const res = await fetch(`${API_BASE}/getAllCustomers`);
+                const data = await res.json();
+                if (data.success) {
+                    allCustomers = data.customers;
+                }
+            } catch (e) {
+                console.error("Error fetching customers:", e);
+            }
+        }
+
+        // LOGIC & PROCESSING
+        function processLoyaltyStats() {
+            customerStats = {};
+
+            allOrders.forEach(order => {
+                // Normalize email mostly
+                const email = order.customer?.email?.toLowerCase() || 'unknown';
+
+                if (!customerStats[email]) {
+                    customerStats[email] = { count: 0, spend: 0 };
+                }
+
+                customerStats[email].count++;
+
+                // Parse total (e.g. "$120.00")
+                let val = 0;
+                if (order.orderTotal) {
+                    val = parseFloat(typeof order.orderTotal === 'string' ? order.orderTotal.replace(/[^0-9.]/g, '') : order.orderTotal) || 0;
+                }
+                customerStats[email].spend += val;
+            });
+        }
+
+        function formatCurrency(num) {
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
+        }
+
+        // UI UPDATES
+        function updateDashboard() {
+            document.getElementById('dashTotalOrders').textContent = allOrders.length;
+            document.getElementById('dashTotalCustomers').textContent = allCustomers.length;
+
+            const totalRev = allOrders.reduce((sum, order) => {
+                let val = parseFloat((order.orderTotal || '0').toString().replace(/[^0-9.]/g, '')) || 0;
+                return sum + val;
+            }, 0);
+
+            document.getElementById('dashTotalRevenue').textContent = formatCurrency(totalRev);
+
+            // Recent Orders Table (Top 5)
+            const recent = allOrders.slice(0, 5);
+            const tbody = document.getElementById('recentOrdersTable');
+            tbody.innerHTML = recent.map(o => `
                 <tr>
-                    <td>${c.firstName || ''} ${c.lastName || ''}</td>
-                    <td>${c.email || ''}</td>
-                    <td>${c.phone || ''}</td>
-                    <td>${c.city || ''}</td>
-                    <td>${c.state || ''}</td>
-                    <td>${c.country || ''}</td>
-                    <td>${c.createdAt ? new Date(c.createdAt).toLocaleDateString() : 'N/A'}</td>
+                    <td style="font-family: monospace; color: var(--primary);">#${o.id || o.orderId}</td>
+                    <td>${o.customer.firstName} ${o.customer.lastName}</td>
+                    <td>${o.totalItems} items</td>
+                    <td>${o.orderTotal}</td>
+                    <td>${new Date(o.createdAt).toLocaleDateString()}</td>
+                    <td><span class="status-badge ${o.telegramConnected ? 'status-completed' : 'status-pending'}">${o.telegramConnected ? 'Connected' : 'Pending'}</span></td>
                 </tr>
             `).join('');
         }
 
-        function updateStats(customers) {
-            document.getElementById('totalCustomers').textContent = customers.length;
+        function renderTables() {
+            // All Orders Table
+            const ordersBody = document.getElementById('allOrdersTable');
+            ordersBody.innerHTML = allOrders.map(o => `
+                <tr>
+                    <td style="font-family: monospace;">#${o.id || o.orderId}</td>
+                    <td>
+                        <div>${o.customer.firstName} ${o.customer.lastName}</div>
+                        <div style="font-size: 0.8rem; color: var(--gray-text);">${o.customer.email}</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.9rem;">${o.totalItems} Items</div>
+                        <div style="font-size: 0.8rem; color: var(--gray-text);">${truncate(summarizeCart(o.cart), 40)}</div>
+                    </td>
+                    <td style="font-weight: 600; color: var(--success);">${o.orderTotal}</td>
+                    <td>${new Date(o.createdAt).toLocaleString()}</td>
+                    <td>${o.telegramConnected ? '✅' : '⏳'}</td>
+                </tr>
+            `).join('');
 
-            const usaCount = customers.filter(c => {
-                const country = (c.country || '').toLowerCase();
-                return country.includes('united') || country === 'usa' || country === 'us';
-            }).length;
-
-            const mxCount = customers.filter(c => {
-                const country = (c.country || '').toLowerCase();
-                return country.includes('mex') || country === 'mx';
-            }).length;
-
-            document.getElementById('usaCustomers').textContent = usaCount;
-            document.getElementById('mxCustomers').textContent = mxCount;
+            // All Customers Table (Loyalty)
+            const customersBody = document.getElementById('allCustomersTable');
+            customersBody.innerHTML = allCustomers.map(c => {
+                const stats = customerStats[c.email?.toLowerCase()] || { count: 0, spend: 0 };
+                return `
+                <tr>
+                    <td>
+                        <div style="font-weight: 600;">${c.firstName} ${c.lastName}</div>
+                    </td>
+                    <td>
+                        <div>${c.email}</div>
+                        <div style="font-size: 0.8rem; color: var(--gray-text);">${c.phone || ''}</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 1.1rem; font-weight: 700;">${stats.count}</div>
+                        <div style="font-size: 0.7rem; color: var(--gray-text);">Orders</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 1.1rem; font-weight: 700; color: var(--success);">${formatCurrency(stats.spend)}</div>
+                        <div style="font-size: 0.7rem; color: var(--gray-text);">Lifetime Value</div>
+                    </td>
+                    <td>${c.city}, ${c.state}</td>
+                    <td>${new Date(c.createdAt || Date.now()).toLocaleDateString()}</td>
+                </tr>
+            `}).join('');
         }
 
-        function filterTable() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allCustomers.filter(c => {
-                const searchable = `${c.firstName} ${c.lastName} ${c.email} ${c.city} ${c.state} ${c.country}`.toLowerCase();
-                return searchable.includes(query);
-            });
-            renderTable(filtered);
+        // HELPERS
+        function summarizeCart(cart) {
+            if (!cart || !Array.isArray(cart)) return '';
+            return cart.map(i => `${i.quantity}x ${i.name}`).join(', ');
         }
 
-        let sortDirection = 1;
-        function sortTable(columnIndex) {
-            const keys = ['firstName', 'email', 'phone', 'city', 'state', 'country', 'createdAt'];
-            const key = keys[columnIndex];
-
-            allCustomers.sort((a, b) => {
-                const valA = (a[key] || '').toString().toLowerCase();
-                const valB = (b[key] || '').toString().toLowerCase();
-                return valA.localeCompare(valB) * sortDirection;
-            });
-
-            sortDirection *= -1;
-            renderTable(allCustomers);
+        function truncate(str, n) {
+            return (str.length > n) ? str.substr(0, n - 1) + '&hellip;' : str;
         }
 
-        // Check if already logged in
-        if (sessionStorage.getItem('pachisAdminAuth') === 'true') {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-            loadCustomers();
+        function switchView(viewName) {
+            // Update Menu Active State
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            // Find link with onclick containing the viewName and add active class (simple heuristic)
+            // Ideally we'd map this better but for now:
+            const links = document.querySelectorAll('.nav-link');
+            if (viewName === 'dashboard') links[0].classList.add('active');
+            if (viewName === 'orders') links[1].classList.add('active');
+            if (viewName === 'customers') links[2].classList.add('active');
+
+            // Show View
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(`view-${viewName}`).classList.add('active');
+
+            // Update Title
+            const titles = {
+                'dashboard': 'Dashboard Overview',
+                'orders': 'Order Management',
+                'customers': 'Loyalty Program & Customers'
+            };
+            document.getElementById('pageTitle').innerText = titles[viewName];
         }
+
+        function filterOrders() {
+            const query = document.getElementById('searchOrders').value.toLowerCase();
+            const filtered = allOrders.filter(o =>
+                o.orderId.toLowerCase().includes(query) ||
+                o.customer.firstName.toLowerCase().includes(query) ||
+                o.customer.email.toLowerCase().includes(query)
+            );
+            // Re-render only orders table logic (duplicated for brevity, usually should be separate function)
+            const ordersBody = document.getElementById('allOrdersTable');
+            ordersBody.innerHTML = filtered.map(o => `
+                <tr>
+                    <td style="font-family: monospace;">#${o.id || o.orderId}</td>
+                    <td>
+                        <div>${o.customer.firstName} ${o.customer.lastName}</div>
+                        <div style="font-size: 0.8rem; color: var(--gray-text);">${o.customer.email}</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.9rem;">${o.totalItems} Items</div>
+                        <div style="font-size: 0.8rem; color: var(--gray-text);">${truncate(summarizeCart(o.cart), 40)}</div>
+                    </td>
+                    <td style="font-weight: 600; color: var(--success);">${o.orderTotal}</td>
+                    <td>${new Date(o.createdAt).toLocaleString()}</td>
+                    <td>${o.telegramConnected ? '✅' : '⏳'}</td>
+                </tr>
+            `).join('');
+        }
+
+        function filterCustomers() {
+            const query = document.getElementById('searchCustomers').value.toLowerCase();
+            const filtered = allCustomers.filter(c =>
+                c.firstName.toLowerCase().includes(query) ||
+                c.lastName.toLowerCase().includes(query) ||
+                c.email.toLowerCase().includes(query)
+            );
+
+            const customersBody = document.getElementById('allCustomersTable');
+            customersBody.innerHTML = filtered.map(c => {
+                const stats = customerStats[c.email?.toLowerCase()] || { count: 0, spend: 0 };
+                return `
+                <tr>
+                    <td>
+                        <div style="font-weight: 600;">${c.firstName} ${c.lastName}</div>
+                    </td>
+                    <td>
+                        <div>${c.email}</div>
+                        <div style="font-size: 0.8rem; color: var(--gray-text);">${c.phone || ''}</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 1.1rem; font-weight: 700;">${stats.count}</div>
+                        <div style="font-size: 0.7rem; color: var(--gray-text);">Orders</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 1.1rem; font-weight: 700; color: var(--success);">${formatCurrency(stats.spend)}</div>
+                        <div style="font-size: 0.7rem; color: var(--gray-text);">Lifetime Value</div>
+                    </td>
+                    <td>${c.city}, ${c.state}</td>
+                    <td>${new Date(c.createdAt || Date.now()).toLocaleDateString()}</td>
+                </tr>
+            `}).join('');
+        }
+
+        // Run Init
+        checkAuth();
+
     </script>
 </body>
 

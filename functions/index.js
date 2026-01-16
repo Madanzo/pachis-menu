@@ -445,3 +445,41 @@ exports.getAllCustomers = functions.https.onRequest(async (req, res) => {
         return res.status(500).json({ error: "Failed to get customers" });
     }
 });
+
+/**
+ * Get all orders for admin dashboard
+ * Returns list of all orders sorted by date
+ */
+exports.getAllOrders = functions.https.onRequest(async (req, res) => {
+    // Enable CORS
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Methods", "GET, OPTIONS");
+    res.set("Access-Control-Allow-Headers", "Content-Type");
+
+    if (req.method === "OPTIONS") {
+        return res.status(204).send("");
+    }
+
+    try {
+        const snapshot = await db.collection('orders')
+            .orderBy('createdAt', 'desc')
+            .get();
+
+        const orders = [];
+        snapshot.forEach(doc => {
+            orders.push({
+                id: doc.id,
+                ...doc.data()
+            });
+        });
+
+        return res.status(200).json({
+            success: true,
+            count: orders.length,
+            orders: orders
+        });
+    } catch (error) {
+        console.error("Error getting all orders:", error);
+        return res.status(500).json({ error: "Failed to get orders" });
+    }
+});
