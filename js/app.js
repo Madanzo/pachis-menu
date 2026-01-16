@@ -9,7 +9,7 @@ console.log('App module loaded');
 // Category header mapping
 const categoryHeaders = {
     "Disposable": "LIQUID DIAMONDS – 2G DISPOSABLE",
-    "Dual Dispo": "PACHIS DUAL DISPO'S – 4G",
+    "Dual Dispo": "PACHIS DUAL DISPO'S – 2G",
     "Live Rosin Dabs": "LIVE ROSIN DABS",
     "Pre-Rolls": "PRE-ROLLS",
     "Flower": "FLOWER",
