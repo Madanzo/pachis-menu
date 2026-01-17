@@ -252,6 +252,16 @@
                 { name: "BANANA BONANZA", type: "2g Liquid Diamonds", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/Pachis%20Banana%20Bonanza.png", terps: "7.2% (indica - fruity, sweet)", thc: "89.0%" },
                 { name: "CHERRY JUBILEE", type: "2g Liquid Diamonds", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/Pachis%20Cherry%20Jubilee.png", terps: "7% (sativa - tart, sweet)", thc: "88.0%" },
                 { name: "WATERMELON MARSHMALLOW", type: "2g Liquid Diamonds", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/pachis%20watermelon%20marshmallow.png", terps: "7% (sativa - tart, sweet)", thc: "88.0%" },
+                { name: "COCO", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Prodcuts%2Fcoco.png?alt=media&token=c7d24ac2-2f1d-4efa-8f1b-a5c81f424bdc", terps: "7% (indica - nutty, creamy)", thc: "88.0%" },
+                { name: "HAZELNUT", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Prodcuts%2Fhazelnut.png?alt=media&token=4c8cdb45-b0fe-4f3b-9301-0536a30a6d34", terps: "7% (indica - nutty, creamy)", thc: "88.0%" },
+                { name: "MANGO TANGO", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Prodcuts%2Fmango_tango.png?alt=media&token=a55c8f72-4b9a-4d29-ab68-14f63d7c8034", terps: "7% (sativa - fruity, sweet)", thc: "88.0%" }
+            ],
+            dual_dispos: [
+                { name: "4K COCO x HAZELNUT", type: "2g Dual Flavor (1g+1g)", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_coco_hazelnut.png", details: "Coco Creamsicle x Hazelnut Heaven" },
+                { name: "STRAWBERRY x BANANA", type: "2g Dual Flavor (1g+1g)", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_strawberry_banana.png", details: "Strawberry Jelly x Banana Bonanza" },
+                { name: "GUAVA x GRAPE", type: "2g Dual Flavor (1g+1g)", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_guava_grape.png", details: "Guava Galaxy x Grape Euphoria" },
+                { name: "MANGO x PEACH", type: "2g Dual Flavor (1g+1g)", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_mango_peach.png", details: "Mango Tango x Peach Rings" },
+                { name: "NERDZ x RUNTZ", type: "2g Dual Flavor (1g+1g)", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_nerdz_runtz.png", details: "Nerdz x Runtz Candy" }
             ],
             dabs: [
                 { name: "DAB IT PACHIS", type: "Live Rosin Dabs", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dabs_2g.png", details: "Available: 1 Jar (2g) • 7 Jars ½oz (14g) • 14 Jars 1oz (28g)" }
@@ -260,7 +270,7 @@
                 { name: "PREROLLS PACHIS", type: "Premium Pre-Rolled Joints", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/pre_rolls.png", details: "Black Box (3 pre-rolls) • Blue Box (18 pre-rolls)" }
             ],
             flower: [
-                { name: "PREMIUM FLOWER", type: "Indoor Premium Flower", image: "images/premium-flower.jpg", details: "Available: ¼oz (7g) • ½oz (14g) • 1oz (28g)" }
+                { name: "PREMIUM FLOWER", type: "Indoor Premium Flower", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/premium-flower.jpg", details: "Available: ¼oz (7g) • ½oz (14g) • 1oz (28g)" }
             ]
         };
 
@@ -284,6 +294,29 @@
                     </div>
                 </div>
             `}).join('');
+
+            // Dual Dispos (New Section)
+            // Create container if it doesn't exist
+            let dualContainer = document.getElementById('dual-grid');
+            if (!dualContainer) {
+                const dabsSection = document.querySelector('.category-section:nth-of-type(2)');
+                const newSection = document.createElement('div');
+                newSection.className = 'category-section';
+                newSection.innerHTML = '<h2 class="section-title">🌗 DUAL FLAVOR DISPOSABLES</h2><div class="product-grid" id="dual-grid"></div>';
+                dabsSection.parentNode.insertBefore(newSection, dabsSection);
+                dualContainer = document.getElementById('dual-grid');
+            }
+
+            dualContainer.innerHTML = products.dual_dispos.map(p => `
+                <div class="product-card">
+                    <img src="${p.image}" alt="${p.name}" class="product-image">
+                    <div class="product-info">
+                        <div class="product-name">${p.name}</div>
+                        <div class="product-type">${p.type}</div>
+                        <div class="product-details"><span>${p.details}</span></div>
+                    </div>
+                </div>
+            `).join('');
 
             // Dabs
             const dabsGrid = document.getElementById('dabs-grid');
@@ -315,7 +348,7 @@
             const flowerGrid = document.getElementById('flower-grid');
             flowerGrid.innerHTML = products.flower.map(p => `
                 <div class="product-card">
-                    <img src="${p.image}" alt="${p.name}" class="product-image">
+                    <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='https://placehold.co/600x400/000000/FFF?text=Premium+Flower'">
                     <div class="product-info">
                         <div class="product-name">${p.name}</div>
                         <div class="product-type">${p.type}</div>
