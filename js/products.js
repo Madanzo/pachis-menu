@@ -152,7 +152,7 @@ export const products = [
         brand: "Pachis",
         type: "2g Liquid Diamonds",
         flavor: "Coco",
-        image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fcoco.png?alt=media&token=c7d24ac2-2f1d-4efa-8f1b-a5c81f424bdc",
+        image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fpng%2Fcoco.png?alt=media&token=d7990bbd-e8e4-48ef-825e-4dfe3ee5dd04",
         terps: "7% (indica - nutty, creamy)",
         thcMg: "879.5/pkg",
         thcPercent: "88.0%",
@@ -165,7 +165,7 @@ export const products = [
         brand: "Pachis",
         type: "2g Liquid Diamonds",
         flavor: "Hazelnut",
-        image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fhazelnut.png?alt=media&token=4c8cdb45-b0fe-4f3b-9301-0536a30a6d34",
+        image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fpng%2Fhazelnut.png?alt=media&token=2ebaa3b3-fcaf-4c9c-aa25-622ac9909053",
         terps: "7% (indica - nutty, creamy)",
         thcMg: "879.5/pkg",
         thcPercent: "88.0%",
@@ -178,7 +178,7 @@ export const products = [
         brand: "Pachis",
         type: "2g Liquid Diamonds",
         flavor: "Mango Tango",
-        image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fmango_tango.png?alt=media&token=a55c8f72-4b9a-4d29-ab68-14f63d7c8034",
+        image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fpng%2Fmango_tango.png?alt=media&token=17803b4d-1a1f-4917-8564-10f6b238bdc2",
         terps: "7% (sativa - fruity, sweet)",
         thcMg: "879.5/pkg",
         thcPercent: "88.0%",
@@ -294,7 +294,7 @@ export const products = [
             { id: "7jars_halfoz", name: "7 Jars - ½oz (14g)", price: 750 },
             { id: "14jars_1oz", name: "14 Jars - 1oz (28g)", price: 1400 }
         ],
-        image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dabs_2g.png"
+        image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fmp4%2Fdab.mp4?alt=media&token=2b38e79b-090f-42b5-b870-bb64cb21c966",
     },
 
     // PRE-ROLLS - Single product with box type selector

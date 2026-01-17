@@ -252,9 +252,9 @@
                 { name: "BANANA BONANZA", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fpng%2Fbanana-bonanza.png?alt=media&token=f4c70a20-d4ec-467a-8498-01afeefd79cd", terps: "7.2% (indica - fruity, sweet)", thc: "89.0%" },
                 { name: "CHERRY JUBILEE", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fpng%2Fcherry_jubilee.png?alt=media", terps: "7% (sativa - tart, sweet)", thc: "88.0%" },
                 { name: "WATERMELON MARSHMALLOW", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fpng%2Fwatermelon_marshmallow.png?alt=media", terps: "7% (sativa - tart, sweet)", thc: "88.0%" },
-                { name: "COCO", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fcoco.png?alt=media&token=c7d24ac2-2f1d-4efa-8f1b-a5c81f424bdc", terps: "7% (indica - nutty, creamy)", thc: "88.0%" },
-                { name: "HAZELNUT", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fhazelnut.png?alt=media&token=4c8cdb45-b0fe-4f3b-9301-0536a30a6d34", terps: "7% (indica - nutty, creamy)", thc: "88.0%" },
-                { name: "MANGO TANGO", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fmango_tango.png?alt=media&token=a55c8f72-4b9a-4d29-ab68-14f63d7c8034", terps: "7% (sativa - fruity, sweet)", thc: "88.0%" }
+                { name: "COCO", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fpng%2Fcoco.png?alt=media&token=d7990bbd-e8e4-48ef-825e-4dfe3ee5dd04", terps: "7% (indica - nutty, creamy)", thc: "88.0%" },
+                { name: "HAZELNUT", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fpng%2Fhazelnut.png?alt=media&token=2ebaa3b3-fcaf-4c9c-aa25-622ac9909053", terps: "7% (indica - nutty, creamy)", thc: "88.0%" },
+                { name: "MANGO TANGO", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fpng%2Fmango_tango.png?alt=media&token=17803b4d-1a1f-4917-8564-10f6b238bdc2", terps: "7% (sativa - fruity, sweet)", thc: "88.0%" }
             ],
             dual_dispos: [
                 { name: "4K COCO x HAZELNUT", type: "2g Dual Flavor (1g+1g)", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_coco_hazelnut.png", details: "Coco Creamsicle x Hazelnut Heaven" },
@@ -264,7 +264,7 @@
                 { name: "NERDZ x RUNTZ", type: "2g Dual Flavor (1g+1g)", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_nerdz_runtz.png", details: "Nerdz x Runtz Candy" }
             ],
             dabs: [
-                { name: "DAB IT PACHIS", type: "Live Rosin Dabs", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dabs_2g.png", details: "Available: 1 Jar (2g) • 7 Jars ½oz (14g) • 14 Jars 1oz (28g)" }
+                { name: "DAB IT PACHIS", type: "Live Rosin Dabs", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fmp4%2Fdab.mp4?alt=media&token=2b38e79b-090f-42b5-b870-bb64cb21c966", details: "Available: 1 Jar (2g) • 7 Jars ½oz (14g) • 14 Jars 1oz (28g)", isVideo: true }
             ],
             prerolls: [
                 { name: "PREROLLS PACHIS", type: "Premium Pre-Rolled Joints", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Products%2Fpng%2Fpre_rolls.png?alt=media", details: "Black Box (3 pre-rolls) • Blue Box (18 pre-rolls)" }
@@ -323,16 +323,20 @@
 
             // Dabs
             const dabsGrid = document.getElementById('dabs-grid');
-            dabsGrid.innerHTML = products.dabs.map(p => `
+            dabsGrid.innerHTML = products.dabs.map(p => {
+                const mediaHtml = p.isVideo
+                    ? `<video src="${p.image}" class="product-image" autoplay loop muted playsinline poster="${getFallback(p.name)}"></video>`
+                    : `<img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.onerror=null;this.src='${getFallback(p.name)}'">`;
+                return `
                 <div class="product-card">
-                    <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.onerror=null;this.src='${getFallback(p.name)}'">
+                    ${mediaHtml}
                     <div class="product-info">
                         <div class="product-name">${p.name}</div>
                         <div class="product-type">${p.type}</div>
                         <div class="product-details"><span>${p.details}</span></div>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
 
             // Pre-rolls
             const prerollsGrid = document.getElementById('prerolls-grid');
