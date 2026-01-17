@@ -185,7 +185,7 @@ function renderProducts(category) {
             }
 
             // Check if image is a video
-            const isVideo = product.image ? product.image.endsWith('.mp4') : false;
+            const isVideo = product.image ? product.image.includes('.mp4') : false;
             const mediaHTML = isVideo
                 ? `<video src="${product.image}" class="product-image" autoplay loop muted playsinline></video>`
                 : `<img src="${product.image || ''}" alt="${product.name}" class="product-image">`;
