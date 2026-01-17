@@ -238,49 +238,52 @@
     </footer>
 
     <script>
-        // Product data - synced from products.js (with Placeholders for broken links)
+        // Product data - synced from products.js (Restored Original URLs with Fallback Protection)
         const products = {
             disposables: [
-                { name: "RUNTZ CANDY", type: "2g Liquid Diamonds", image: "https://placehold.co/400x400/1a1a2e/00cec9?text=Runtz+Candy", terps: "7% (indica - fruity, tangy)", thc: "88.0%" },
-                { name: "BUBBLEGUM TAPE", type: "2g Liquid Diamonds", image: "https://placehold.co/400x400/1a1a2e/00cec9?text=Bubblegum", terps: "7% (hybrid - playful, sweet)", thc: "88.0%", isVideo: false },
-                { name: "FRUITIER CEREAL", type: "2g Liquid Diamonds", image: "https://placehold.co/400x400/1a1a2e/00cec9?text=Cereal", terps: "7% (hybrid - playful, sweet)", thc: "88.0%", isVideo: false },
-                { name: "GRAPE EUPHORIA", type: "2g Liquid Diamonds", image: "https://placehold.co/400x400/1a1a2e/00cec9?text=Grape", terps: "7% (indica - fruity, tangy)", thc: "88.0%" },
-                { name: "GUAVA GALAXY", type: "2g Liquid Diamonds", image: "https://placehold.co/400x400/1a1a2e/00cec9?text=Guava", terps: "7% (indica - fruity, tangy)", thc: "88.0%" },
-                { name: "NERDZ", type: "2g Liquid Diamonds", image: "https://placehold.co/400x400/1a1a2e/00cec9?text=Nerdz", terps: "7% (indica - fruity, tangy)", thc: "88.0%" },
-                { name: "STRAWBERRY JELLY", type: "2g Liquid Diamonds", image: "https://placehold.co/400x400/1a1a2e/00cec9?text=Strawberry", terps: "7% (indica - fruity, tangy)", thc: "88.0%", isVideo: false },
-                { name: "PEACH RINGS", type: "2g Liquid Diamonds", image: "https://placehold.co/400x400/1a1a2e/00cec9?text=Peach+Rings", terps: "7% (sativa - tart, sweet)", thc: "88.0%", isVideo: false },
-                { name: "BANANA BONANZA", type: "2g Liquid Diamonds", image: "https://placehold.co/400x400/1a1a2e/00cec9?text=Banana", terps: "7.2% (indica - fruity, sweet)", thc: "89.0%" },
-                { name: "CHERRY JUBILEE", type: "2g Liquid Diamonds", image: "https://placehold.co/400x400/1a1a2e/00cec9?text=Cherry", terps: "7% (sativa - tart, sweet)", thc: "88.0%" },
-                { name: "WATERMELON MARSHMALLOW", type: "2g Liquid Diamonds", image: "https://placehold.co/400x400/1a1a2e/00cec9?text=Watermelon", terps: "7% (sativa - tart, sweet)", thc: "88.0%" },
-                { name: "COCO", type: "2g Liquid Diamonds", image: "https://placehold.co/400x400/1a1a2e/00cec9?text=Coco", terps: "7% (indica - nutty, creamy)", thc: "88.0%" },
-                { name: "HAZELNUT", type: "2g Liquid Diamonds", image: "https://placehold.co/400x400/1a1a2e/00cec9?text=Hazelnut", terps: "7% (indica - nutty, creamy)", thc: "88.0%" },
-                { name: "MANGO TANGO", type: "2g Liquid Diamonds", image: "https://placehold.co/400x400/1a1a2e/00cec9?text=Mango", terps: "7% (sativa - fruity, sweet)", thc: "88.0%" }
+                { name: "RUNTZ CANDY", type: "2g Liquid Diamonds", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/runtz_candy.png", terps: "7% (indica - fruity, tangy)", thc: "88.0%" },
+                { name: "BUBBLEGUM TAPE", type: "2g Liquid Diamonds", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/bubblegum_tape.mp4", terps: "7% (hybrid - playful, sweet)", thc: "88.0%", isVideo: true },
+                { name: "FRUITIER CEREAL", type: "2g Liquid Diamonds", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/fruitier_cereal.mp4", terps: "7% (hybrid - playful, sweet)", thc: "88.0%", isVideo: true },
+                { name: "GRAPE EUPHORIA", type: "2g Liquid Diamonds", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/grape_euphoria.png", terps: "7% (indica - fruity, tangy)", thc: "88.0%" },
+                { name: "GUAVA GALAXY", type: "2g Liquid Diamonds", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/guava_galaxy.png", terps: "7% (indica - fruity, tangy)", thc: "88.0%" },
+                { name: "NERDZ", type: "2g Liquid Diamonds", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/nerdz.png", terps: "7% (indica - fruity, tangy)", thc: "88.0%" },
+                { name: "STRAWBERRY JELLY", type: "2g Liquid Diamonds", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/strawberry_jelly.mp4", terps: "7% (indica - fruity, tangy)", thc: "88.0%", isVideo: true },
+                { name: "PEACH RINGS", type: "2g Liquid Diamonds", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/peach_ringz.mp4", terps: "7% (sativa - tart, sweet)", thc: "88.0%", isVideo: true },
+                { name: "BANANA BONANZA", type: "2g Liquid Diamonds", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/Pachis%20Banana%20Bonanza.png", terps: "7.2% (indica - fruity, sweet)", thc: "89.0%" },
+                { name: "CHERRY JUBILEE", type: "2g Liquid Diamonds", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/Pachis%20Cherry%20Jubilee.png", terps: "7% (sativa - tart, sweet)", thc: "88.0%" },
+                { name: "WATERMELON MARSHMALLOW", type: "2g Liquid Diamonds", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/pachis%20watermelon%20marshmallow.png", terps: "7% (sativa - tart, sweet)", thc: "88.0%" },
+                { name: "COCO", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Prodcuts%2Fcoco.png?alt=media&token=c7d24ac2-2f1d-4efa-8f1b-a5c81f424bdc", terps: "7% (indica - nutty, creamy)", thc: "88.0%" },
+                { name: "HAZELNUT", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Prodcuts%2Fhazelnut.png?alt=media&token=4c8cdb45-b0fe-4f3b-9301-0536a30a6d34", terps: "7% (indica - nutty, creamy)", thc: "88.0%" },
+                { name: "MANGO TANGO", type: "2g Liquid Diamonds", image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Prodcuts%2Fmango_tango.png?alt=media&token=a55c8f72-4b9a-4d29-ab68-14f63d7c8034", terps: "7% (sativa - fruity, sweet)", thc: "88.0%" }
             ],
             dual_dispos: [
-                { name: "4K COCO x HAZELNUT", type: "2g Dual Flavor (1g+1g)", image: "https://placehold.co/400x400/1a1a2e/e056fd?text=Coco+x+Hazelnut", details: "Coco Creamsicle x Hazelnut Heaven" },
-                { name: "STRAWBERRY x BANANA", type: "2g Dual Flavor (1g+1g)", image: "https://placehold.co/400x400/1a1a2e/e056fd?text=Strawberry+x+Banana", details: "Strawberry Jelly x Banana Bonanza" },
-                { name: "GUAVA x GRAPE", type: "2g Dual Flavor (1g+1g)", image: "https://placehold.co/400x400/1a1a2e/e056fd?text=Guava+x+Grape", details: "Guava Galaxy x Grape Euphoria" },
-                { name: "MANGO x PEACH", type: "2g Dual Flavor (1g+1g)", image: "https://placehold.co/400x400/1a1a2e/e056fd?text=Mango+x+Peach", details: "Mango Tango x Peach Rings" },
-                { name: "NERDZ x RUNTZ", type: "2g Dual Flavor (1g+1g)", image: "https://placehold.co/400x400/1a1a2e/e056fd?text=Nerdz+x+Runtz", details: "Nerdz x Runtz Candy" }
+                { name: "4K COCO x HAZELNUT", type: "2g Dual Flavor (1g+1g)", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_coco_hazelnut.png", details: "Coco Creamsicle x Hazelnut Heaven" },
+                { name: "STRAWBERRY x BANANA", type: "2g Dual Flavor (1g+1g)", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_strawberry_banana.png", details: "Strawberry Jelly x Banana Bonanza" },
+                { name: "GUAVA x GRAPE", type: "2g Dual Flavor (1g+1g)", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_guava_grape.png", details: "Guava Galaxy x Grape Euphoria" },
+                { name: "MANGO x PEACH", type: "2g Dual Flavor (1g+1g)", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_mango_peach.png", details: "Mango Tango x Peach Rings" },
+                { name: "NERDZ x RUNTZ", type: "2g Dual Flavor (1g+1g)", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dual_nerdz_runtz.png", details: "Nerdz x Runtz Candy" }
             ],
             dabs: [
-                { name: "DAB IT PACHIS", type: "Live Rosin Dabs", image: "https://placehold.co/400x400/1a1a2e/f1c40f?text=Live+Rosin", details: "Available: 1 Jar (2g) • 7 Jars ½oz (14g) • 14 Jars 1oz (28g)" }
+                { name: "DAB IT PACHIS", type: "Live Rosin Dabs", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/dabs_2g.png", details: "Available: 1 Jar (2g) • 7 Jars ½oz (14g) • 14 Jars 1oz (28g)" }
             ],
             prerolls: [
-                { name: "PREROLLS PACHIS", type: "Premium Pre-Rolled Joints", image: "https://placehold.co/400x400/1a1a2e/badc58?text=Pre-Rolls", details: "Black Box (3 pre-rolls) • Blue Box (18 pre-rolls)" }
+                { name: "PREROLLS PACHIS", type: "Premium Pre-Rolled Joints", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/pre_rolls.png", details: "Black Box (3 pre-rolls) • Blue Box (18 pre-rolls)" }
             ],
             flower: [
-                { name: "PREMIUM FLOWER", type: "Indoor Premium Flower", image: "https://placehold.co/400x400/1a1a2e/badc58?text=Premium+Flower", details: "Available: ¼oz (7g) • ½oz (14g) • 1oz (28g)" }
+                { name: "PREMIUM FLOWER", type: "Indoor Premium Flower", image: "https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/premium-flower.jpg", details: "Available: ¼oz (7g) • ½oz (14g) • 1oz (28g)" }
             ]
         };
 
         function renderProducts() {
+            // Helper for fallback image
+            const getFallback = (name) => `https://placehold.co/400x400/1a1a2e/00cec9?text=${encodeURIComponent(name)}`;
+
             // Disposables
             const dispGrid = document.getElementById('disposables-grid');
             dispGrid.innerHTML = products.disposables.map(p => {
                 const mediaHtml = p.isVideo
-                    ? `<video src="${p.image}" class="product-image" autoplay loop muted playsinline></video>`
-                    : `<img src="${p.image}" alt="${p.name}" class="product-image">`;
+                    ? `<video src="${p.image}" class="product-image" autoplay loop muted playsinline poster="${getFallback(p.name)}"></video>`
+                    : `<img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.onerror=null;this.src='${getFallback(p.name)}'">`;
                 return `
                 <div class="product-card">
                     ${mediaHtml}
@@ -309,7 +312,7 @@
 
             dualContainer.innerHTML = products.dual_dispos.map(p => `
                 <div class="product-card">
-                    <img src="${p.image}" alt="${p.name}" class="product-image">
+                    <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.onerror=null;this.src='${getFallback(p.name)}'">
                     <div class="product-info">
                         <div class="product-name">${p.name}</div>
                         <div class="product-type">${p.type}</div>
@@ -322,7 +325,7 @@
             const dabsGrid = document.getElementById('dabs-grid');
             dabsGrid.innerHTML = products.dabs.map(p => `
                 <div class="product-card">
-                    <img src="${p.image}" alt="${p.name}" class="product-image">
+                    <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.onerror=null;this.src='${getFallback(p.name)}'">
                     <div class="product-info">
                         <div class="product-name">${p.name}</div>
                         <div class="product-type">${p.type}</div>
@@ -335,7 +338,7 @@
             const prerollsGrid = document.getElementById('prerolls-grid');
             prerollsGrid.innerHTML = products.prerolls.map(p => `
                 <div class="product-card">
-                    <img src="${p.image}" alt="${p.name}" class="product-image">
+                    <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.onerror=null;this.src='${getFallback(p.name)}'">
                     <div class="product-info">
                         <div class="product-name">${p.name}</div>
                         <div class="product-type">${p.type}</div>
@@ -348,7 +351,7 @@
             const flowerGrid = document.getElementById('flower-grid');
             flowerGrid.innerHTML = products.flower.map(p => `
                 <div class="product-card">
-                    <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='https://placehold.co/600x400/000000/FFF?text=Premium+Flower'">
+                    <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.onerror=null;this.src='${getFallback(p.name)}'">
                     <div class="product-info">
                         <div class="product-name">${p.name}</div>
                         <div class="product-type">${p.type}</div>
