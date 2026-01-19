@@ -4,7 +4,6 @@ import { showToast } from './utils.js';
 import { setRegion, getSizeOptionsForProduct, getRegion, getCurrentPricingTiers, formatPrice } from './pricing.js';
 import { setLanguage, getLanguage, t, initLanguage, applyTranslations } from './i18n.js';
 
-console.log('App module loaded');
 
 // Category header mapping
 const categoryHeaders = {
@@ -363,7 +362,6 @@ function verifyAge(event) {
 
     // Set region based on country for pricing
     const region = setRegion(country);
-    console.log('Region set to:', region);
 
     // Set language based on country
     const countryLower = country.toLowerCase().trim();
@@ -392,7 +390,6 @@ async function saveCustomerToFirebase(customerData) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ customer: customerData })
         });
-        console.log('Customer saved to CRM');
     } catch (error) {
         console.error('Failed to save customer to CRM:', error);
         // Don't block - localStorage is the fallback
@@ -505,7 +502,6 @@ function updateSettings(event) {
 
     // Update region if country changed
     const region = setRegion(updatedData.country);
-    console.log('Region updated to:', region);
 
     // Update language if country changed
     const countryLower = updatedData.country.toLowerCase().trim();
