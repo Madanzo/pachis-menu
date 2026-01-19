@@ -87,6 +87,7 @@ export const translations = {
         },
 
         comingSoon: "Coming Soon",
+        comingSoonDate: "DROPS 4/20/26 🔥",
 
         // Regions
         regionUSA: "(USA)",
@@ -181,6 +182,7 @@ export const translations = {
         },
 
         comingSoon: "Próximamente",
+        comingSoonDate: "SALE 4/20/26 🔥",
 
         // Regions
         regionUSA: "(USA)",

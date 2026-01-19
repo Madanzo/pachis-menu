@@ -180,7 +180,7 @@ function renderProducts(category) {
             if (product.comingSoon) {
                 card.classList.add('product-coming-soon');
                 productComingSoonHTML = `
-            <div class="coming-soon-banner">COMING SOON</div>
+            <div class="coming-soon-banner">${t('comingSoonDate')}</div>
           `;
             }
 
@@ -230,7 +230,7 @@ function renderProducts(category) {
             <span class="qty-display" data-product-id="${product.id}">1</span>
             <button class="qty-btn" data-action="increase-qty" data-id="${product.id}" ${product.soldOut || product.comingSoon ? 'disabled' : ''}>+</button>
             <button class="add-to-cart-btn" data-action="add-to-cart" data-id="${product.id}" ${product.soldOut || product.comingSoon ? 'disabled' : ''}>
-              ${product.soldOut ? 'Sold Out' : product.comingSoon ? 'Coming Soon' : 'Add to Cart'}
+              ${product.soldOut ? 'Sold Out' : product.comingSoon ? 'Coming 4/20 🔥' : 'Add to Cart'}
             </button>
           </div>
         `;
