@@ -1,7 +1,7 @@
 // Cart management
 import { products } from './products.js';
 import { showToast } from './utils.js';
-import { calculateCartTotal, formatPrice, pricingTiers } from './pricing.js';
+import { calculateCartTotal, formatPrice, pricingTiers, getRegion, getCurrencySymbol } from './pricing.js';
 import { t } from './i18n.js';
 
 let cart = [];
@@ -254,7 +254,9 @@ export async function sendToTelegram() {
                 customer: customerData,
                 totalItems: totalItems,
                 orderTotal: cartData.formattedTotal,
-                orderTotalValue: cartData.total
+                orderTotalValue: cartData.total,
+                region: getRegion(),
+                currency: getRegion() === 'MX' ? 'MXN' : 'USD'
             })
         });
 

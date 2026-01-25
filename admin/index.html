@@ -2,6 +2,15 @@
 <html lang="en">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJLKJ3CXLW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-KJLKJ3CXLW');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pachis Admin Dashboard</title>
@@ -414,6 +423,12 @@
                         <span>Loyalty & Customers</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="switchView('raffle')">
+                        <span class="nav-icon">🎟️</span>
+                        <span>Raffle</span>
+                    </a>
+                </li>
 
                 <li style="margin: 20px 0; border-top: 1px solid var(--border-color);"></li>
 
@@ -468,9 +483,14 @@
                         <div class="stat-change">Registered users</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-title">Total Revenue Estimate</div>
-                        <div class="stat-value" id="dashTotalRevenue">$0.00</div>
-                        <div class="stat-change">Based on order history</div>
+                        <div class="stat-title">🇺🇸 Revenue (USD)</div>
+                        <div class="stat-value" id="dashRevenueUSD">$0.00</div>
+                        <div class="stat-change" id="dashOrdersUSD">0 orders</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">🇲🇽 Revenue (MXN)</div>
+                        <div class="stat-value" id="dashRevenueMXN">MX$0</div>
+                        <div class="stat-change" id="dashOrdersMXN">0 orders</div>
                     </div>
                 </div>
 
@@ -514,7 +534,8 @@
                                 <th>Items Summary</th>
                                 <th>Total</th>
                                 <th>Date</th>
-                                <th>Connected</th>
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="allOrdersTable">
@@ -541,12 +562,86 @@
                                 <th>Lifetime Value</th>
                                 <th>Location</th>
                                 <th>Joined</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="allCustomersTable">
                             <!-- Populated by JS -->
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- RAFFLE VIEW -->
+            <div id="view-raffle" class="view-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-title">🎫 Total Entries</div>
+                        <div class="stat-value" id="raffleTotalEntries">0</div>
+                        <div class="stat-change">Paid entries only</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">👥 Participants</div>
+                        <div class="stat-value" id="raffleParticipants">0</div>
+                        <div class="stat-change">Unique people</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">⏳ Pending</div>
+                        <div class="stat-value" id="rafflePending">0</div>
+                        <div class="stat-change">Awaiting payment</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">💰 Revenue</div>
+                        <div class="stat-value" id="raffleRevenue">$0</div>
+                        <div class="stat-change">From paid entries</div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <div class="table-title">🏈 Cowboys Jersey Raffle - Order Entries</div>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn-primary"
+                                style="width: auto; padding: 10px 20px; font-size: 0.9rem; background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #1a1a1a;"
+                                onclick="drawWinner()">
+                                🎲 Draw Winner
+                            </button>
+                            <a href="/" target="_blank" class="btn-primary"
+                                style="width: auto; padding: 10px 20px; font-size: 0.9rem; text-decoration: none;">
+                                View Store ↗
+                            </a>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Order Total</th>
+                                <th>Entries</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="raffleEntriesTable">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Winner Modal -->
+                <div id="winnerModal"
+                    style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 3000; justify-content: center; align-items: center;">
+                    <div
+                        style="background: linear-gradient(135deg, #003594 0%, #0057B8 100%); border: 3px solid #FFD700; border-radius: 24px; padding: 40px; max-width: 500px; text-align: center;">
+                        <div style="font-size: 4rem;">🏆</div>
+                        <h2 style="color: #FFD700; margin: 20px 0;">WINNER!</h2>
+                        <div id="winnerDetails" style="color: #fff; font-size: 1.2rem; line-height: 1.8;"></div>
+                        <button onclick="closeWinnerModal()"
+                            style="margin-top: 20px; padding: 12px 30px; background: #FFD700; color: #1a1a1a; border: none; border-radius: 10px; font-weight: 700; cursor: pointer;">Close</button>
+                    </div>
                 </div>
             </div>
 
@@ -655,17 +750,58 @@
             return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
         }
 
+        // Helper to detect currency from order (handles old orders without currency field)
+        function getCurrency(order) {
+            // If order has currency field, use it
+            if (order.currency) return order.currency;
+            // If order has region field, derive from it
+            if (order.region === 'MX') return 'MXN';
+            if (order.region === 'USA') return 'USD';
+            // Check if orderTotal contains MX$ (Mexican peso format)
+            if (order.orderTotal && order.orderTotal.includes('MX')) return 'MXN';
+            // Check customer country
+            const country = (order.customer?.country || '').toUpperCase();
+            if (country.includes('MEX') || country === 'MX') return 'MXN';
+            // Default to USD
+            return 'USD';
+        }
+
+        function getCurrencyBadge(order) {
+            const currency = getCurrency(order);
+            if (currency === 'MXN') {
+                return '<span style="background: #2ecc71; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 6px;">🇲🇽 MXN</span>';
+            }
+            return '<span style="background: #3498db; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-left: 6px;">🇺🇸 USD</span>';
+        }
+
         // UI UPDATES
         function updateDashboard() {
             document.getElementById('dashTotalOrders').textContent = allOrders.length;
             document.getElementById('dashTotalCustomers').textContent = allCustomers.length;
 
-            const totalRev = allOrders.reduce((sum, order) => {
-                let val = parseFloat((order.orderTotal || '0').toString().replace(/[^0-9.]/g, '')) || 0;
-                return sum + val;
-            }, 0);
+            // Calculate separate USD and MXN revenue
+            let totalUSD = 0;
+            let countUSD = 0;
+            let totalMXN = 0;
+            let countMXN = 0;
 
-            document.getElementById('dashTotalRevenue').textContent = formatCurrency(totalRev);
+            allOrders.forEach(order => {
+                const currency = getCurrency(order);
+                const val = parseFloat((order.orderTotal || '0').toString().replace(/[^0-9.]/g, '')) || 0;
+
+                if (currency === 'MXN') {
+                    totalMXN += val;
+                    countMXN++;
+                } else {
+                    totalUSD += val;
+                    countUSD++;
+                }
+            });
+
+            document.getElementById('dashRevenueUSD').textContent = formatCurrency(totalUSD);
+            document.getElementById('dashOrdersUSD').textContent = `${countUSD} orders`;
+            document.getElementById('dashRevenueMXN').textContent = 'MX$' + totalMXN.toLocaleString('es-MX');
+            document.getElementById('dashOrdersMXN').textContent = `${countMXN} orders`;
 
             // Recent Orders Table (Top 5)
             const recent = allOrders.slice(0, 5);
@@ -675,7 +811,7 @@
                     <td style="font-family: monospace; color: var(--primary);">#${o.id || o.orderId}</td>
                     <td>${o.customer.firstName} ${o.customer.lastName}</td>
                     <td>${o.totalItems} items</td>
-                    <td>${o.orderTotal}</td>
+                    <td>${o.orderTotal} ${getCurrencyBadge(o)}</td>
                     <td>${new Date(o.createdAt).toLocaleDateString()}</td>
                     <td><span class="status-badge ${o.telegramConnected ? 'status-completed' : 'status-pending'}">${o.telegramConnected ? 'Connected' : 'Pending'}</span></td>
                 </tr>
@@ -685,9 +821,22 @@
         function renderTables() {
             // All Orders Table
             const ordersBody = document.getElementById('allOrdersTable');
-            ordersBody.innerHTML = allOrders.map(o => `
+            ordersBody.innerHTML = allOrders.map(o => {
+                const orderId = o.id || o.orderId;
+                const status = o.status || 'pending';
+                const statusClass = status === 'paid' ? 'status-completed' : 'status-pending';
+                const statusIcon = status === 'paid' ? '🟢' : '🟡';
+                const raffleInfo = o.raffleEntries ? `<span style="color: var(--primary); font-size: 0.8rem;">🎟️ ${o.raffleEntries} entries</span>` : '';
+
+                const actionBtns = status === 'pending'
+                    ? `<button onclick="updateOrderStatus('${orderId}', 'paid')" style="background: var(--success); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; margin-right: 5px;">✅ Paid</button>
+                       <button onclick="deleteOrder('${orderId}')" style="background: var(--danger); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;">🗑️</button>`
+                    : `<button onclick="updateOrderStatus('${orderId}', 'pending')" style="background: var(--secondary); color: #fff; border: none; padding: 6px 10px; border-radius: 8px; cursor: pointer; margin-right: 5px; font-size: 0.8rem;">↩️ Unpaid</button>
+                       <button onclick="deleteOrder('${orderId}')" style="background: var(--danger); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;">🗑️</button>`;
+
+                return `
                 <tr>
-                    <td style="font-family: monospace;">#${o.id || o.orderId}</td>
+                    <td style="font-family: monospace;">#${orderId}</td>
                     <td>
                         <div>${o.customer.firstName} ${o.customer.lastName}</div>
                         <div style="font-size: 0.8rem; color: var(--gray-text);">${o.customer.email}</div>
@@ -696,16 +845,24 @@
                         <div style="font-size: 0.9rem;">${o.totalItems} Items</div>
                         <div style="font-size: 0.8rem; color: var(--gray-text);">${truncate(summarizeCart(o.cart), 40)}</div>
                     </td>
-                    <td style="font-weight: 600; color: var(--success);">${o.orderTotal}</td>
+                    <td>
+                        <div style="font-weight: 600; color: var(--success);">${o.orderTotal} ${getCurrencyBadge(o)}</div>
+                        ${raffleInfo}
+                    </td>
                     <td>${new Date(o.createdAt).toLocaleString()}</td>
-                    <td>${o.telegramConnected ? '✅' : '⏳'}</td>
+                    <td><span class="status-badge ${statusClass}">${statusIcon} ${status.toUpperCase()}</span></td>
+                    <td>${actionBtns}</td>
                 </tr>
-            `).join('');
+            `}).join('');
 
             // All Customers Table (Loyalty)
             const customersBody = document.getElementById('allCustomersTable');
             customersBody.innerHTML = allCustomers.map(c => {
                 const stats = customerStats[c.email?.toLowerCase()] || { count: 0, spend: 0 };
+                const hasOrders = stats.count > 0;
+                const deleteBtn = hasOrders
+                    ? `<button onclick="deleteCustomer('${c.email}')" style="background: var(--secondary); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; opacity: 0.6;" title="Has ${stats.count} orders">🗑️</button>`
+                    : `<button onclick="deleteCustomer('${c.email}')" style="background: var(--danger); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;">🗑️ Delete</button>`;
                 return `
                 <tr>
                     <td>
@@ -725,6 +882,7 @@
                     </td>
                     <td>${c.city}, ${c.state}</td>
                     <td>${new Date(c.createdAt || Date.now()).toLocaleDateString()}</td>
+                    <td>${deleteBtn}</td>
                 </tr>
             `}).join('');
         }
@@ -739,6 +897,14 @@
             return (str.length > n) ? str.substr(0, n - 1) + '&hellip;' : str;
         }
 
+        function viewOrder(orderId) {
+            switchView('orders');
+            const searchInput = document.getElementById('searchOrders');
+            searchInput.value = orderId;
+            // Trigger input event to filter
+            searchInput.dispatchEvent(new Event('input'));
+        }
+
         function switchView(viewName) {
             // Update Menu Active State
             document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
@@ -748,6 +914,7 @@
             if (viewName === 'dashboard') links[0].classList.add('active');
             if (viewName === 'orders') links[1].classList.add('active');
             if (viewName === 'customers') links[2].classList.add('active');
+            if (viewName === 'raffle') links[3].classList.add('active');
 
             // Show View
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
@@ -757,9 +924,15 @@
             const titles = {
                 'dashboard': 'Dashboard Overview',
                 'orders': 'Order Management',
-                'customers': 'Loyalty Program & Customers'
+                'customers': 'Loyalty Program & Customers',
+                'raffle': 'Cowboys Jersey Raffle'
             };
             document.getElementById('pageTitle').innerText = titles[viewName];
+
+            // Load raffle data when switching to raffle view
+            if (viewName === 'raffle') {
+                loadRaffleData();
+            }
         }
 
         function filterOrders() {
@@ -782,7 +955,7 @@
                         <div style="font-size: 0.9rem;">${o.totalItems} Items</div>
                         <div style="font-size: 0.8rem; color: var(--gray-text);">${truncate(summarizeCart(o.cart), 40)}</div>
                     </td>
-                    <td style="font-weight: 600; color: var(--success);">${o.orderTotal}</td>
+                    <td style="font-weight: 600; color: var(--success);">${o.orderTotal} ${getCurrencyBadge(o)}</td>
                     <td>${new Date(o.createdAt).toLocaleString()}</td>
                     <td>${o.telegramConnected ? '✅' : '⏳'}</td>
                 </tr>
@@ -800,6 +973,10 @@
             const customersBody = document.getElementById('allCustomersTable');
             customersBody.innerHTML = filtered.map(c => {
                 const stats = customerStats[c.email?.toLowerCase()] || { count: 0, spend: 0 };
+                const hasOrders = stats.count > 0;
+                const deleteBtn = hasOrders
+                    ? `<button onclick="deleteCustomer('${c.email}')" style="background: var(--secondary); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; opacity: 0.6;" title="Has ${stats.count} orders">🗑️</button>`
+                    : `<button onclick="deleteCustomer('${c.email}')" style="background: var(--danger); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;">🗑️ Delete</button>`;
                 return `
                 <tr>
                     <td>
@@ -819,8 +996,230 @@
                     </td>
                     <td>${c.city}, ${c.state}</td>
                     <td>${new Date(c.createdAt || Date.now()).toLocaleDateString()}</td>
+                    <td>${deleteBtn}</td>
                 </tr>
             `}).join('');
+        }
+
+        // ============================================
+        // ORDER FUNCTIONS
+        // ============================================
+        async function updateOrderStatus(orderId, status) {
+            const action = status === 'paid' ? 'mark as PAID' : 'mark as PENDING';
+            if (!confirm(`Are you sure you want to ${action} order #${orderId}?`)) return;
+
+            // Optimistic update
+            const btn = event.target;
+            const originalContent = btn.innerHTML;
+            btn.textContent = '...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch(`${API_BASE}/updateOrder`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ orderId, status })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    // Update local data state immediately for responsiveness
+                    const orderIndex = allOrders.findIndex(o => (o.id || o.orderId) === orderId);
+                    if (orderIndex !== -1) {
+                        allOrders[orderIndex].status = status;
+                        renderTables();
+                    } else {
+                        loadData(); // Fallback
+                    }
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to update'));
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                }
+            } catch (e) {
+                alert('Error updating order');
+                console.error(e);
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+            }
+        }
+
+        async function deleteOrder(orderId) {
+            if (!confirm(`Are you sure you want to DELETE order #${orderId}?\n\nThis will also delete any associated raffle entries.\n\nThis cannot be undone.`)) return;
+
+            try {
+                // Optimistically remove from UI
+                const orderIndex = allOrders.findIndex(o => (o.id || o.orderId) === orderId);
+                if (orderIndex !== -1) {
+                    allOrders.splice(orderIndex, 1);
+                    renderTables();
+                }
+
+                const res = await fetch(`${API_BASE}/deleteOrder`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ orderId })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    // Success silently confirmed, if failed we would alert and reload
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to delete'));
+                    loadData(); // Revert on failure
+                }
+            } catch (e) {
+                alert('Error deleting order');
+                console.error(e);
+                loadData(); // Revert on failure
+            }
+        }
+
+        // ============================================
+        // CUSTOMER FUNCTIONS
+        // ============================================
+        async function deleteCustomer(email) {
+            if (!confirm(`Are you sure you want to delete customer ${email}?\n\nThis cannot be undone.`)) return;
+
+            try {
+                // Optimistically remove from UI
+                const customerIndex = allCustomers.findIndex(c => c.email === email);
+                if (customerIndex !== -1) {
+                    allCustomers.splice(customerIndex, 1);
+                    filterCustomers(); // Re-render filtered list
+                }
+
+                const res = await fetch(`${API_BASE}/deleteCustomer`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    // Success confirmed
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to delete'));
+                    loadData(); // Revert
+                }
+            } catch (e) {
+                alert('Error deleting customer');
+                console.error(e);
+                loadData(); // Revert
+            }
+        }
+
+        // ============================================
+        // RAFFLE FUNCTIONS
+        // ============================================
+        let raffleEntries = [];
+
+        async function loadRaffleData() {
+            try {
+                const res = await fetch(`${API_BASE}/getAllRaffleEntries`);
+                const data = await res.json();
+                if (data.success) {
+                    raffleEntries = data.entries || [];
+                    updateRaffleStats(data.stats);
+                    renderRaffleTable();
+                }
+            } catch (e) {
+                console.error('Error loading raffle data:', e);
+            }
+        }
+
+        function updateRaffleStats(stats) {
+            document.getElementById('raffleTotalEntries').textContent = stats?.totalEntries || 0;
+            document.getElementById('raffleParticipants').textContent = stats?.participants || 0;
+            document.getElementById('rafflePending').textContent = stats?.pendingEntries || 0;
+            document.getElementById('raffleRevenue').textContent = '$' + (stats?.totalRevenue || 0);
+        }
+
+        function renderRaffleTable() {
+            const tbody = document.getElementById('raffleEntriesTable');
+            if (!raffleEntries.length) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--gray-text); padding: 30px;">No raffle entries yet</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = raffleEntries.map(e => {
+                const statusClass = e.status === 'paid' ? 'status-completed' : 'status-pending';
+                const statusIcon = e.status === 'paid' ? '🟢' : '🟡';
+                const actionBtns = e.status === 'pending'
+                    ? `<button onclick="updateEntryStatus('${e.entryId}', 'paid')" style="background: var(--success); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; margin-right: 5px;">✅ Paid</button>
+                       <button onclick="updateEntryStatus('${e.entryId}', 'deleted')" style="background: var(--danger); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;">🗑️</button>`
+                    : `<button onclick="updateEntryStatus('${e.entryId}', 'deleted')" style="background: var(--danger); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer;">🗑️</button>`;
+
+                return `
+                    <tr>
+                        <td style="font-family: monospace; color: var(--primary);">
+                            ${e.orderId ? `<a href="#" onclick="viewOrder('${e.orderId}')" style="color: var(--primary); text-decoration: underline;">#${e.entryId}</a>` : e.entryId}
+                        </td>
+                        <td>
+                            <div style="font-weight: 600;">${e.firstName} ${e.lastName}</div>
+                        </td>
+                        <td>
+                            <div style="font-size: 0.8rem; color: var(--gray-text);">${e.phone}</div>
+                        </td>
+                        <td style="font-weight: 700; color: var(--success);">${e.orderTotal ? '$' + e.orderTotal : (e.qualifyingSpend ? '$' + e.qualifyingSpend : e.tier)}</td>
+                        <td style="text-align: center; font-weight: 700; font-size: 1.2rem;">${e.entryCount}</td>
+                        <td><span class="status-badge ${statusClass}">${statusIcon} ${e.status.toUpperCase()}</span></td>
+                        <td>${new Date(e.createdAt).toLocaleDateString()}</td>
+                        <td>${actionBtns}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        async function updateEntryStatus(entryId, status) {
+            const action = status === 'paid' ? 'mark as PAID' : 'DELETE';
+            if (!confirm(`Are you sure you want to ${action} entry ${entryId}?`)) return;
+
+            try {
+                const res = await fetch(`${API_BASE}/updateRaffleEntry`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ entryId, status })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    loadRaffleData(); // Reload
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to update'));
+                }
+            } catch (e) {
+                alert('Error updating entry');
+            }
+        }
+
+        async function drawWinner() {
+            if (!confirm('🎲 Draw a random winner from PAID entries?\n\nThis will select a winner based on entry weights (more entries = higher chance).')) return;
+
+            try {
+                const res = await fetch(`${API_BASE}/drawRaffleWinner`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const data = await res.json();
+
+                if (data.success && data.winner) {
+                    const w = data.winner;
+                    document.getElementById('winnerDetails').innerHTML = `
+                        <p><strong>Name:</strong> ${w.name}</p>
+                        <p><strong>Entry ID:</strong> ${w.entryId}</p>
+                        <p><strong>Email:</strong> ${w.email}</p>
+                        <p><strong>Phone:</strong> ${w.phone}</p>
+                        <p><strong>Tier:</strong> ${w.tier} (${w.entryCount} entries)</p>
+                        <p style="margin-top: 15px; color: #FFD700;">Total entries in draw: ${data.totalEntriesInDraw}</p>
+                    `;
+                    document.getElementById('winnerModal').style.display = 'flex';
+                } else {
+                    alert('Error: ' + (data.error || 'No paid entries to draw from'));
+                }
+            } catch (e) {
+                alert('Error drawing winner');
+            }
+        }
+
+        function closeWinnerModal() {
+            document.getElementById('winnerModal').style.display = 'none';
         }
 
         // Run Init

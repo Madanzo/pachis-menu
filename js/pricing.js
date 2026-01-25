@@ -57,6 +57,10 @@ export const pricingTiers = {
         Flower: {
             type: 'fixed',
             description: 'Indoor Premium Flower'
+        },
+        Raffle: {
+            type: 'fixed',
+            description: 'Raffle Entries'
         }
     },
     MX: {
@@ -90,6 +94,10 @@ export const pricingTiers = {
         Flower: {
             type: 'fixed',
             description: 'Indoor Premium Flower'
+        },
+        Raffle: {
+            type: 'fixed',
+            description: 'Raffle Entries'
         }
     }
 };

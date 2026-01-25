@@ -482,5 +482,40 @@ export const products = [
         brand: "Pachis",
         type: "Complete Cleaning Kit",
         image: "images/cleaning-kit.jpg"
+    },
+
+    // RAFFLE ENTRIES
+    {
+        id: "raffle_1_entry",
+        name: "1 RAFFLE ENTRY",
+        category: "Raffle",
+        brand: "Cowboys",
+        type: "Raffle Ticket",
+        price: 35,
+        image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Logo%2FPachis.png?alt=media&token=5ae2146b-b4ff-46b7-9314-b05253af84dc", // Use logo for now
+        description: "1 Entry to win the signed Cowboys Jersey",
+        raffleEntries: 1
+    },
+    {
+        id: "raffle_3_entries",
+        name: "3 RAFFLE ENTRIES",
+        category: "Raffle",
+        brand: "Cowboys",
+        type: "Raffle Ticket Bundle",
+        price: 80,
+        image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Logo%2FPachis.png?alt=media&token=5ae2146b-b4ff-46b7-9314-b05253af84dc",
+        description: "3 Entries to win the signed Cowboys Jersey",
+        raffleEntries: 3
+    },
+    {
+        id: "raffle_6_entries",
+        name: "6 RAFFLE ENTRIES",
+        category: "Raffle",
+        brand: "Cowboys",
+        type: "Raffle Ticket Bundle",
+        price: 130,
+        image: "https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Logo%2FPachis.png?alt=media&token=5ae2146b-b4ff-46b7-9314-b05253af84dc",
+        description: "6 Entries to win the signed Cowboys Jersey",
+        raffleEntries: 6
     }
 ];

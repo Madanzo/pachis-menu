@@ -10,6 +10,34 @@
             {
                 "source": "/api/send-order",
                 "function": "sendOrder"
+            },
+            {
+                "source": "/api/raffle/stats",
+                "function": "getRaffleStats"
+            },
+            {
+                "source": "/api/raffle/entries",
+                "function": "getAllRaffleEntries"
+            },
+            {
+                "source": "/api/raffle/update",
+                "function": "updateRaffleEntry"
+            },
+            {
+                "source": "/api/raffle/draw",
+                "function": "drawRaffleWinner"
+            },
+            {
+                "source": "/api/customer/delete",
+                "function": "deleteCustomer"
+            },
+            {
+                "source": "/api/order/update",
+                "function": "updateOrder"
+            },
+            {
+                "source": "/api/order/delete",
+                "function": "deleteOrder"
             }
         ]
     },

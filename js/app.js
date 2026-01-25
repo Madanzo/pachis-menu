@@ -14,8 +14,26 @@ const categoryHeaders = {
     "Flower": "FLOWER",
     "Apparel": "PACHIS APPAREL",
     "Pleasure Gear": "PLEASURE GEAR",
-    "420 Kit": "420 KIT"
+    "420 Kit": "420 KIT",
+    "Raffle": "COWBOYS JERSEY RAFFLE - BUY ENTRIES"
 };
+
+// ... existing code ...
+
+function selectRaffleCategory() {
+    const raffleTab = document.querySelector('.tab-button[data-category="Raffle"]');
+    if (raffleTab) raffleTab.click();
+
+    setTimeout(() => {
+        const grid = document.getElementById('product-grid');
+        if (grid) grid.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+}
+
+// ... existing code ...
+
+window.selectRaffleCategory = selectRaffleCategory;
+
 
 // Categories marked as coming soon
 const comingSoonCategories = ["Apparel", "Pleasure Gear", "420 Kit"];
@@ -26,6 +44,38 @@ let currentCategory = "Disposable";
 // Age Verification
 const AGE_VERIFICATION_KEY = 'pachisAgeVerified';
 const VERIFICATION_DATA_KEY = 'pachisVerificationData';
+
+// Lazy load videos - only load and play when visible
+function initLazyVideos() {
+    const lazyVideos = document.querySelectorAll('.lazy-video');
+
+    if ('IntersectionObserver' in window) {
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const video = entry.target;
+                    if (video.dataset.src && !video.src) {
+                        video.src = video.dataset.src;
+                        video.load();
+                        video.play().catch(() => { }); // Ignore autoplay errors
+                    }
+                    videoObserver.unobserve(video);
+                }
+            });
+        }, { rootMargin: '100px' }); // Start loading 100px before visible
+
+        lazyVideos.forEach(video => videoObserver.observe(video));
+    } else {
+        // Fallback for older browsers
+        lazyVideos.forEach(video => {
+            if (video.dataset.src) {
+                video.src = video.dataset.src;
+                video.load();
+                video.play().catch(() => { });
+            }
+        });
+    }
+}
 
 function updateQuantity(productID, change) {
     const qtyDisplay = document.querySelector(`.qty-display[data-product-id="${productID}"]`);
@@ -185,8 +235,9 @@ function renderProducts(category) {
 
             // Check if image is a video
             const isVideo = product.image ? product.image.includes('.mp4') : false;
+            // Use data-src for lazy loading videos - only load when visible
             const mediaHTML = isVideo
-                ? `<video src="${product.image}" class="product-image" autoplay loop muted playsinline></video>`
+                ? `<video data-src="${product.image}" class="product-image lazy-video" loop muted playsinline preload="none"></video>`
                 : `<img src="${product.image || ''}" alt="${product.name}" class="product-image">`;
 
             let detailsHTML = '';
@@ -256,6 +307,9 @@ function renderProducts(category) {
 
             grid.appendChild(card);
         });
+
+        // Lazy load videos using Intersection Observer
+        initLazyVideos();
     }
 }
 

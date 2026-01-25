@@ -2,6 +2,15 @@
 <html lang="en">
 
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJLKJ3CXLW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-KJLKJ3CXLW');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pachis Menu</title>
@@ -107,8 +116,33 @@
 
       <!-- Logo Area -->
       <div class="menu-logo">
-        <img src="https://rizo7o6vttmkyalu.public.blob.vercel-storage.com/Pachis.png" alt="Pachis Logo">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/pachis-menu-app.firebasestorage.app/o/Logo%2FPachis.png?alt=media&token=5ae2146b-b4ff-46b7-9314-b05253af84dc"
+          alt="Pachis Logo">
       </div>
+
+      <!-- Raffle Promo Banner -->
+      <!-- Raffle Promo Banner -->
+      <a href="#product-grid" onclick="selectRaffleCategory()" id="raffle-banner" class="promo-banner"
+        style="margin-bottom: 20px; text-decoration: none; display: block; cursor: pointer;">
+        <div class="promo-content"
+          style="background: linear-gradient(135deg, #003594 0%, #0057B8 100%); border: 2px solid #FFD700;">
+          <span class="promo-title" style="color: #FFD700;">🏈 COWBOYS JERSEY GIVEAWAY! 🏈</span>
+          <div class="promo-deals" style="color: #fff;">
+            <span class="promo-deal" style="color: #fff;">$35 = <strong style="color: #FFD700;">1 Entry</strong></span>
+            <span class="promo-divider" style="color: rgba(255,255,255,0.5);">|</span>
+            <span class="promo-deal" style="color: #fff;">$80 = <strong style="color: #FFD700;">3
+                Entries</strong></span>
+            <span class="promo-divider" style="color: rgba(255,255,255,0.5);">|</span>
+            <span class="promo-deal" style="color: #fff;">$130 = <strong style="color: #FFD700;">6
+                Entries</strong></span>
+          </div>
+          <div style="margin-top: 8px; font-size: 0.8rem; color: rgba(255,255,255,0.8);">
+            Win a signed authentic jersey! 🏆 <strong style="color: #FFD700;">Tap to buy entries OR spend $60+ for FREE
+              entries</strong>
+          </div>
+        </div>
+      </a>
 
       <!-- Menu Header (dynamic) -->
       <div class="menu-header">
@@ -142,6 +176,9 @@
       <!-- Category Tabs -->
       <div class="menu-tabs">
         <button class="tab-button active" data-category="Disposable">Disposable</button>
+        <button class="tab-button" data-category="Raffle"
+          style="background: linear-gradient(135deg, #003594 0%, #0057B8 100%); color: #FFD700; border: 1px solid #FFD700;">🏈
+          Raffle</button>
         <button class="tab-button" data-category="Dual Dispo">Dual Dispo's</button>
         <button class="tab-button" data-category="Live Rosin Dabs">Dabs</button>
         <button class="tab-button" data-category="Pre-Rolls">Pre-Rolls</button>
